@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>FluoTest</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QWidget" name="gridLayoutWidget">
@@ -24,20 +24,7 @@
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout">
-     <item row="2" column="0">
-      <widget class="QLabel" name="label_4">
-       <property name="font">
-        <font>
-         <family>Agency FB</family>
-         <pointsize>10</pointsize>
-        </font>
-       </property>
-       <property name="text">
-        <string>2024.10.30</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="0">
+     <item row="3" column="0">
       <widget class="QTabWidget" name="tabWidget">
        <property name="styleSheet">
         <string notr="true">background-color:rgb(217, 255, 226)</string>
@@ -49,6 +36,69 @@
         <attribute name="title">
          <string>机构信息</string>
         </attribute>
+        <widget class="QWidget" name="horizontalLayoutWidget">
+         <property name="geometry">
+          <rect>
+           <x>120</x>
+           <y>60</y>
+           <width>431</width>
+           <height>61</height>
+          </rect>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_8">
+          <item>
+           <widget class="QLabel" name="label_30">
+            <property name="text">
+             <string>机构地址</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="lineEdit_14"/>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="horizontalLayoutWidget_8">
+         <property name="geometry">
+          <rect>
+           <x>120</x>
+           <y>140</y>
+           <width>431</width>
+           <height>231</height>
+          </rect>
+         </property>
+         <layout class="QHBoxLayout" name="horizontalLayout_9">
+          <item>
+           <widget class="QLabel" name="label_29">
+            <property name="text">
+             <string>机构名称：</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QTextEdit" name="textEdit_2"/>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QPushButton" name="pushButton_18">
+         <property name="geometry">
+          <rect>
+           <x>600</x>
+           <y>80</y>
+           <width>81</width>
+           <height>61</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <family>Agency FB</family>
+           <pointsize>24</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>注册</string>
+         </property>
+        </widget>
        </widget>
        <widget class="QWidget" name="widget_2">
         <attribute name="title">
@@ -244,7 +294,11 @@
                </widget>
               </item>
               <item row="0" column="1">
-               <widget class="QLineEdit" name="lineEdit_4"/>
+               <widget class="QLineEdit" name="lineEdit_4">
+                <property name="styleSheet">
+                 <string notr="true">background-color:rgb(255, 255, 255)</string>
+                </property>
+               </widget>
               </item>
              </layout>
             </widget>
@@ -869,7 +923,7 @@
          <property name="geometry">
           <rect>
            <x>350</x>
-           <y>50</y>
+           <y>40</y>
            <width>391</width>
            <height>381</height>
           </rect>
@@ -985,9 +1039,9 @@
              <property name="geometry">
               <rect>
                <x>20</x>
-               <y>30</y>
+               <y>20</y>
                <width>311</width>
-               <height>311</height>
+               <height>321</height>
               </rect>
              </property>
             </widget>
@@ -1052,6 +1106,25 @@
      </item>
     </layout>
    </widget>
+   <widget class="QLabel" name="label_4">
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>370</y>
+      <width>44</width>
+      <height>519</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Agency FB</family>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>2024.10.30</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -1062,6 +1135,12 @@
      <height>23</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuFluoTest">
+    <property name="title">
+     <string>FluoTest</string>
+    </property>
+   </widget>
+   <addaction name="menuFluoTest"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
