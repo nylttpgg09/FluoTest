@@ -1,6 +1,39 @@
-from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QVBoxLayout, QPushButton, QStackedWidget
-from PyQt5.uic import loadUi  # 用于加载 .ui 文件
+from PyQt5.QtWidgets import QApplication, QMainWindow, QProgressBar, QVBoxLayout, QWidget, QPushButton
+from PyQt5.uic import loadUi
+from PyQt5.QtCore import QTimer
 import sys
+class Welcome1Window(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        loadUi("welcome1.ui", self)  # 加载 welcome1.ui
+
+        # 获取进度条控件
+        self.progress_bar = self.findChild(QProgressBar, "progressBar")  # 假设进度条名为 progressBar
+        self.progress_bar.setValue(0)  # 初始值为 0
+
+        # 设置定时器，用来更新进度条并跳转到主界面
+        self.timer = QTimer(self)
+        self.timer.timeout.connect(self.update_progress)
+        self.timer.start(50)  # 每50毫秒更新一次进度条
+
+        self.progress = 0  # 进度条的当前值
+
+    def update_progress(self):
+        self.progress += 1
+        self.progress_bar.setValue(self.progress)
+
+        # 如果进度条完成了100%，跳转到 main.ui
+        if self.progress >= 100:
+            self.timer.stop()  # 停止定时器
+            self.open_welcome_window()  # 打开主界面
+
+    def open_welcome_window(self):
+        # 创建欢迎界面并显示
+        self.welcome_window = WelcomeWindow()
+        self.welcome_window.show()
+
+        # 关闭欢迎界面
+        self.close()
 
 class WelcomeWindow(QMainWindow):
     def __init__(self):
@@ -43,6 +76,6 @@ class FluoTestWindow(QMainWindow):
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    window = WelcomeWindow()  # 创建欢迎窗口
+    window = Welcome1Window()  # 创建欢迎窗口
     window.show()  # 显示欢迎窗口
     sys.exit(app.exec_())  # 启动应用
