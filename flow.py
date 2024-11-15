@@ -1,5 +1,6 @@
 from PyQt5.QtWidgets import QApplication, QMainWindow, QProgressBar, QVBoxLayout, QWidget, QPushButton
 from PyQt5.uic import loadUi
+from PyQt5.QtSql import QSqlDatabase, QSqlQuery
 from PyQt5.QtCore import QTimer
 import sys
 class Welcome1Window(QMainWindow):
