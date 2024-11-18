@@ -58,13 +58,30 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         loadUi("main.ui", self)  # 加载 main.ui
-        self.settingButton.clicked.connect(self.show_fluo_window)  # FluoTest.ui 按钮
+        self.settingButton.clicked.connect(self.show_fluo_window)
+        self.historyButton.clicked.connect(self.show_history_window)
+        self.itemButton.clicked.connect(self.show_item_window)
+        self.testButton.clicked.connect(self.show_test_window)
 
     def show_fluo_window(self):
         self.fluo_window = FluoTestWindow()  # 创建 FluoTest 窗口对象
         self.fluo_window.show()
         self.close()  # 关闭当前
 
+    def show_history_window(self):
+        self.historys_window = HistorysWindow()
+        self.historys_window.show()
+        self.close()  # 关闭当前
+
+    def show_item_window(self):
+        self.item_window = QuerylineWindow()
+        self.item_window.show()
+        self.close()  # 关闭当前
+
+    def show_test_window(self):
+        self.test_window = ChannelWindow()
+        self.test_window.show()
+        self.close()  # 关闭当前
 class FluoTestWindow(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -73,6 +90,45 @@ class FluoTestWindow(QMainWindow):
     def show_main_window(self):
         self.main_window = MainWindow()  # 创建主窗口对象
         self.main_window.show()
+        self.close()  # 关闭当前的欢迎窗口
+
+class HistorysWindow(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        loadUi("historys.ui", self)  # 加载 ui
+        self.mainButton.clicked.connect(self.show_main_window)
+    def show_main_window(self):
+        self.main_window = MainWindow()  # 创建主窗口对象
+        self.main_window.show()
+        self.close()  # 关闭当前的欢迎窗口
+
+
+
+class QuerylineWindow(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        loadUi("queryline.ui", self)  # 加载 ui
+
+
+class ChannelWindow(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        loadUi("channel.ui", self)  # 加载 ui
+        self.channelsetting.clicked.connect(self.show_setting_window)
+
+    def show_setting_window(self):
+        self.setting_window = ChannelsettingWindow()  # 创建主窗口对象
+        self.setting_window.show()
+        self.close()  # 关闭当前的欢迎窗口
+
+class ChannelsettingWindow(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        loadUi("channelsetting.ui", self)  # 加载 ui
+        self.controlButton.clicked.connect(self.show_control_window)
+    def show_control_window(self):
+        self.control_window = ChannelWindow()  # 创建主窗口对象
+        self.control_window.show()
         self.close()  # 关闭当前的欢迎窗口
 
 if __name__ == "__main__":

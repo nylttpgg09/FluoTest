@@ -635,7 +635,7 @@
      <string>历史记录</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton_7">
+   <widget class="QPushButton" name="channelsetting">
     <property name="geometry">
      <rect>
       <x>610</x>

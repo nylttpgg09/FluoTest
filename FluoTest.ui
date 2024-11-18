@@ -30,7 +30,7 @@
         <string notr="true">background-color:rgb(217, 255, 226)</string>
        </property>
        <property name="currentIndex">
-        <number>6</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="widget">
         <attribute name="title">
