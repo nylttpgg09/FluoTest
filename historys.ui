@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>640</width>
-    <height>480</height>
+    <width>718</width>
+    <height>519</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -23,8 +23,11 @@
       <height>401</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -38,6 +41,13 @@
         <width>601</width>
         <height>151</height>
        </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QTableWidget::horizontalHeader QHeaderView::section {
+  background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;
+}
+</string>
       </property>
       <property name="columnCount">
        <number>7</number>
@@ -90,71 +100,151 @@
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
         <widget class="QLabel" name="label">
+         <property name="styleSheet">
+          <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
+         </property>
          <property name="text">
           <string>通道1</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_2">
+         <property name="styleSheet">
+          <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
+         </property>
          <property name="text">
           <string>通道2</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_3">
+         <property name="styleSheet">
+          <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
+         </property>
          <property name="text">
           <string>通道3</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_5">
+         <property name="styleSheet">
+          <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
+         </property>
          <property name="text">
           <string>通道4</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_7">
+         <property name="styleSheet">
+          <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
+         </property>
          <property name="text">
           <string>通道5</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_8">
+         <property name="styleSheet">
+          <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
+         </property>
          <property name="text">
           <string>通道6</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_10">
+         <property name="styleSheet">
+          <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
+         </property>
          <property name="text">
           <string>通道7</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_9">
+         <property name="styleSheet">
+          <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
+         </property>
          <property name="text">
           <string>通道8</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_6">
+         <property name="styleSheet">
+          <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
+         </property>
          <property name="text">
           <string>通道9</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QLabel" name="label_4">
+         <property name="styleSheet">
+          <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
+         </property>
          <property name="text">
           <string>通道10</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
          </property>
         </widget>
        </item>
@@ -165,13 +255,24 @@
        <rect>
         <x>10</x>
         <y>250</y>
-        <width>806</width>
+        <width>581</width>
         <height>41</height>
        </rect>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_2">
        <item>
         <widget class="QPushButton" name="pushButton">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="styleSheet">
+          <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
+         </property>
          <property name="text">
           <string>空闲</string>
          </property>
@@ -179,6 +280,17 @@
        </item>
        <item>
         <widget class="QPushButton" name="pushButton_5">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="styleSheet">
+          <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
+         </property>
          <property name="text">
           <string>空闲</string>
          </property>
@@ -186,6 +298,17 @@
        </item>
        <item>
         <widget class="QPushButton" name="pushButton_2">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="styleSheet">
+          <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
+         </property>
          <property name="text">
           <string>空闲</string>
          </property>
@@ -193,6 +316,17 @@
        </item>
        <item>
         <widget class="QPushButton" name="pushButton_10">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="styleSheet">
+          <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
+         </property>
          <property name="text">
           <string>空闲</string>
          </property>
@@ -200,13 +334,17 @@
        </item>
        <item>
         <widget class="QPushButton" name="pushButton_9">
-         <property name="text">
-          <string>空闲</string>
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
          </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="pushButton_8">
+         <property name="styleSheet">
+          <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
+         </property>
          <property name="text">
           <string>空闲</string>
          </property>
@@ -214,6 +352,35 @@
        </item>
        <item>
         <widget class="QPushButton" name="pushButton_7">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="styleSheet">
+          <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
+         </property>
+         <property name="text">
+          <string>空闲</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_8">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="styleSheet">
+          <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
+         </property>
          <property name="text">
           <string>空闲</string>
          </property>
@@ -221,6 +388,17 @@
        </item>
        <item>
         <widget class="QPushButton" name="pushButton_6">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="styleSheet">
+          <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
+         </property>
          <property name="text">
           <string>空闲</string>
          </property>
@@ -228,6 +406,17 @@
        </item>
        <item>
         <widget class="QPushButton" name="pushButton_3">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="styleSheet">
+          <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
+         </property>
          <property name="text">
           <string>空闲</string>
          </property>
@@ -235,6 +424,17 @@
        </item>
        <item>
         <widget class="QPushButton" name="pushButton_4">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="styleSheet">
+          <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
+         </property>
          <property name="text">
           <string>空闲</string>
          </property>
@@ -250,6 +450,11 @@
         <width>75</width>
         <height>23</height>
        </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
       </property>
       <property name="text">
        <string>主页</string>
@@ -480,6 +685,13 @@
         <height>161</height>
        </rect>
       </property>
+      <property name="styleSheet">
+       <string notr="true">QTableWidget::horizontalHeader QHeaderView::section {
+  background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;
+}
+</string>
+      </property>
       <property name="columnCount">
        <number>8</number>
       </property>
@@ -532,11 +744,24 @@
      <widget class="QTableWidget" name="tableWidget_3">
       <property name="geometry">
        <rect>
-        <x>0</x>
-        <y>60</y>
-        <width>611</width>
-        <height>161</height>
+        <x>20</x>
+        <y>50</y>
+        <width>601</width>
+        <height>211</height>
        </rect>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QTableWidget::horizontalHeader QHeaderView::section {
+  background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;
+}
+</string>
       </property>
       <property name="columnCount">
        <number>6</number>
@@ -575,10 +800,10 @@
      <widget class="QWidget" name="horizontalLayoutWidget_4">
       <property name="geometry">
        <rect>
-        <x>50</x>
-        <y>0</y>
+        <x>80</x>
+        <y>10</y>
         <width>381</width>
-        <height>51</height>
+        <height>31</height>
        </rect>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_4">
@@ -600,6 +825,17 @@
        </item>
        <item>
         <widget class="QPushButton" name="pushButton_14">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="styleSheet">
+          <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
+         </property>
          <property name="text">
           <string>二维码项目导入</string>
          </property>
@@ -607,6 +843,17 @@
        </item>
        <item>
         <widget class="QPushButton" name="pushButton_15">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="styleSheet">
+          <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
+         </property>
          <property name="text">
           <string>U盘项目导入</string>
          </property>
@@ -614,6 +861,17 @@
        </item>
        <item>
         <widget class="QPushButton" name="pushButton_16">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="styleSheet">
+          <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
+         </property>
          <property name="text">
           <string>项目删除</string>
          </property>
@@ -629,8 +887,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>640</width>
-     <height>23</height>
+     <width>718</width>
+     <height>22</height>
     </rect>
    </property>
   </widget>

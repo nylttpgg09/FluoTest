@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>480</width>
-    <height>272</height>
+    <width>470</width>
+    <height>280</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,15 +17,29 @@
    <widget class="QWidget" name="horizontalLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>60</y>
+      <x>20</x>
+      <y>90</y>
       <width>421</width>
-      <height>101</height>
+      <height>31</height>
      </rect>
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout">
+     <property name="bottomMargin">
+      <number>0</number>
+     </property>
      <item>
       <widget class="QPushButton" name="historyButton">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="styleSheet">
+        <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
+       </property>
        <property name="text">
         <string>历史</string>
        </property>
@@ -33,6 +47,17 @@
      </item>
      <item>
       <widget class="QPushButton" name="pushButton_2">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="styleSheet">
+        <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
+       </property>
        <property name="text">
         <string>批量测试</string>
        </property>
@@ -40,6 +65,17 @@
      </item>
      <item>
       <widget class="QPushButton" name="testButton">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="styleSheet">
+        <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
+       </property>
        <property name="text">
         <string>测试</string>
        </property>
@@ -47,6 +83,17 @@
      </item>
      <item>
       <widget class="QPushButton" name="itemButton">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="styleSheet">
+        <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
+       </property>
        <property name="text">
         <string>项目</string>
        </property>
@@ -54,6 +101,17 @@
      </item>
      <item>
       <widget class="QPushButton" name="settingButton">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="styleSheet">
+        <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
+       </property>
        <property name="text">
         <string>设置</string>
        </property>
@@ -61,14 +119,19 @@
      </item>
     </layout>
    </widget>
-   <widget class="QPushButton" name="pushButton_6">
+   <widget class="QPushButton" name="close_button">
     <property name="geometry">
      <rect>
-      <x>550</x>
-      <y>380</y>
+      <x>390</x>
+      <y>170</y>
       <width>75</width>
       <height>23</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
     </property>
     <property name="text">
      <string>关机</string>
@@ -80,7 +143,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>480</width>
+     <width>470</width>
      <height>23</height>
     </rect>
    </property>

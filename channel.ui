@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1021</width>
-    <height>452</height>
+    <width>1024</width>
+    <height>566</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="tab_2">
      <attribute name="title">
@@ -98,6 +98,13 @@
         <height>23</height>
        </rect>
       </property>
+      <property name="styleSheet">
+       <string notr="true">font: 750 9pt &quot;Agency FB&quot;;
+background-color: rgba(0, 50, 205, 0.5);
+color: white;
+border: 2px solid rgb(173, 216, 230);
+</string>
+      </property>
       <property name="text">
        <string>开始质控</string>
       </property>
@@ -110,6 +117,14 @@
         <width>75</width>
         <height>23</height>
        </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: white;
+font: 750 9pt &quot;Agency FB&quot;;
+border: 2px solid rgb(173, 216, 230);
+background-color: rgba(255, 0, 0, 0.5);
+
+</string>
       </property>
       <property name="text">
        <string>删除质控</string>
@@ -609,7 +624,7 @@
      </widget>
     </widget>
    </widget>
-   <widget class="QPushButton" name="pushButton_5">
+   <widget class="QPushButton" name="main_button">
     <property name="geometry">
      <rect>
       <x>410</x>
@@ -643,6 +658,12 @@
       <width>75</width>
       <height>23</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: black;
+border: 3px solid rgb(173, 216, 230);
+background-color: rgba(0, 255, 0, 0.5);
+font: 750 9pt &quot;Agency FB&quot;;</string>
     </property>
     <property name="text">
      <string>设置</string>
@@ -680,7 +701,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1021</width>
+     <width>1024</width>
      <height>23</height>
     </rect>
    </property>

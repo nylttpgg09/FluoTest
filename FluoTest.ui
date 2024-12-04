@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>480</width>
-    <height>272</height>
+    <width>578</width>
+    <height>410</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -24,13 +24,13 @@
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout">
-     <item row="3" column="0">
+     <item row="2" column="0">
       <widget class="QTabWidget" name="tabWidget">
        <property name="styleSheet">
-        <string notr="true">background-color:rgb(217, 255, 226)</string>
+        <string notr="true"/>
        </property>
        <property name="currentIndex">
-        <number>0</number>
+        <number>6</number>
        </property>
        <widget class="QWidget" name="widget">
         <attribute name="title">
@@ -64,7 +64,7 @@
            <x>0</x>
            <y>80</y>
            <width>371</width>
-           <height>73</height>
+           <height>61</height>
           </rect>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_9">
@@ -84,16 +84,25 @@
          <property name="geometry">
           <rect>
            <x>380</x>
-           <y>10</y>
-           <width>81</width>
-           <height>61</height>
+           <y>20</y>
+           <width>91</width>
+           <height>41</height>
           </rect>
          </property>
          <property name="font">
           <font>
            <family>Agency FB</family>
-           <pointsize>24</pointsize>
+           <pointsize>9</pointsize>
+           <weight>50</weight>
+           <italic>false</italic>
+           <bold>false</bold>
           </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true"> border-radius: 10px;
+font: 9pt &quot;Agency FB&quot;;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
          </property>
          <property name="text">
           <string>注册</string>
@@ -103,10 +112,16 @@
          <property name="geometry">
           <rect>
            <x>380</x>
-           <y>100</y>
-           <width>75</width>
-           <height>23</height>
+           <y>90</y>
+           <width>91</width>
+           <height>41</height>
           </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true"> border-radius: 10px;
+font: 9pt &quot;Agency FB&quot;;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
          </property>
          <property name="text">
           <string>主页</string>
@@ -116,7 +131,7 @@
          <property name="geometry">
           <rect>
            <x>10</x>
-           <y>170</y>
+           <y>150</y>
            <width>51</width>
            <height>41</height>
           </rect>
@@ -468,7 +483,9 @@
            </rect>
           </property>
           <property name="styleSheet">
-           <string notr="true">background-color:rgb(126, 253, 255)</string>
+           <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
           </property>
           <property name="text">
            <string>刷新</string>
@@ -478,10 +495,10 @@
         <widget class="QWidget" name="horizontalLayoutWidget_2">
          <property name="geometry">
           <rect>
-           <x>330</x>
-           <y>120</y>
+           <x>110</x>
+           <y>220</y>
            <width>141</width>
-           <height>20</height>
+           <height>21</height>
           </rect>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -662,6 +679,11 @@
             <height>23</height>
            </rect>
           </property>
+          <property name="styleSheet">
+           <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
+          </property>
           <property name="text">
            <string>保存</string>
           </property>
@@ -691,6 +713,11 @@
                <height>23</height>
               </rect>
              </property>
+             <property name="styleSheet">
+              <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
+             </property>
              <property name="text">
               <string>校准</string>
              </property>
@@ -711,6 +738,11 @@
                <height>23</height>
               </rect>
              </property>
+             <property name="styleSheet">
+              <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
+             </property>
              <property name="text">
               <string>清除数据</string>
              </property>
@@ -730,6 +762,11 @@
                <width>75</width>
                <height>23</height>
               </rect>
+             </property>
+             <property name="styleSheet">
+              <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
              </property>
              <property name="text">
               <string>系统自检</string>
@@ -765,6 +802,11 @@
                <width>51</width>
                <height>23</height>
               </rect>
+             </property>
+             <property name="styleSheet">
+              <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
              </property>
              <property name="text">
               <string>保存</string>
@@ -849,7 +891,9 @@
           </font>
          </property>
          <property name="styleSheet">
-          <string notr="true">background-color:rgb(170, 255, 255)</string>
+          <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
          </property>
          <property name="text">
           <string>系统升级</string>
@@ -964,39 +1008,83 @@
           <string>用户列表</string>
          </property>
         </widget>
-        <widget class="QWidget" name="gridLayoutWidget_5">
+        <widget class="QWidget" name="verticalLayoutWidget_2">
          <property name="geometry">
           <rect>
            <x>10</x>
-           <y>100</y>
-           <width>171</width>
-           <height>91</height>
+           <y>90</y>
+           <width>160</width>
+           <height>101</height>
           </rect>
          </property>
-         <layout class="QGridLayout" name="gridLayout_6">
-          <item row="0" column="1">
-           <widget class="QPushButton" name="pushButton_9">
-            <property name="text">
-             <string>修改用户</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0">
-           <widget class="QPushButton" name="pushButton_8">
-            <property name="text">
-             <string>登出</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <item>
            <widget class="QPushButton" name="pushButton_10">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
+            </property>
             <property name="text">
              <string>新增用户</string>
             </property>
            </widget>
           </item>
-          <item row="1" column="1">
+          <item>
+           <widget class="QPushButton" name="pushButton_9">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
+            </property>
+            <property name="text">
+             <string>修改用户</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_8">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
+            </property>
+            <property name="text">
+             <string>登出</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QPushButton" name="pushButton_11">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
+            </property>
             <property name="text">
              <string>删除用户</string>
             </property>
@@ -1043,6 +1131,11 @@
                <height>23</height>
               </rect>
              </property>
+             <property name="styleSheet">
+              <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
+             </property>
              <property name="text">
               <string>删除</string>
              </property>
@@ -1055,6 +1148,11 @@
                <width>75</width>
                <height>23</height>
               </rect>
+             </property>
+             <property name="styleSheet">
+              <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
              </property>
              <property name="text">
               <string>设为当前</string>
@@ -1086,6 +1184,11 @@
                <height>23</height>
               </rect>
              </property>
+             <property name="styleSheet">
+              <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
+             </property>
              <property name="text">
               <string>读取参考范围卡</string>
              </property>
@@ -1098,6 +1201,11 @@
                <width>41</width>
                <height>23</height>
               </rect>
+             </property>
+             <property name="styleSheet">
+              <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
              </property>
              <property name="text">
               <string>新增</string>
@@ -1112,6 +1220,11 @@
                <height>23</height>
               </rect>
              </property>
+             <property name="styleSheet">
+              <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
+             </property>
              <property name="text">
               <string>编辑</string>
              </property>
@@ -1124,6 +1237,11 @@
                <width>41</width>
                <height>23</height>
               </rect>
+             </property>
+             <property name="styleSheet">
+              <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
              </property>
              <property name="text">
               <string>删除</string>
@@ -1144,8 +1262,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>480</width>
-     <height>23</height>
+     <width>578</width>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFluoTest">

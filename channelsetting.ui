@@ -6,22 +6,27 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1008</width>
-    <height>480</height>
+    <width>945</width>
+    <height>509</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QPushButton" name="pushButton_5">
+   <widget class="QPushButton" name="main_button">
     <property name="geometry">
      <rect>
-      <x>400</x>
-      <y>0</y>
+      <x>350</x>
+      <y>10</y>
       <width>75</width>
       <height>23</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
     </property>
     <property name="text">
      <string>首页</string>
@@ -30,11 +35,16 @@
    <widget class="QPushButton" name="pushButton_6">
     <property name="geometry">
      <rect>
-      <x>510</x>
-      <y>0</y>
+      <x>450</x>
+      <y>10</y>
       <width>75</width>
       <height>23</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
     </property>
     <property name="text">
      <string>历史记录</string>
@@ -43,11 +53,16 @@
    <widget class="QPushButton" name="pushButton_10">
     <property name="geometry">
      <rect>
-      <x>610</x>
-      <y>0</y>
+      <x>540</x>
+      <y>10</y>
       <width>75</width>
       <height>23</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
     </property>
     <property name="text">
      <string>设置</string>
@@ -56,11 +71,16 @@
    <widget class="QPushButton" name="debugButton">
     <property name="geometry">
      <rect>
-      <x>720</x>
-      <y>0</y>
+      <x>640</x>
+      <y>10</y>
       <width>75</width>
       <height>23</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
     </property>
     <property name="text">
      <string>调试模式</string>
@@ -82,11 +102,14 @@
    <widget class="QTabWidget" name="tabWidget">
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>30</y>
-      <width>1011</width>
-      <height>391</height>
+      <x>40</x>
+      <y>40</y>
+      <width>721</width>
+      <height>401</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
     </property>
     <property name="currentIndex">
      <number>0</number>
@@ -113,35 +136,47 @@
          <x>10</x>
          <y>20</y>
          <width>221</width>
-         <height>152</height>
+         <height>164</height>
         </rect>
        </property>
        <layout class="QFormLayout" name="formLayout">
         <item row="2" column="0">
          <widget class="QLabel" name="label_11">
+          <property name="styleSheet">
+           <string notr="true"/>
+          </property>
           <property name="text">
-           <string>序列号：</string>
+           <string>:</string>
           </property>
          </widget>
         </item>
         <item row="3" column="0">
          <widget class="QLabel" name="label_12">
+          <property name="styleSheet">
+           <string notr="true"/>
+          </property>
           <property name="text">
-           <string>仪器编号：</string>
+           <string> 仪器编号:</string>
           </property>
          </widget>
         </item>
         <item row="4" column="0">
          <widget class="QLabel" name="label_14">
+          <property name="styleSheet">
+           <string notr="true"/>
+          </property>
           <property name="text">
-           <string>版本号：</string>
+           <string> 版 本 号:</string>
           </property>
          </widget>
         </item>
         <item row="5" column="0">
          <widget class="QLabel" name="label_13">
+          <property name="styleSheet">
+           <string notr="true"/>
+          </property>
           <property name="text">
-           <string>编译码：</string>
+           <string> 编 译 码:</string>
           </property>
          </widget>
         </item>
@@ -150,8 +185,11 @@
         </item>
         <item row="0" column="0">
          <widget class="QLabel" name="label_9">
+          <property name="styleSheet">
+           <string notr="true"/>
+          </property>
           <property name="text">
-           <string>名称：</string>
+           <string>  名   称:</string>
           </property>
          </widget>
         </item>
@@ -163,8 +201,11 @@
         </item>
         <item row="1" column="0">
          <widget class="QLabel" name="label_10">
+          <property name="styleSheet">
+           <string notr="true"/>
+          </property>
           <property name="text">
-           <string>型号：</string>
+           <string>  型   号:</string>
           </property>
          </widget>
         </item>
@@ -355,8 +396,8 @@
         <rect>
          <x>10</x>
          <y>20</y>
-         <width>194</width>
-         <height>54</height>
+         <width>211</width>
+         <height>61</height>
         </rect>
        </property>
        <layout class="QFormLayout" name="formLayout_2">
@@ -369,15 +410,19 @@
         </item>
         <item row="0" column="1">
          <widget class="QPushButton" name="pushButton_14">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="styleSheet">
+           <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
+          </property>
           <property name="text">
            <string>设置</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="1">
-         <widget class="QPushButton" name="pushButton_15">
-          <property name="text">
-           <string>同步时间</string>
           </property>
          </widget>
         </item>
@@ -388,6 +433,24 @@
             <string>ntp.ntsc.ac.cn</string>
            </property>
           </item>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QPushButton" name="pushButton_15">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="styleSheet">
+           <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
+          </property>
+          <property name="text">
+           <string>同步时间</string>
+          </property>
          </widget>
         </item>
        </layout>
@@ -437,6 +500,11 @@
          <height>23</height>
         </rect>
        </property>
+       <property name="styleSheet">
+        <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
+       </property>
        <property name="text">
         <string>保存</string>
        </property>
@@ -478,6 +546,11 @@
          <height>23</height>
         </rect>
        </property>
+       <property name="styleSheet">
+        <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
+       </property>
        <property name="text">
         <string>设置</string>
        </property>
@@ -514,7 +587,7 @@
          <x>70</x>
          <y>10</y>
          <width>161</width>
-         <height>22</height>
+         <height>31</height>
         </rect>
        </property>
        <item>
@@ -532,6 +605,11 @@
          <height>23</height>
         </rect>
        </property>
+       <property name="styleSheet">
+        <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
+       </property>
        <property name="text">
         <string>导出数据库</string>
        </property>
@@ -544,6 +622,11 @@
          <width>75</width>
          <height>23</height>
         </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
        </property>
        <property name="text">
         <string>导出日志</string>
@@ -558,6 +641,11 @@
         <width>75</width>
         <height>23</height>
        </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
       </property>
       <property name="text">
        <string>修改密码</string>
@@ -610,6 +698,11 @@
          <height>23</height>
         </rect>
        </property>
+       <property name="styleSheet">
+        <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
+       </property>
        <property name="text">
         <string>刷新</string>
        </property>
@@ -636,7 +729,7 @@
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>20</y>
+         <y>10</y>
          <width>178</width>
          <height>171</height>
         </rect>
@@ -644,6 +737,9 @@
        <layout class="QFormLayout" name="formLayout_3">
         <item row="0" column="0">
          <widget class="QLabel" name="label_4">
+          <property name="styleSheet">
+           <string notr="true"/>
+          </property>
           <property name="text">
            <string>IP获取:</string>
           </property>
@@ -665,8 +761,17 @@
         </item>
         <item row="1" column="0">
          <widget class="QLabel" name="label_5">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="styleSheet">
+           <string notr="true"/>
+          </property>
           <property name="text">
-           <string>IP:</string>
+           <string>  IP  :</string>
           </property>
          </widget>
         </item>
@@ -675,8 +780,11 @@
         </item>
         <item row="2" column="0">
          <widget class="QLabel" name="label_6">
+          <property name="styleSheet">
+           <string notr="true"/>
+          </property>
           <property name="text">
-           <string>网关：</string>
+           <string>网  关:</string>
           </property>
          </widget>
         </item>
@@ -685,8 +793,11 @@
         </item>
         <item row="3" column="0">
          <widget class="QLabel" name="label_7">
+          <property name="styleSheet">
+           <string notr="true"/>
+          </property>
           <property name="text">
-           <string>掩码：</string>
+           <string>掩  码:</string>
           </property>
          </widget>
         </item>
@@ -698,8 +809,11 @@
         </item>
         <item row="5" column="0">
          <widget class="QLabel" name="label_24">
+          <property name="styleSheet">
+           <string notr="true"/>
+          </property>
           <property name="text">
-           <string>DNS2:</string>
+           <string> DNS 2:</string>
           </property>
          </widget>
         </item>
@@ -708,8 +822,11 @@
         </item>
         <item row="4" column="0">
          <widget class="QLabel" name="label_2">
+          <property name="styleSheet">
+           <string notr="true"/>
+          </property>
           <property name="text">
-           <string>DNS1:</string>
+           <string> DNS 1:</string>
           </property>
          </widget>
         </item>
@@ -724,6 +841,11 @@
          <height>23</height>
         </rect>
        </property>
+       <property name="styleSheet">
+        <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
+       </property>
        <property name="text">
         <string>恢复默认值</string>
        </property>
@@ -736,6 +858,11 @@
          <width>41</width>
          <height>23</height>
         </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
        </property>
        <property name="text">
         <string>获取</string>
@@ -750,6 +877,11 @@
          <height>23</height>
         </rect>
        </property>
+       <property name="styleSheet">
+        <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
+       </property>
        <property name="text">
         <string>设置</string>
        </property>
@@ -758,7 +890,7 @@
      <widget class="QGroupBox" name="groupBox_8">
       <property name="geometry">
        <rect>
-        <x>220</x>
+        <x>230</x>
         <y>10</y>
         <width>201</width>
         <height>321</height>
@@ -772,15 +904,18 @@
         <rect>
          <x>10</x>
          <y>20</y>
-         <width>217</width>
-         <height>241</height>
+         <width>227</width>
+         <height>248</height>
         </rect>
        </property>
        <layout class="QFormLayout" name="formLayout_4">
         <item row="0" column="0">
          <widget class="QLabel" name="label_25">
+          <property name="styleSheet">
+           <string notr="true"/>
+          </property>
           <property name="text">
-           <string>SSID：</string>
+           <string> S S I D:</string>
           </property>
          </widget>
         </item>
@@ -800,6 +935,9 @@
         </item>
         <item row="1" column="0">
          <widget class="QLabel" name="label_26">
+          <property name="styleSheet">
+           <string notr="true"/>
+          </property>
           <property name="text">
            <string>Password:</string>
           </property>
@@ -810,8 +948,11 @@
         </item>
         <item row="2" column="0">
          <widget class="QLabel" name="label_27">
+          <property name="styleSheet">
+           <string notr="true"/>
+          </property>
           <property name="text">
-           <string>状态：</string>
+           <string>状    态:</string>
           </property>
          </widget>
         </item>
@@ -831,8 +972,11 @@
         </item>
         <item row="3" column="0">
          <widget class="QLabel" name="label">
+          <property name="styleSheet">
+           <string notr="true"/>
+          </property>
           <property name="text">
-           <string>IP获取：</string>
+           <string>IP 获 取:</string>
           </property>
          </widget>
         </item>
@@ -847,8 +991,11 @@
         </item>
         <item row="4" column="0">
          <widget class="QLabel" name="label_28">
+          <property name="styleSheet">
+           <string notr="true"/>
+          </property>
           <property name="text">
-           <string>IP：</string>
+           <string>   IP   :</string>
           </property>
          </widget>
         </item>
@@ -857,8 +1004,11 @@
         </item>
         <item row="5" column="0">
          <widget class="QLabel" name="label_3">
+          <property name="styleSheet">
+           <string notr="true"/>
+          </property>
           <property name="text">
-           <string>网关：</string>
+           <string>网    关:</string>
           </property>
          </widget>
         </item>
@@ -867,22 +1017,31 @@
         </item>
         <item row="6" column="0">
          <widget class="QLabel" name="label_8">
+          <property name="styleSheet">
+           <string notr="true"/>
+          </property>
           <property name="text">
-           <string>掩码：</string>
+           <string>掩    码:</string>
           </property>
          </widget>
         </item>
         <item row="7" column="0">
          <widget class="QLabel" name="label_30">
+          <property name="styleSheet">
+           <string notr="true"/>
+          </property>
           <property name="text">
-           <string>DNS1:</string>
+           <string> D N S 1:</string>
           </property>
          </widget>
         </item>
         <item row="8" column="0">
          <widget class="QLabel" name="label_31">
+          <property name="styleSheet">
+           <string notr="true"/>
+          </property>
           <property name="text">
-           <string>DNS2:</string>
+           <string> D N S 2:</string>
           </property>
          </widget>
         </item>
@@ -902,9 +1061,14 @@
         <rect>
          <x>10</x>
          <y>270</y>
-         <width>51</width>
+         <width>71</width>
          <height>23</height>
         </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
        </property>
        <property name="text">
         <string>重新连接</string>
@@ -913,11 +1077,16 @@
       <widget class="QPushButton" name="pushButton_23">
        <property name="geometry">
         <rect>
-         <x>60</x>
+         <x>80</x>
          <y>270</y>
          <width>41</width>
          <height>23</height>
         </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
        </property>
        <property name="text">
         <string>获取</string>
@@ -926,11 +1095,16 @@
       <widget class="QPushButton" name="pushButton_24">
        <property name="geometry">
         <rect>
-         <x>110</x>
+         <x>120</x>
          <y>270</y>
          <width>41</width>
          <height>23</height>
         </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
        </property>
        <property name="text">
         <string>设置</string>
@@ -939,11 +1113,16 @@
       <widget class="QPushButton" name="pushButton_25">
        <property name="geometry">
         <rect>
-         <x>150</x>
+         <x>160</x>
          <y>270</y>
          <width>41</width>
          <height>23</height>
         </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
        </property>
        <property name="text">
         <string>扫描</string>
@@ -974,22 +1153,31 @@
        <layout class="QFormLayout" name="formLayout_5">
         <item row="0" column="0">
          <widget class="QLabel" name="label_29">
+          <property name="styleSheet">
+           <string notr="true"/>
+          </property>
           <property name="text">
-           <string>IP：</string>
+           <string>   IP    :</string>
           </property>
          </widget>
         </item>
         <item row="1" column="0">
          <widget class="QLabel" name="label_33">
+          <property name="styleSheet">
+           <string notr="true"/>
+          </property>
           <property name="text">
-           <string>端口：</string>
+           <string> 端    口:</string>
           </property>
          </widget>
         </item>
         <item row="2" column="0">
          <widget class="QLabel" name="label_32">
+          <property name="styleSheet">
+           <string notr="true"/>
+          </property>
           <property name="text">
-           <string>编码格式：</string>
+           <string> 编码格式:</string>
           </property>
          </widget>
         </item>
@@ -1023,6 +1211,11 @@
          <height>23</height>
         </rect>
        </property>
+       <property name="styleSheet">
+        <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
+       </property>
        <property name="text">
         <string>设置</string>
        </property>
@@ -1035,6 +1228,11 @@
          <width>71</width>
          <height>23</height>
         </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
        </property>
        <property name="text">
         <string>重新连接</string>
@@ -1057,19 +1255,22 @@
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>40</y>
-         <width>54</width>
-         <height>12</height>
+         <y>30</y>
+         <width>41</width>
+         <height>21</height>
         </rect>
        </property>
+       <property name="styleSheet">
+        <string notr="true"/>
+       </property>
        <property name="text">
-        <string>端口：</string>
+        <string>端  口:</string>
        </property>
       </widget>
       <widget class="QLineEdit" name="lineEdit_28">
        <property name="geometry">
         <rect>
-         <x>60</x>
+         <x>80</x>
          <y>30</y>
          <width>31</width>
          <height>20</height>
@@ -1088,6 +1289,11 @@
          <height>23</height>
         </rect>
        </property>
+       <property name="styleSheet">
+        <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
+       </property>
        <property name="text">
         <string>设置</string>
        </property>
@@ -1104,7 +1310,7 @@
         <x>160</x>
         <y>10</y>
         <width>311</width>
-        <height>211</height>
+        <height>230</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout">
@@ -1138,8 +1344,14 @@
        </item>
        <item row="0" column="0">
         <widget class="QLabel" name="label_35">
+         <property name="layoutDirection">
+          <enum>Qt::LeftToRight</enum>
+         </property>
          <property name="text">
           <string>顶部信息</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
          </property>
         </widget>
        </item>
@@ -1168,6 +1380,9 @@
         <widget class="QLabel" name="label_37">
          <property name="text">
           <string>底部信息</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
          </property>
         </widget>
        </item>
@@ -1225,6 +1440,9 @@
          <property name="text">
           <string>结果信息</string>
          </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
         </widget>
        </item>
        <item row="6" column="0">
@@ -1257,6 +1475,12 @@
        </item>
        <item row="1" column="2">
         <widget class="QCheckBox" name="checkBox_3">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="text">
           <string>检验医生</string>
          </property>
@@ -1309,6 +1533,17 @@
        <layout class="QVBoxLayout" name="verticalLayout">
         <item>
          <widget class="QComboBox" name="comboBox_12">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="styleSheet">
+           <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
+          </property>
           <item>
            <property name="text">
             <string>串口打印机</string>
@@ -1318,6 +1553,17 @@
         </item>
         <item>
          <widget class="QPushButton" name="pushButton_29">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="styleSheet">
+           <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
+          </property>
           <property name="text">
            <string>正向打印</string>
           </property>
@@ -1325,6 +1571,17 @@
         </item>
         <item>
          <widget class="QPushButton" name="pushButton_30">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="styleSheet">
+           <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
+          </property>
           <property name="text">
            <string>反向打印</string>
           </property>
@@ -1422,6 +1679,13 @@
         <height>161</height>
        </rect>
       </property>
+      <property name="styleSheet">
+       <string notr="true">QTableWidget::horizontalHeader QHeaderView::section {
+  background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;
+}
+</string>
+      </property>
       <property name="columnCount">
        <number>1</number>
       </property>
@@ -1440,6 +1704,11 @@
         <height>23</height>
        </rect>
       </property>
+      <property name="styleSheet">
+       <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
+      </property>
       <property name="text">
        <string>新增</string>
       </property>
@@ -1453,6 +1722,11 @@
         <height>23</height>
        </rect>
       </property>
+      <property name="styleSheet">
+       <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
+      </property>
       <property name="text">
        <string>删除</string>
       </property>
@@ -1465,6 +1739,13 @@
         <width>101</width>
         <height>161</height>
        </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QTableWidget::horizontalHeader QHeaderView::section {
+  background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;
+}
+</string>
       </property>
       <property name="columnCount">
        <number>1</number>
@@ -1484,6 +1765,13 @@
         <height>161</height>
        </rect>
       </property>
+      <property name="styleSheet">
+       <string notr="true">QTableWidget::horizontalHeader QHeaderView::section {
+  background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;
+}
+</string>
+      </property>
       <property name="columnCount">
        <number>1</number>
       </property>
@@ -1502,6 +1790,13 @@
         <height>161</height>
        </rect>
       </property>
+      <property name="styleSheet">
+       <string notr="true">QTableWidget::horizontalHeader QHeaderView::section {
+  background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;
+}
+</string>
+      </property>
       <property name="columnCount">
        <number>1</number>
       </property>
@@ -1519,6 +1814,13 @@
         <width>101</width>
         <height>161</height>
        </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QTableWidget::horizontalHeader QHeaderView::section {
+  background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;
+}
+</string>
       </property>
       <property name="columnCount">
        <number>1</number>
@@ -1590,6 +1892,11 @@
         <height>23</height>
        </rect>
       </property>
+      <property name="styleSheet">
+       <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
+      </property>
       <property name="text">
        <string>删除</string>
       </property>
@@ -1602,6 +1909,11 @@
         <width>51</width>
         <height>23</height>
        </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
       </property>
       <property name="text">
        <string>新增</string>
@@ -1616,6 +1928,11 @@
         <height>23</height>
        </rect>
       </property>
+      <property name="styleSheet">
+       <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
+      </property>
       <property name="text">
        <string>删除</string>
       </property>
@@ -1629,6 +1946,11 @@
         <height>23</height>
        </rect>
       </property>
+      <property name="styleSheet">
+       <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
+      </property>
       <property name="text">
        <string>新增</string>
       </property>
@@ -1636,11 +1958,16 @@
      <widget class="QPushButton" name="pushButton_40">
       <property name="geometry">
        <rect>
-        <x>520</x>
+        <x>510</x>
         <y>220</y>
         <width>51</width>
         <height>23</height>
        </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
       </property>
       <property name="text">
        <string>删除</string>
@@ -1649,11 +1976,16 @@
      <widget class="QPushButton" name="pushButton_41">
       <property name="geometry">
        <rect>
-        <x>470</x>
+        <x>460</x>
         <y>220</y>
         <width>51</width>
         <height>23</height>
        </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
       </property>
       <property name="text">
        <string>新增</string>
@@ -1668,6 +2000,11 @@
         <height>23</height>
        </rect>
       </property>
+      <property name="styleSheet">
+       <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
+      </property>
       <property name="text">
        <string>删除</string>
       </property>
@@ -1680,6 +2017,11 @@
         <width>51</width>
         <height>23</height>
        </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
       </property>
       <property name="text">
        <string>新增</string>
@@ -1704,6 +2046,11 @@
         <layout class="QHBoxLayout" name="horizontalLayout_3">
          <item>
           <widget class="QLabel" name="label_20">
+           <property name="styleSheet">
+            <string notr="true">
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
+           </property>
            <property name="text">
             <string>用户名：</string>
            </property>
@@ -1718,8 +2065,13 @@
         <layout class="QHBoxLayout" name="horizontalLayout_4">
          <item>
           <widget class="QLabel" name="label_21">
+           <property name="styleSheet">
+            <string notr="true">
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
+           </property>
            <property name="text">
-            <string>密码：</string>
+            <string> 密码： </string>
            </property>
           </widget>
          </item>
@@ -1739,6 +2091,11 @@
         <height>23</height>
        </rect>
       </property>
+      <property name="styleSheet">
+       <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
+      </property>
       <property name="text">
        <string>确定</string>
       </property>
@@ -1752,6 +2109,11 @@
         <height>23</height>
        </rect>
       </property>
+      <property name="styleSheet">
+       <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
+      </property>
       <property name="text">
        <string>取消</string>
       </property>
@@ -1759,11 +2121,16 @@
      <widget class="QPushButton" name="pushButton_9">
       <property name="geometry">
        <rect>
-        <x>770</x>
-        <y>30</y>
+        <x>450</x>
+        <y>80</y>
         <width>75</width>
         <height>23</height>
        </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
       </property>
       <property name="text">
        <string>刷新</string>
@@ -1772,11 +2139,16 @@
      <widget class="QPushButton" name="pushButton_13">
       <property name="geometry">
        <rect>
-        <x>770</x>
-        <y>100</y>
+        <x>450</x>
+        <y>130</y>
         <width>75</width>
         <height>23</height>
        </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"> border-radius: 10px;
+    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
+    color: white;</string>
       </property>
       <property name="text">
        <string>清空</string>
@@ -1790,7 +2162,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1008</width>
+     <width>945</width>
      <height>23</height>
     </rect>
    </property>
