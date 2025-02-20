@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1024</width>
-    <height>566</height>
+    <width>903</width>
+    <height>417</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,10 +17,10 @@
    <widget class="QTabWidget" name="tabWidget">
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>10</y>
-      <width>1011</width>
-      <height>391</height>
+      <x>-10</x>
+      <y>30</y>
+      <width>1001</width>
+      <height>371</height>
      </rect>
     </property>
     <property name="currentIndex">
@@ -322,8 +322,8 @@ background-color: rgba(255, 0, 0, 0.5);
        <rect>
         <x>0</x>
         <y>150</y>
-        <width>801</width>
-        <height>211</height>
+        <width>721</width>
+        <height>181</height>
        </rect>
       </property>
       <property name="title">
@@ -333,8 +333,8 @@ background-color: rgba(255, 0, 0, 0.5);
        <property name="geometry">
         <rect>
          <x>0</x>
-         <y>20</y>
-         <width>841</width>
+         <y>10</y>
+         <width>711</width>
          <height>161</height>
         </rect>
        </property>
@@ -572,54 +572,119 @@ background-color: rgba(255, 0, 0, 0.5);
        <string>脱靶：</string>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit_4">
+     <widget class="QLineEdit" name="lineEdit_9">
       <property name="geometry">
        <rect>
-        <x>870</x>
+        <x>770</x>
         <y>170</y>
         <width>113</width>
         <height>20</height>
        </rect>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit_5">
+     <widget class="QLineEdit" name="lineEdit_10">
       <property name="geometry">
        <rect>
-        <x>870</x>
-        <y>200</y>
-        <width>113</width>
-        <height>20</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QLineEdit" name="lineEdit_6">
-      <property name="geometry">
-       <rect>
-        <x>870</x>
+        <x>770</x>
         <y>230</y>
         <width>113</width>
         <height>20</height>
        </rect>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit_7">
+     <widget class="QLabel" name="label_20">
       <property name="geometry">
        <rect>
-        <x>870</x>
+        <x>730</x>
+        <y>260</y>
+        <width>54</width>
+        <height>12</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>在控：</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_11">
+      <property name="geometry">
+       <rect>
+        <x>770</x>
+        <y>200</y>
+        <width>113</width>
+        <height>20</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_21">
+      <property name="geometry">
+       <rect>
+        <x>730</x>
+        <y>200</y>
+        <width>54</width>
+        <height>12</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>批号：</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_22">
+      <property name="geometry">
+       <rect>
+        <x>730</x>
+        <y>230</y>
+        <width>54</width>
+        <height>12</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>总数：</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_12">
+      <property name="geometry">
+       <rect>
+        <x>770</x>
         <y>260</y>
         <width>113</width>
         <height>20</height>
        </rect>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit_8">
+     <widget class="QLabel" name="label_23">
       <property name="geometry">
        <rect>
-        <x>870</x>
+        <x>730</x>
+        <y>290</y>
+        <width>54</width>
+        <height>12</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>脱靶：</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineEdit_13">
+      <property name="geometry">
+       <rect>
+        <x>770</x>
         <y>290</y>
         <width>113</width>
         <height>20</height>
        </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_24">
+      <property name="geometry">
+       <rect>
+        <x>730</x>
+        <y>170</y>
+        <width>54</width>
+        <height>12</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>项目：</string>
       </property>
      </widget>
     </widget>
@@ -701,7 +766,7 @@ font: 750 9pt &quot;Agency FB&quot;;</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1024</width>
+     <width>903</width>
      <height>23</height>
     </rect>
    </property>
