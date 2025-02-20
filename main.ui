@@ -46,7 +46,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_2">
+      <widget class="QPushButton" name="data_Button">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
          <horstretch>0</horstretch>
@@ -59,7 +59,7 @@
     color: white;</string>
        </property>
        <property name="text">
-        <string>批量测试</string>
+        <string>数据管理</string>
        </property>
       </widget>
      </item>
