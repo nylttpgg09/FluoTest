@@ -1,134 +1,151 @@
-from PyQt5.QtWidgets import QProgressBar, QComboBox
-from PyQt5.uic import loadUi
-from PyQt5.QtCore import QTimer
+
 import sys
 import numpy as np
+import sqlite3
+from PyQt5.QtWidgets import (QApplication, QMainWindow, QProgressBar, QComboBox, QTableView, QVBoxLayout, QPushButton,
+                             QLineEdit, QLabel, QHBoxLayout, QWidget, QFormLayout, QMessageBox)
+from PyQt5.uic import loadUi
+from PyQt5.QtCore import Qt, QAbstractTableModel, QTimer
 from scipy.signal import find_peaks
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
-import sqlite3
-from PyQt5.QtWidgets import QApplication, QMainWindow, QTableView, QVBoxLayout, QPushButton, QLineEdit, QLabel, \
-    QHBoxLayout, QWidget, QFormLayout
-from PyQt5.QtCore import Qt, QAbstractTableModel
-
-# 读取数据
-data_values = []
+DATABASE = "app.db"
 
 def load_data():
     global data_values
     data_values = []
-    # 打开文件并读取
-    with open('data.txt', 'r') as file:
-        hex_data = file.read().split()
-        hex_data = hex_data[6:]
+    # 从文件中读取数据
+    try:
+        with open('data.txt', 'r') as file:
+            hex_data = file.read().split()
+            # 跳过前6个数据（根据实际情况调整）
+            hex_data = hex_data[6:]
+            for i in range(0, len(hex_data), 2):
+                hex_pair = hex_data[i:i + 2]
+                if len(hex_pair) == 2:
+                    low_byte = int(hex_pair[0], 16)
+                    high_byte = int(hex_pair[1], 16)
+                    value = low_byte + (high_byte << 8)
+                    data_values.append(value)
+        data_values = np.array(data_values)
+    except Exception as e:
+        print(f"Error loading data: {e}")
 
-        for i in range(0, len(hex_data), 2):
-            hex_pair = hex_data[i:i + 2]
-            if len(hex_pair) == 2:
-                low_byte = int(hex_pair[0], 16)
-                high_byte = int(hex_pair[1], 16)
-                value = low_byte + (high_byte << 8)
-                data_values.append(value)
-
-    data_values = np.array(data_values)
-
-
-def calculate_peak_area_base_line(data):
-    # 通过 find_peaks 查找波峰，并调整参数
+# ----------------------- 检测参数计算 -----------------------
+def calculate_detection_parameters(data):
+    """
+    对传入数据利用 find_peaks 寻峰，
+    对每个波峰动态确定左右边界，
+    并计算：基线值、波峰宽度、毛面积（原始曲线积分）和净面积（毛面积减去基线面积）。
+    """
     peaks, properties = find_peaks(data, prominence=100, width=1)
-    peak_areas = []
-
+    peak_params = []
     for peak in peaks:
         left = peak
         right = peak
 
-        # 动态调整左右扩展范围
+        # 动态调整左右边界（步长可根据数据特性调整）
         while left > 0 and data[left] > data[left - 1]:
-            left -= 10  # 根据需要调整步长
+            left = max(0, left - 10)
         while right < len(data) - 1 and data[right] > data[right + 1]:
-            right += 10
+            right = min(len(data) - 1, right + 10)
 
-        # 扩展检测范围
+        # 扩展检测范围用于基线计算
         left_extended = max(0, left - 100)
         right_extended = min(len(data) - 1, right + 100)
 
-        # 使用移动平均来平滑基线
+        # 分别计算左右侧的均值作为基线候选
         baseline_left = np.mean(data[left_extended:peak + 1])
         baseline_right = np.mean(data[peak:right_extended + 1])
         baseline = min(baseline_left, baseline_right)
 
-        # 计算波峰面积
-        peak_area = np.trapz(data[left:right + 1] - baseline, dx=1)
-        peak_areas.append(peak_area)
+        # 波峰宽度（数据点数，可乘以采样间隔得到实际宽度）
+        width = right - left
 
-    return peaks, peak_areas
+        # 毛面积：在左右边界内对原始信号积分
+        gross_area = np.trapz(data[left:right + 1], dx=1)
+        # 基线面积
+        baseline_area = baseline * (right - left)
+        # 净面积：荧光面积（毛面积减去基线面积）
+        net_area = gross_area - baseline_area
+
+        peak_params.append({
+            'peak_index': peak,
+            'left_index': left,
+            'right_index': right,
+            'baseline': baseline,
+            'width': width,
+            'gross_area': gross_area,
+            'net_area': net_area
+        })
+    return peaks, peak_params
 
 
-# 选择x轴在500-700和700-900之间的最大两个波峰进行比较
-def get_max_peak_in_range(peaks, peak_areas, x_range):
-    # 筛选在指定范围内的波峰
-    valid_peaks = [(i, peak_areas[i]) for i in range(len(peaks)) if x_range[0] <= peaks[i] <= x_range[1]]
-
+# ----------------------- 面积比计算 -----------------------
+def get_max_peak_in_range(peak_params, x_range):
+    """
+    从给定范围内的波峰中，选择净面积最大的波峰
+    """
+    valid_peaks = [p for p in peak_params if x_range[0] <= p['peak_index'] <= x_range[1]]
     if len(valid_peaks) == 0:
-        return None, None  # 如果范围内没有波峰
+        return None
+    return max(valid_peaks, key=lambda p: p['net_area'])
 
-    # 找到最大面积的波峰
-    max_peak = max(valid_peaks, key=lambda x: x[1])
-
-    return max_peak
-
-
-# 选择500-700区间和700-900区间的最大波峰
-def calculate_area_ratio(peaks, peak_areas):
-    max_peak_500_700 = get_max_peak_in_range(peaks, peak_areas, (500, 700))
-    max_peak_700_900 = get_max_peak_in_range(peaks, peak_areas, (700, 900))
-
-    if max_peak_500_700 and max_peak_700_900:
-        # 直接获取波峰的索引
-        peak_500_700_index = max_peak_500_700[0]
-        peak_700_900_index = max_peak_700_900[0]
-
-        # 输出两个区间的最大波峰信息
-        print(f"Max peak in range 500-700: Peak {peak_500_700_index + 1} with area: {max_peak_500_700[1]}")
-        print(f"Max peak in range 700-900: Peak {peak_700_900_index + 1} with area: {max_peak_700_900[1]}")
-
-        # 计算这两个最大波峰的面积比值
-        peak_area_ratio = max_peak_500_700[1] / max_peak_700_900[1]
-        print(
-            f"The ratio of the max peak area in 500-700 range to the max peak area in 700-900 range is: {peak_area_ratio}")
-
-        return peak_area_ratio
+def calculate_area_ratio(peak_params):
+    """
+    分别在500-700和700-900区间内选择净面积最大的波峰，
+    并计算两者净面积的比值
+    """
+    peak_500_700 = get_max_peak_in_range(peak_params, (500, 700))
+    peak_700_900 = get_max_peak_in_range(peak_params, (700, 900))
+    if peak_500_700 and peak_700_900:
+        print(f"Max peak in range 500-700: Peak {peak_500_700['peak_index']} with net area: {peak_500_700['net_area']}")
+        print(f"Max peak in range 700-900: Peak {peak_700_900['peak_index']} with net area: {peak_700_900['net_area']}")
+        ratio = peak_500_700['net_area'] / peak_700_900['net_area']
+        print(f"The ratio of net peak area in 500-700 to 700-900 is: {ratio}")
+        return ratio, peak_500_700, peak_700_900
     else:
         print("One or both of the ranges do not contain any peaks.")
-        return None
+        return None, None, None
+# ----------------------- 检测结果数据库 -----------------------
 
-
-
-# 创建和管理数据库
-def create_database():
+def create_app_database():
     try:
-        conn = sqlite3.connect('user_management.db')
+        conn = sqlite3.connect(DATABASE)
         cursor = conn.cursor()
-
-        # 创建用户信息表
+        # 创建用户表
         cursor.execute('''
-        CREATE TABLE IF NOT EXISTS user_table (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            username TEXT NOT NULL,
-            email TEXT NOT NULL
-        )
+            CREATE TABLE IF NOT EXISTS user_table (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                username TEXT NOT NULL,
+                email TEXT NOT NULL
+            )
         ''')
-
+        # 创建检测结果表，关联 user_id
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS detection_results (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                user_id INTEGER, 
+                peak_index INTEGER,
+                left_index INTEGER,
+                right_index INTEGER,
+                baseline REAL,
+                peak_width REAL,
+                gross_area REAL,
+                net_area REAL,
+                timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+                FOREIGN KEY(user_id) REFERENCES user_table(id)
+            )
+        ''')
         conn.commit()
         conn.close()
     except Exception as e:
-        print(f"Error creating database: {e}")
+        print(f"Error creating app database: {e}")
 
-
-# 插入用户数据
 def insert_user(username, email):
+    """插入用户信息"""
     try:
-        conn = sqlite3.connect('user_management.db')
+        conn = sqlite3.connect(DATABASE)
         cursor = conn.cursor()
         cursor.execute('INSERT INTO user_table (username, email) VALUES (?, ?)', (username, email))
         conn.commit()
@@ -136,21 +153,33 @@ def insert_user(username, email):
     except Exception as e:
         print(f"Error inserting user: {e}")
 
+def store_detection_results(result, user_id=0):
+    try:
+        conn = sqlite3.connect(DATABASE)
+        cursor = conn.cursor()
+        cursor.execute('''
+            INSERT INTO detection_results (user_id, peak_index, left_index, right_index, baseline, peak_width, gross_area, net_area)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+        ''', (user_id,
+              int(result['peak_index']),    # 显式转换为内置 int
+              int(result['left_index']),
+              int(result['right_index']),
+              float(result['baseline']),
+              float(result['width']),
+              float(result['gross_area']),
+              float(result['net_area'])))
+        conn.commit()
+        conn.close()
+    except Exception as e:
+        print(f"Error inserting detection result: {e}")
+
 # 查询用户数据
 def fetch_users(columns=[]):
     try:
-        conn = sqlite3.connect('user_management.db')
+        conn = sqlite3.connect(DATABASE)
         cursor = conn.cursor()
-
-        # 如果没有指定字段，查询所有字段
         column_list = ", ".join(columns) if columns else "*"
-
-        # 防止空列名或者非法列名导致的错误
-        if column_list == "*":
-            cursor.execute(f'SELECT {column_list} FROM user_table')
-        else:
-            cursor.execute(f'SELECT {column_list} FROM user_table')
-
+        cursor.execute(f'SELECT {column_list} FROM user_table')
         rows = cursor.fetchall()
         conn.close()
         return rows
@@ -178,200 +207,192 @@ class TableModel(QAbstractTableModel):
 
     def headerData(self, section, orientation, role):
         if role == Qt.DisplayRole:
-            return ['ID', 'Username', 'Email'][section] if orientation == Qt.Horizontal else str(section + 1)
+            headers = ['ID', 'Username', 'Email']
+            return headers[section] if orientation == Qt.Horizontal and section < len(headers) else str(section + 1)
         return None
 
 
-class UserWindow(QMainWindow):
+
+class DetectionResultsWindow(QMainWindow):
     def __init__(self):
         super().__init__()
+        self.setWindowTitle("Detection Results")
+        self.setFixedSize(700, 400)  # 你可以调整大小
 
-        self.setWindowTitle("User Data Management")
-        self.setFixedSize(470, 280)  # 设置窗口固定大小为 470x280
-
-        # 创建UI组件
+        # 创建表格视图
         self.table_view = QTableView(self)
-        self.load_user_button = QPushButton("Load Users from File", self)
-        self.insert_user_button = QPushButton("Insert User", self)
-        self.query_button = QPushButton("Query Users", self)
 
-        self.username_input = QLineEdit(self)
-        self.email_input = QLineEdit(self)
-        self.column_input = QLineEdit(self)
+        # 创建一个按钮，用来刷新数据或者返回
+        self.refresh_button = QPushButton("Refresh / Reload", self)
+        self.close_button = QPushButton("Close", self)
 
-        self.username_label = QLabel("Username: ", self)
-        self.email_label = QLabel("Email: ", self)
-        self.column_label = QLabel("New Column Name: ", self)
+        # 将按钮和表格布局
+        layout = QVBoxLayout()
+        layout.addWidget(self.table_view)
 
-        self.query_combobox = QComboBox(self)
+        button_layout = QHBoxLayout()
+        button_layout.addWidget(self.refresh_button)
+        button_layout.addWidget(self.close_button)
+        layout.addLayout(button_layout)
 
-        # 创建左侧布局（输入区和按钮）
-        left_layout = QVBoxLayout()
-        left_layout.addWidget(self.load_user_button)
-        left_layout.addWidget(self.insert_user_button)
-        left_layout.addWidget(self.column_label)
-        left_layout.addWidget(self.column_input)
-        left_layout.addWidget(self.username_label)
-        left_layout.addWidget(self.username_input)
-        left_layout.addWidget(self.email_label)
-        left_layout.addWidget(self.email_input)
-
-        # 创建右侧布局（查询部分和表格）
-        right_layout = QVBoxLayout()
-        right_layout.addWidget(self.query_button)
-        right_layout.addWidget(self.query_combobox)
-        right_layout.addWidget(self.table_view)
-
-        # 创建水平布局，将左侧和右侧布局放在一行
-        main_layout = QHBoxLayout()
-        main_layout.addLayout(left_layout, stretch=1)  # 左侧占 2/3
-        main_layout.addLayout(right_layout, stretch=2)  # 右侧占 1/3
-
-        # 设定主布局
+        # 创建一个容器并设置为中央Widget
         container = QWidget()
-        container.setLayout(main_layout)
+        container.setLayout(layout)
         self.setCentralWidget(container)
 
-        # 按钮点击事件
-        self.load_user_button.clicked.connect(self.load_users_from_file)
-        self.insert_user_button.clicked.connect(self.insert_user)
-        self.query_button.clicked.connect(self.query_users)
+        # 按钮事件
+        self.refresh_button.clicked.connect(self.refresh_table)
+        self.close_button.clicked.connect(self.close)
 
-    def load_users_from_file(self):
-        # 假设从文件中读取用户数据并插入到数据库
-        # 这里你可以用实际的文件路径
-        users = [("user1", "user1@example.com"), ("user2", "user2@example.com")]
-        for user in users:
-            insert_user(user[0], user[1])
-
+        # 启动时就加载一次数据
         self.refresh_table()
 
-    def insert_user(self):
-        # 插入用户
-        username = self.username_input.text()
-        email = self.email_input.text()
-        insert_user(username, email)
-        self.username_input.clear()
-        self.email_input.clear()
-        self.refresh_table()
+    def refresh_table(self):
+        """
+        从数据库获取检测结果并在表格中显示
+        """
+        rows = fetch_detection_results()
 
-    def query_users(self):
-        # 查询用户数据，查询字段从ComboBox中选择
-        selected_column = self.query_combobox.currentText()
-        if selected_column == "All":
-            columns = []  # 查询所有列
-        else:
-            columns = [selected_column]  # 只查询选择的列
+        # 我们想展示的列标题
+        headers = ["ID", "UserID", "PeakIndex", "LeftIndex", "RightIndex", "Baseline", "PeakWidth", "GrossArea",
+                   "NetArea", "Timestamp"]
 
-        users = fetch_users(columns)
-        self.refresh_table(users)
-
-    def refresh_table(self, users=None):
-        # 更新表格
-        if users is None:
-            users = fetch_users()
-
-        model = TableModel(users)
+        # 将 rows 数据做成 TableModel
+        model = DetectionTableModel(rows, headers)
         self.table_view.setModel(model)
-
-        # 更新查询选项
-        self.query_combobox.clear()
-        self.query_combobox.addItem("All")
-        self.query_combobox.addItems([col[1] for col in self.get_columns()])
-
-    def get_columns(self):
-        # 获取所有列名
-        conn = sqlite3.connect('user_management.db')
+def fetch_detection_results():
+    """
+    从 detection_results 表中获取所有检测结果
+    返回: [ (id, user_id, peak_index, left_index, right_index, baseline, peak_width, gross_area, net_area, timestamp), ... ]
+    """
+    try:
+        conn = sqlite3.connect(DATABASE)
         cursor = conn.cursor()
-        cursor.execute('PRAGMA table_info(user_table)')
-        columns = cursor.fetchall()
+        cursor.execute("SELECT id, user_id, peak_index, left_index, right_index, baseline, peak_width, gross_area, net_area, timestamp FROM detection_results")
+        rows = cursor.fetchall()
         conn.close()
-        return columns
+        return rows
+    except Exception as e:
+        print(f"Error fetching detection results: {e}")
+        return []
 
+class DetectionTableModel(QAbstractTableModel):
+    """
+    用于显示检测结果的表格模型
+    """
+
+    def __init__(self, data, headers):
+        super().__init__()
+        self._data = data  # [ (id, user_id, peak_index, ... ), ... ]
+        self._headers = headers
+
+    def rowCount(self, parent=None):
+        return len(self._data)
+
+    def columnCount(self, parent=None):
+        return len(self._headers)
+
+    def data(self, index, role=Qt.DisplayRole):
+        if role == Qt.DisplayRole:
+            row = index.row()
+            col = index.column()
+            return str(self._data[row][col])
+        return None
+
+    def headerData(self, section, orientation, role=Qt.DisplayRole):
+        if role == Qt.DisplayRole:
+            if orientation == Qt.Horizontal:
+                return self._headers[section]
+            else:
+                return str(section + 1)
+        return None
+
+
+# ----------------------- 绘图类 -----------------------
 class PlotCanvas(FigureCanvas):
     def __init__(self, parent=None):
-        # 创建一个图形对象
         self.fig, self.ax = plt.subplots(figsize=(4.7, 2.8))
-
         super().__init__(self.fig)
         self.setParent(parent)
 
-    def plot(self, data, peaks):
-        # 清除上一次生成的图像
+    def plot(self, data, peaks, selected_peaks=None):
         self.ax.clear()
-
-        # 绘制原始曲线
         self.ax.plot(range(len(data)), data, label='Original Data')
-
-        # 绘制波峰标记
         self.ax.plot(peaks, [data[i] for i in peaks], "rx", label="Peaks")
-
-        # 添加标题和标签
-        self.ax.set_title('Peak Area')
-        self.ax.set_xlabel('X Values')
-        self.ax.set_ylabel('Data Values')
-
-        # 显示图例
+        if selected_peaks:
+            for sp in selected_peaks:
+                left = sp['left_index']
+                right = sp['right_index']
+                baseline = sp['baseline']
+                self.ax.axvline(x=left, color="orange", linestyle="--", label="Left Boundary" if sp==selected_peaks[0] else "")
+                self.ax.axvline(x=right, color="purple", linestyle="--", label="Right Boundary" if sp==selected_peaks[0] else "")
+                self.ax.axhline(y=baseline, color="green", linestyle="--", label="Baseline" if sp==selected_peaks[0] else "")
+        self.ax.set_title('Peak Analysis')
+        self.ax.set_xlabel('Data Points')
+        self.ax.set_ylabel('Signal')
         self.ax.legend()
-
-        # 绘制图形
         self.draw()
 
 
+# ----------------------- 检测结果界面 -----------------------
 class TextWindow(QMainWindow):
-    def __init__(self):
+    def __init__(self, user_id=0):
         super().__init__()
+        self.user_id = user_id  # 保存所选用户的id
 
-        self.setWindowTitle('Matplotlib in PyQt')
-
-        # 创建一个QWidget作为主窗口
+        self.setWindowTitle('Fluorescence Detection Analysis')
         self.central_widget = QWidget(self)
         self.setCentralWidget(self.central_widget)
-
-        # 创建QVBoxLayout来布局
         self.layout = QVBoxLayout(self.central_widget)
 
-        # 创建一个显示文本的Label
         self.label = QLabel('Peak Area Ratio: ', self)
         self.layout.addWidget(self.label)
 
-        # 创建绘图区域
         self.canvas = PlotCanvas(self)
         self.layout.addWidget(self.canvas)
 
-        # 创建按钮并连接槽函数
-        self.button = QPushButton('Calculate and Plot', self)
-        self.button.clicked.connect(self.on_button_click)
-        self.layout.addWidget(self.button)
+        self.calc_button = QPushButton('Calculate and Plot', self)
+        self.calc_button.clicked.connect(self.on_button_click)
+        self.layout.addWidget(self.calc_button)
 
-        # 创建按钮并连接槽函数
-        self.button = QPushButton('返回', self)
-        self.button.clicked.connect(self.on_main_click)
-        self.layout.addWidget(self.button)
+        self.back_button = QPushButton('返回', self)
+        self.back_button.clicked.connect(self.on_main_click)
+        self.layout.addWidget(self.back_button)
 
-        # 设置固定窗口大小为 470x280
         self.setFixedSize(470, 280)
+
     def on_button_click(self):
-        # 加载数据
         load_data()
+        if data_values.size == 0:
+            QMessageBox.warning(self, "警告", "数据加载失败或数据为空")
+            return
 
-        # 计算波峰及其面积
-        peaks, peak_areas = calculate_peak_area_base_line(data_values)
+        # 计算所有波峰的检测参数
+        peaks, peak_params = calculate_detection_parameters(data_values)
+        # 分别在两个区间选择净面积最大的波峰，并计算面积比
+        ratio, peak_500_700, peak_700_900 = calculate_area_ratio(peak_params)
 
-        # 绘制图形
-        self.canvas.plot(data_values, peaks)
+        # 绘图时标出所有波峰，并用不同颜色标出用于面积比计算的波峰
+        selected_peaks = [p for p in [peak_500_700, peak_700_900] if p is not None]
+        self.canvas.plot(data_values, peaks, selected_peaks=selected_peaks)
 
-        # 显示面积比值
-        peak_area_ratio = calculate_area_ratio(peaks, peak_areas)
-        if peak_area_ratio:
-            self.label.setText(f"Peak Area Ratio: {peak_area_ratio:.2f}")
+        # 显示面积比并存储数据库
+        if ratio is not None:
+            self.label.setText(f"Peak Area Ratio: {ratio:.2f}\n"
+                               f"500-700 peak net area: {peak_500_700['net_area']:.2f}\n"
+                               f"700-900 peak net area: {peak_700_900['net_area']:.2f}")
+
+            # 重点：这里将 user_id 一并存入
+            store_detection_results(peak_500_700, self.user_id)
+            store_detection_results(peak_700_900, self.user_id)
         else:
             self.label.setText("Peak Area Ratio: N/A")
 
     def on_main_click(self):
-            self.main_window = MainWindow()  # 创建主窗口对象
-            self.main_window.show()
-            self.close()  #
+        self.main_window = MainWindow()
+        self.main_window.show()
+        self.close()
+
 
 class Welcome1Window(QMainWindow):
     def __init__(self):
@@ -443,7 +464,27 @@ class MainWindow(QMainWindow):
         self.close_button.clicked.connect(self.show_close_window)
         self.setbox_button.clicked.connect(self.show_welcome_window)
         self.data_Button.clicked.connect(self.show_user_window)
+        # 设置按钮点击事件
+        self.testButton.clicked.connect(self.show_test_window)
+        ...
 
+        # 调用加载用户列表
+        self.load_users_to_combobox()
+    def load_users_to_combobox(self):
+        """
+        从数据库 user_table 中获取所有用户，将其显示在 userComboBox 中。
+        """
+        users = fetch_users()  # 通常返回 [(id, username, email), ...]
+        self.userComboBox.clear()
+        if not users:
+            # 如果没有任何用户，就加入一个占位项
+            self.userComboBox.addItem("（无用户）", -1)
+        else:
+            for row in users:
+                user_id = row[0]  # id
+                username = row[1]  # username
+                # 在ComboBox里显示username，同时把user_id作为对应数据
+                self.userComboBox.addItem(username, user_id)
 
     def show_fluo_window(self):
         self.fluo_window = FluoTestWindow()  # 创建 FluoTest 窗口对象
@@ -475,11 +516,147 @@ class MainWindow(QMainWindow):
         self.close()  # 关闭当前
 
     def show_test_window(self):
-        self.test_window = TextWindow()  # 创建 FluoTest 窗口对象
+        # 1) 从下拉框获取当前选中的 user_id
+        selected_user_id = self.userComboBox.currentData()
+        if selected_user_id is None or selected_user_id < 0:
+            QMessageBox.warning(self, "警告", "请先在下拉框里选择一个用户！")
+            return
+
+        # 2) 创建 TextWindow 的时候，把 user_id 作为参数传过去
+        self.test_window = TextWindow(user_id=selected_user_id)
         self.test_window.show()
-        self.close()  #
+        self.close()
+
     def show_close_window(self):
         self.close()  #
+
+class UserWindow(QMainWindow):
+    def __init__(self):
+        super().__init__()
+
+        self.setWindowTitle("User Data Management")
+        self.setFixedSize(470, 280)  # 设置窗口固定大小为 470x280
+
+        # 创建UI组件
+        self.table_view = QTableView(self)
+        self.load_user_button = QPushButton("Load Users from File", self)
+        self.insert_user_button = QPushButton("Insert User", self)
+        self.query_button = QPushButton("Query Users", self)
+
+        self.username_input = QLineEdit(self)
+        self.email_input = QLineEdit(self)
+        self.column_input = QLineEdit(self)
+
+        self.username_label = QLabel("Username: ", self)
+        self.email_label = QLabel("Email: ", self)
+        self.column_label = QLabel("New Column Name: ", self)
+        # --- 新增一个返回主界面的按钮 ---
+        self.back_button = QPushButton("返回主界面", self)  # 按钮文字可自定义
+        self.query_combobox = QComboBox(self)
+        # 创建左侧布局（输入区和按钮）
+        left_layout = QVBoxLayout()
+        left_layout.addWidget(self.load_user_button)
+        left_layout.addWidget(self.insert_user_button)
+        left_layout.addWidget(self.column_label)
+        left_layout.addWidget(self.column_input)
+        left_layout.addWidget(self.username_label)
+        left_layout.addWidget(self.username_input)
+        left_layout.addWidget(self.email_label)
+        left_layout.addWidget(self.email_input)
+        # 加在下方
+        left_layout.addWidget(self.back_button)  # <-- 这里添加“返回主界面”按钮
+
+        # 最后再加一个 “View Detection Results” 按钮
+        self.view_detection_button = QPushButton("View Detection Results", self)
+        left_layout.addWidget(self.view_detection_button)
+        # 创建右侧布局（查询部分和表格）
+        right_layout = QVBoxLayout()
+        right_layout.addWidget(self.query_button)
+        right_layout.addWidget(self.query_combobox)
+        right_layout.addWidget(self.table_view)
+
+        # 创建水平布局，将左侧和右侧布局放在一行
+        main_layout = QHBoxLayout()
+        main_layout.addLayout(left_layout, stretch=1)  # 左侧占 2/3
+        main_layout.addLayout(right_layout, stretch=2)  # 右侧占 1/3
+
+        # 设定主布局
+        container = QWidget()
+        container.setLayout(main_layout)
+        self.setCentralWidget(container)
+
+        # 再绑定事件
+        self.view_detection_button.clicked.connect(self.show_detection_window)
+        # 按钮点击事件
+        self.back_button.clicked.connect(self.on_back_to_main)  # <-- 绑定事件
+        self.load_user_button.clicked.connect(self.load_users_from_file)
+        self.insert_user_button.clicked.connect(self.insert_user)
+        self.query_button.clicked.connect(self.query_users)
+
+    def load_users_from_file(self):
+        # 假设从文件中读取用户数据并插入到数据库
+        # 这里你可以用实际的文件路径
+        users = [("user1", "user1@example.com"), ("user2", "user2@example.com")]
+        for user in users:
+            insert_user(user[0], user[1])
+
+        self.refresh_table()
+
+    def on_back_to_main(self):
+        """
+        返回主界面
+        """
+        self.main_window = MainWindow()
+        self.main_window.show()
+        self.close()
+
+    def show_detection_window(self):
+        self.det_window = DetectionResultsWindow()
+
+        self.det_window.show()
+    def insert_user(self):
+        # 插入用户
+        username = self.username_input.text()
+        email = self.email_input.text()
+        insert_user(username, email)
+        self.username_input.clear()
+        self.email_input.clear()
+        self.refresh_table()
+
+    def query_users(self):
+        # 查询用户数据，查询字段从ComboBox中选择
+        selected_column = self.query_combobox.currentText()
+        if selected_column == "All":
+            columns = []  # 查询所有列
+        else:
+            columns = [selected_column]  # 只查询选择的列
+
+        users = fetch_users(columns)
+        self.refresh_table(users)
+
+    def refresh_table(self, users=None):
+        # 更新表格
+        if users is None:
+            users = fetch_users()
+
+        model = TableModel(users)
+        self.table_view.setModel(model)
+
+        # 更新查询选项
+        self.query_combobox.clear()
+        self.query_combobox.addItem("All")
+        self.query_combobox.addItems([col[1] for col in self.get_columns()])
+
+    def get_columns(self):
+        # 获取所有列名，从统一的数据库中查询
+        conn = sqlite3.connect(DATABASE)  # 改为使用 DATABASE
+        cursor = conn.cursor()
+        cursor.execute('PRAGMA table_info(user_table)')
+        columns = cursor.fetchall()
+        conn.close()
+        return columns
+
+
 
 
 class FluoTestWindow(QMainWindow):
@@ -548,9 +725,9 @@ class ChannelsettingWindow(QMainWindow):
         self.close()  # 关闭当前的欢迎窗口
 
 if __name__ == "__main__":
-    create_database()  # 初始化数据库和表
+    create_app_database()  # 创建所有表（包括 detection_results）
     app = QApplication(sys.argv)
     window = Welcome1Window()  # 创建欢迎窗口
     window.show()  # 显示欢迎窗口
-    sys.exit(app.exec_())  # 启动应用
+    sys.exit(app.exec_())
 
