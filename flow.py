@@ -9,7 +9,91 @@ from PyQt5.QtCore import Qt, QAbstractTableModel, QTimer
 from scipy.signal import find_peaks
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
+import paho.mqtt.client as mqtt
+import ssl
+import json
+
 DATABASE = "app.db"
+# 华为云 MQTT 配置信息（请替换为实际值）
+HW_MQTT_BROKER = ""  # 如："xxxx.iot-mqtts.cn-north-4.myhuaweicloud.com"
+HW_MQTT_PORT = 1883                        # 通常使用 TLS 端口 8883
+DEVICE_ID = ""                  # 设备ID
+MQTT_USERNAME = ""              # 用户名（可能为设备名称）
+MQTT_PASSWORD = ""  # 密码（设备密钥）
+# 根据华为云平台要求设置 Topic，以下为示例格式
+MQTT_TOPIC = f"$oc/devices/{DEVICE_ID}/sys/properties/report"
+CA_CERT_PATH = ""                     # CA 证书路径，如需要验证服务器证书
+
+# 初始化全局 MQTT 客户端
+def init_mqtt_client():
+    client = mqtt.Client(client_id=DEVICE_ID, clean_session=True)
+    client.username_pw_set(MQTT_USERNAME, MQTT_PASSWORD)
+    if CA_CERT_PATH:
+        client.tls_set(
+            CA_CERT_PATH,
+            certfile=None,
+            keyfile=None,
+            cert_reqs=ssl.CERT_REQUIRED,
+            tls_version=ssl.PROTOCOL_TLS,
+            ciphers=None
+        )
+        client.tls_insecure_set(False)
+
+    # 回调函数（可根据需要扩展）
+    client.on_connect = lambda c, u, f, rc: print("MQTT connected with code", rc)
+    client.on_publish = lambda c, u, mid: print("MQTT published message id:", mid)
+    try:
+        client.connect(HW_MQTT_BROKER, HW_MQTT_PORT, keepalive=60)
+    except Exception as e:
+        print("Error connecting to MQTT broker:", e)
+    client.loop_start()  # 启动网络循环
+    return client
+
+# 全局保存 MQTT 客户端对象
+mqtt_client = init_mqtt_client()
+
+
+
+def upload_detection_to_huawei_cloud(result, ratio):
+    """
+    将检测结果通过 MQTT 协议上传到华为云平台
+    参数：
+      result：字典，包含两个波峰的信息（例如 peak_index、net_area 等）
+      ratio：两个波峰面积比
+    """
+    # 从 result 中取出 user_id，并获取用户记录
+    user_id = result.get("user_id", 0)
+    user = get_user_by_id(user_id)
+    if user:
+        username = user[1]  # 用户姓名
+        age = user[3]       # 年龄
+    else:
+        username = ""
+        age = 0
+        # 这里构造属性上报的 JSON 格式
+    payload = {
+        "services": [
+            {
+                "service_id": "flow",  # 修改为 "flow"
+                "properties": {
+                    "user_id": str(user_id),
+                    "age": age,
+                    "peak_index_1": int(result["peak_index_1"]),
+                    "net_area_1": round(float(result["net_area_1"]), 4),  # 保留四位小数
+                    "peak_index_2": int(result["peak_index_2"]),
+                    "net_area_2": round(float(result["net_area_2"]), 4),  # 保留四位小数
+                    "ratio": round(float(ratio), 4),
+                    "username": str(username)
+                }
+            }
+        ]
+    }
+    payload_str = json.dumps(payload)
+    ret = mqtt_client.publish(MQTT_TOPIC, payload=payload_str, qos=1)
+    if ret.rc == mqtt.MQTT_ERR_SUCCESS:
+        print("属性上报成功，payload =", payload_str)
+    else:
+        print("属性上报失败，返回码：", ret.rc)
 
 
 
@@ -33,6 +117,22 @@ def load_data():
         data_values = np.array(data_values)
     except Exception as e:
         print(f"Error loading data: {e}")
+
+#用于获取上传姓名和年龄用到的数据
+def get_user_by_id(user_id):
+    """
+    根据用户ID查询用户信息，返回 (id, username, email, age)
+    """
+    try:
+        conn = sqlite3.connect(DATABASE)
+        cursor = conn.cursor()
+        cursor.execute("SELECT id, username, email, age FROM user_table WHERE id = ?", (user_id,))
+        row = cursor.fetchone()
+        conn.close()
+        return row
+    except Exception as e:
+        print(f"Error fetching user by id: {e}")
+        return None
 
 # ----------------------- 检测参数计算 -----------------------
 def calculate_detection_parameters(data):
@@ -167,6 +267,9 @@ def insert_user(username, email, age):
 def store_two_peaks(peak_500_700, peak_700_900, ratio, user_id=0):
     """
     一条记录同时存储两个波峰信息 + 面积比
+    将两个波峰信息和面积比整合为一条记录存入本地数据库，
+    然后调用属性上报函数上传到华为云平台。
+    存储字段包括：peak_index_1, net_area_1, peak_index_2, net_area_2, ratio
     """
     try:
         conn = sqlite3.connect(DATABASE)
@@ -190,28 +293,21 @@ def store_two_peaks(peak_500_700, peak_700_900, ratio, user_id=0):
         conn.close()
 
         print("成功插入组合波峰记录到 detection_results 表。")
+        # 为上传到华为云准备数据
+        upload_data = {
+            "user_id": user_id,
+            "peak_index_1": int(peak_500_700['peak_index']),
+            "net_area_1": float(peak_500_700['net_area']),
+            "peak_index_2": int(peak_700_900['peak_index']),
+            "net_area_2": float(peak_700_900['net_area'])
+        }
+
+        # 添加 user_id 到上传数据中，用于属性上报
+        upload_data["user_id"] = user_id
+        # 上传属性数据
+        upload_detection_to_huawei_cloud(upload_data, ratio)
     except Exception as e:
         print(f"Error inserting two peaks result: {e}")
-
-def store_detection_results(result, user_id=0):
-    try:
-        conn = sqlite3.connect(DATABASE)
-        cursor = conn.cursor()
-        cursor.execute('''
-            INSERT INTO detection_results (user_id, peak_index, left_index, right_index, baseline, peak_width, gross_area, net_area)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-        ''', (user_id,
-              int(result['peak_index']),    # 显式转换为内置 int
-              int(result['left_index']),
-              int(result['right_index']),
-              float(result['baseline']),
-              float(result['width']),
-              float(result['gross_area']),
-              float(result['net_area'])))
-        conn.commit()
-        conn.close()
-    except Exception as e:
-        print(f"Error inserting detection result: {e}")
 
 # 查询用户数据
 def fetch_users(columns=[]):
@@ -434,6 +530,7 @@ class TextWindow(QMainWindow):
                                f"500-700 peak net area: {peak_500_700['net_area']:.2f}\n"
                                f"700-900 peak net area: {peak_700_900['net_area']:.2f}")
 
+            # 存储组合波峰记录并上传至华为云
 
             store_two_peaks(peak_500_700, peak_700_900, ratio, self.user_id)
         else:
