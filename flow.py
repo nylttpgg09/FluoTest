@@ -11,6 +11,9 @@ import matplotlib.pyplot as plt
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 DATABASE = "app.db"
 
+
+
+
 def load_data():
     global data_values
     data_values = []
@@ -118,40 +121,77 @@ def create_app_database():
             CREATE TABLE IF NOT EXISTS user_table (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 username TEXT NOT NULL,
-                email TEXT NOT NULL
+                email TEXT NOT NULL,
+                age INTEGER
             )
         ''')
         # 创建检测结果表，关联 user_id
         cursor.execute('''
-            CREATE TABLE IF NOT EXISTS detection_results (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                user_id INTEGER, 
-                peak_index INTEGER,
-                left_index INTEGER,
-                right_index INTEGER,
-                baseline REAL,
-                peak_width REAL,
-                gross_area REAL,
-                net_area REAL,
-                timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
-                FOREIGN KEY(user_id) REFERENCES user_table(id)
-            )
-        ''')
+              CREATE TABLE IF NOT EXISTS detection_results (
+                  id INTEGER PRIMARY KEY AUTOINCREMENT,
+                  user_id INTEGER,
+
+                  -- 第一个波峰
+                  peak_index_1 INTEGER,
+                  net_area_1 REAL,
+
+                  -- 第二个波峰
+                  peak_index_2 INTEGER,
+                  net_area_2 REAL,
+
+                  -- 两个波峰面积比
+                  ratio REAL,
+
+                  timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+
+                  FOREIGN KEY(user_id) REFERENCES user_table(id)
+              )
+          ''')
         conn.commit()
         conn.close()
     except Exception as e:
         print(f"Error creating app database: {e}")
 
-def insert_user(username, email):
-    """插入用户信息"""
+def insert_user(username, email, age):
+    """插入用户信息（包含年龄）"""
     try:
         conn = sqlite3.connect(DATABASE)
         cursor = conn.cursor()
-        cursor.execute('INSERT INTO user_table (username, email) VALUES (?, ?)', (username, email))
+        cursor.execute('INSERT INTO user_table (username, email, age) VALUES (?, ?, ?)', (username, email, age))
         conn.commit()
         conn.close()
     except Exception as e:
         print(f"Error inserting user: {e}")
+
+
+def store_two_peaks(peak_500_700, peak_700_900, ratio, user_id=0):
+    """
+    一条记录同时存储两个波峰信息 + 面积比
+    """
+    try:
+        conn = sqlite3.connect(DATABASE)
+        cursor = conn.cursor()
+
+        cursor.execute('''
+            INSERT INTO detection_results 
+            (user_id,
+             peak_index_1, net_area_1,
+             peak_index_2, net_area_2,
+             ratio
+            )
+            VALUES (?, ?, ?, ?, ?, ?)
+        ''', (
+            user_id,
+            int(peak_500_700['peak_index']), float(peak_500_700['net_area']),
+            int(peak_700_900['peak_index']), float(peak_700_900['net_area']),
+            float(ratio)
+        ))
+        conn.commit()
+        conn.close()
+
+        print("成功插入组合波峰记录到 detection_results 表。")
+    except Exception as e:
+        print(f"Error inserting two peaks result: {e}")
 
 def store_detection_results(result, user_id=0):
     try:
@@ -206,9 +246,11 @@ class TableModel(QAbstractTableModel):
         return None
 
     def headerData(self, section, orientation, role):
-        if role == Qt.DisplayRole:
-            headers = ['ID', 'Username', 'Email']
-            return headers[section] if orientation == Qt.Horizontal and section < len(headers) else str(section + 1)
+        if role == Qt.DisplayRole and orientation == Qt.Horizontal:
+            headers = ['ID', 'Username', 'Email', 'Age']
+            return headers[section] if section < len(headers) else str(section + 1)
+        if role == Qt.DisplayRole and orientation == Qt.Vertical:
+            return str(section + 1)
         return None
 
 
@@ -247,28 +289,41 @@ class DetectionResultsWindow(QMainWindow):
         # 启动时就加载一次数据
         self.refresh_table()
 
+    # 在 DetectionResultsWindow 中:
     def refresh_table(self):
-        """
-        从数据库获取检测结果并在表格中显示
-        """
         rows = fetch_detection_results()
-
-        # 我们想展示的列标题
-        headers = ["ID", "UserID", "PeakIndex", "LeftIndex", "RightIndex", "Baseline", "PeakWidth", "GrossArea",
-                   "NetArea", "Timestamp"]
-
-        # 将 rows 数据做成 TableModel
+        # 对应 SELECT 的列顺序
+        headers = [
+            "ID", "UserID",
+            "PeakIndex_1", "NetArea_1",
+            "PeakIndex_2", "NetArea_2",
+            "Ratio",
+            "Timestamp"
+        ]
         model = DetectionTableModel(rows, headers)
         self.table_view.setModel(model)
+
+
 def fetch_detection_results():
     """
-    从 detection_results 表中获取所有检测结果
-    返回: [ (id, user_id, peak_index, left_index, right_index, baseline, peak_width, gross_area, net_area, timestamp), ... ]
+    现在 detection_results 里只有:
+      id, user_id,
+      peak_index_1, net_area_1,
+      peak_index_2, net_area_2,
+      ratio,
+      timestamp
     """
     try:
         conn = sqlite3.connect(DATABASE)
         cursor = conn.cursor()
-        cursor.execute("SELECT id, user_id, peak_index, left_index, right_index, baseline, peak_width, gross_area, net_area, timestamp FROM detection_results")
+        cursor.execute('''
+            SELECT id, user_id,
+                   peak_index_1, net_area_1,
+                   peak_index_2, net_area_2,
+                   ratio,
+                   timestamp
+            FROM detection_results
+        ''')
         rows = cursor.fetchall()
         conn.close()
         return rows
@@ -277,13 +332,9 @@ def fetch_detection_results():
         return []
 
 class DetectionTableModel(QAbstractTableModel):
-    """
-    用于显示检测结果的表格模型
-    """
-
     def __init__(self, data, headers):
         super().__init__()
-        self._data = data  # [ (id, user_id, peak_index, ... ), ... ]
+        self._data = data
         self._headers = headers
 
     def rowCount(self, parent=None):
@@ -306,6 +357,7 @@ class DetectionTableModel(QAbstractTableModel):
             else:
                 return str(section + 1)
         return None
+
 
 
 # ----------------------- 绘图类 -----------------------
@@ -382,9 +434,8 @@ class TextWindow(QMainWindow):
                                f"500-700 peak net area: {peak_500_700['net_area']:.2f}\n"
                                f"700-900 peak net area: {peak_700_900['net_area']:.2f}")
 
-            # 重点：这里将 user_id 一并存入
-            store_detection_results(peak_500_700, self.user_id)
-            store_detection_results(peak_700_900, self.user_id)
+
+            store_two_peaks(peak_500_700, peak_700_900, ratio, self.user_id)
         else:
             self.label.setText("Peak Area Ratio: N/A")
 
@@ -545,11 +596,11 @@ class UserWindow(QMainWindow):
 
         self.username_input = QLineEdit(self)
         self.email_input = QLineEdit(self)
-        self.column_input = QLineEdit(self)
+        self.age_input = QLineEdit(self)
 
         self.username_label = QLabel("Username: ", self)
         self.email_label = QLabel("Email: ", self)
-        self.column_label = QLabel("New Column Name: ", self)
+        self.age_label = QLabel("Age: ", self)
         # --- 新增一个返回主界面的按钮 ---
         self.back_button = QPushButton("返回主界面", self)  # 按钮文字可自定义
         self.query_combobox = QComboBox(self)
@@ -557,8 +608,9 @@ class UserWindow(QMainWindow):
         left_layout = QVBoxLayout()
         left_layout.addWidget(self.load_user_button)
         left_layout.addWidget(self.insert_user_button)
-        left_layout.addWidget(self.column_label)
-        left_layout.addWidget(self.column_input)
+
+        left_layout.addWidget(self.age_label)
+        left_layout.addWidget(self.age_input)
         left_layout.addWidget(self.username_label)
         left_layout.addWidget(self.username_input)
         left_layout.addWidget(self.email_label)
@@ -596,10 +648,6 @@ class UserWindow(QMainWindow):
     def load_users_from_file(self):
         # 假设从文件中读取用户数据并插入到数据库
         # 这里你可以用实际的文件路径
-        users = [("user1", "user1@example.com"), ("user2", "user2@example.com")]
-        for user in users:
-            insert_user(user[0], user[1])
-
         self.refresh_table()
 
     def on_back_to_main(self):
@@ -614,23 +662,30 @@ class UserWindow(QMainWindow):
         self.det_window = DetectionResultsWindow()
 
         self.det_window.show()
+
     def insert_user(self):
-        # 插入用户
+        # 从输入框中获取数据
         username = self.username_input.text()
         email = self.email_input.text()
-        insert_user(username, email)
+        age_text = self.age_input.text()
+        try:
+            age = int(age_text)
+        except:
+            QMessageBox.warning(self, "警告", "请输入有效的年龄（整数）！")
+            return
+
+        insert_user(username, email, age)
         self.username_input.clear()
         self.email_input.clear()
+        self.age_input.clear()
         self.refresh_table()
 
     def query_users(self):
-        # 查询用户数据，查询字段从ComboBox中选择
         selected_column = self.query_combobox.currentText()
         if selected_column == "All":
-            columns = []  # 查询所有列
+            columns = []
         else:
-            columns = [selected_column]  # 只查询选择的列
-
+            columns = [selected_column]
         users = fetch_users(columns)
         self.refresh_table(users)
 
