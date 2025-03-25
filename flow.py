@@ -1,4 +1,3 @@
-
 import sys
 import numpy as np
 import sqlite3
@@ -6,12 +5,13 @@ from PyQt5.QtWidgets import (QApplication, QMainWindow, QProgressBar, QComboBox,
                              QLineEdit, QLabel, QHBoxLayout, QWidget, QFormLayout, QMessageBox)
 from PyQt5.uic import loadUi
 from PyQt5.QtCore import Qt, QAbstractTableModel, QTimer
-from scipy.signal import find_peaks
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 import paho.mqtt.client as mqtt
 import ssl
 import json
+from welcome1 import Ui_Welcome1
+from control import get_serial_data  # 导入获取串口数据的函数
 
 DATABASE = "app.db"
 # 华为云 MQTT 配置信息（请替换为实际值）
@@ -52,6 +52,23 @@ def init_mqtt_client():
 # 全局保存 MQTT 客户端对象
 mqtt_client = init_mqtt_client()
 
+#平滑计算
+def smooth_data(data, window_size=9):
+    """
+    简单滑动平均平滑，window_size建议是奇数
+    返回与原长度相同的数组（前端和后端的值用padding处理）
+    """
+    if window_size < 3:
+        return data
+
+    half_w = window_size // 2
+    smoothed = np.copy(data).astype(float)
+
+    for i in range(len(data)):
+        start = max(0, i - half_w)
+        end = min(len(data), i + half_w + 1)
+        smoothed[i] = np.mean(data[start:end])
+    return smoothed
 
 
 def upload_detection_to_huawei_cloud(result, ratio):
@@ -97,15 +114,15 @@ def upload_detection_to_huawei_cloud(result, ratio):
 
 
 
-
+"""
 def load_data():
     global data_values
     data_values = []
-    # 从文件中读取数据
     try:
         with open('data.txt', 'r') as file:
-            hex_data = file.read().split()
-            # 跳过前6个数据（根据实际情况调整）
+            content = file.read()  # 可以先读取整个内容
+            print("成功读取 data.txt，字符数：", len(content))
+            hex_data = content.split()
             hex_data = hex_data[6:]
             for i in range(0, len(hex_data), 2):
                 hex_pair = hex_data[i:i + 2]
@@ -115,8 +132,10 @@ def load_data():
                     value = low_byte + (high_byte << 8)
                     data_values.append(value)
         data_values = np.array(data_values)
+        print("data_values 长度：", len(data_values))
     except Exception as e:
         print(f"Error loading data: {e}")
+"""
 
 #用于获取上传姓名和年龄用到的数据
 def get_user_by_id(user_id):
@@ -134,54 +153,194 @@ def get_user_by_id(user_id):
         print(f"Error fetching user by id: {e}")
         return None
 
+
+def custom_find_peaks(data, prominence=50, min_distance=20):
+    data = np.asarray(data, dtype=np.float32)
+    if data.ndim != 1 or len(data) < 3:
+        return np.array([], dtype=int)
+
+    peaks = []
+    i = 1
+    while i < len(data) - 1:
+        # 检查局部最大值
+        if data[i] > data[i - 1] and data[i] > data[i + 1]:
+            left_edge = i
+            right_edge = i
+            # 检查是否存在平顶
+            while right_edge < len(data) - 1 and data[right_edge] == data[right_edge + 1]:
+                right_edge += 1
+
+            # 计算一个简单的baseline（用左右邻点值）
+            baseline = max(data[left_edge - 1],
+                           data[right_edge + 1] if right_edge < len(data) - 1 else data[right_edge])
+            peak_val = data[i]
+            if (peak_val - baseline) >= prominence:
+                # 用平顶区间的中点作为峰值索引
+                peak_index = (left_edge + right_edge) // 2
+                peaks.append(peak_index)
+            i = right_edge + 1  # 跳过平顶区间
+        else:
+            i += 1
+
+    # 合并过近的峰
+    if min_distance > 0 and len(peaks) > 1:
+        # 按峰值高度排序，保留最高的
+        peak_heights = [(p, data[p]) for p in peaks]
+        peak_heights.sort(key=lambda x: x[1], reverse=True)
+        final_peaks = []
+        for p, h in peak_heights:
+            if all(abs(p - fp) >= min_distance for fp in final_peaks):
+                final_peaks.append(p)
+        final_peaks.sort()
+        peaks = final_peaks
+
+    return np.array(peaks, dtype=int)
+
+
+def merge_close_peaks(peaks, data, distance=30):
+    """
+    若有多个峰相距 < distance，则只保留其中最高的那个。
+    peaks: list of peak indices
+    data: your signal
+    """
+    if len(peaks) < 2:
+        return peaks
+
+    peaks = sorted(peaks)
+    merged = [peaks[0]]
+    for p in peaks[1:]:
+        if (p - merged[-1]) < distance:
+            # 比较高度，保留更高峰
+            if data[p] > data[merged[-1]]:
+                merged[-1] = p
+        else:
+            merged.append(p)
+    return merged
+
+
 # ----------------------- 检测参数计算 -----------------------
-def calculate_detection_parameters(data):
+def find_peak_boundaries(data, peaks):
     """
-    对传入数据利用 find_peaks 寻峰，
-    对每个波峰动态确定左右边界，
-    并计算：基线值、波峰宽度、毛面积（原始曲线积分）和净面积（毛面积减去基线面积）。
+    根据相邻峰中点，给每个峰分配一个最大搜索区间 [left_limit, right_limit]。
+    peaks: 已按升序排序好的峰顶索引 list 或 np.array
+    返回: boundary_limits = [(left_limit_i, right_limit_i), ...] 与 peaks 一一对应
     """
-    peaks, properties = find_peaks(data, prominence=100, width=1)
+    n = len(data)
+    boundaries = []
+
+    for i, p in enumerate(peaks):
+        # 左侧限制
+        if i == 0:
+            left_limit = 0
+        else:
+            # 与前一个峰的中点
+            prev_peak = peaks[i - 1]
+            left_limit = (prev_peak + p) // 2
+
+        # 右侧限制
+        if i == len(peaks) - 1:
+            right_limit = n - 1
+        else:
+            # 与下一个峰的中点
+            next_peak = peaks[i + 1]
+            right_limit = (p + next_peak) // 2
+
+        boundaries.append((left_limit, right_limit))
+
+    return boundaries
+
+
+#############################
+# 2) 修改 refined_calculate_peak_params
+#############################
+def refined_calculate_peak_params(data, peaks, step=5, extension=50, slope_threshold=5.0):
+    """
+    改进版的峰参数计算：
+      - 先用 find_peak_boundaries 确定每个峰的最大搜索区间
+      - 在各自区间内向左右搜索边界
+      - 局部基线计算
+
+    参数:
+      data, peaks, step, extension, slope_threshold 同之前
+    """
+    data = np.asarray(data, dtype=np.float32)
+    n = len(data)
+    if len(peaks) == 0:
+        return []
+
+    # 先保证 peaks 升序
+    peaks = sorted(peaks)
+
+    # 1) 根据相邻峰中点，得到每个峰的最大搜索区
+    boundary_limits = find_peak_boundaries(data, peaks)
+
     peak_params = []
-    for peak in peaks:
+    for i, peak in enumerate(peaks):
+        left_limit, right_limit = boundary_limits[i]
+
+        # 2) 从峰顶往左找边界，但不能越过 left_limit
         left = peak
+        while left > left_limit:
+            if data[left] > data[left - 1]:
+                left -= step
+            else:
+                if (data[left] - data[left - 1]) > slope_threshold:
+                    left -= step
+                else:
+                    break
+            if left < 0:
+                left = 0
+                break
+
+        # 3) 从峰顶往右找边界，但不能越过 right_limit
         right = peak
+        while right < right_limit:
+            if data[right] > data[right + 1]:
+                right += step
+            else:
+                if (data[right + 1] - data[right]) > slope_threshold:
+                    right += step
+                else:
+                    break
+            if right >= right_limit:
+                right = right_limit
+                break
 
-        # 动态调整左右边界（步长可根据数据特性调整）
-        while left > 0 and data[left] > data[left - 1]:
-            left = max(0, left - 10)
-        while right < len(data) - 1 and data[right] > data[right + 1]:
-            right = min(len(data) - 1, right + 10)
+        if left > right:
+            left, right = right, left
 
-        # 扩展检测范围用于基线计算
-        left_extended = max(0, left - 100)
-        right_extended = min(len(data) - 1, right + 100)
+        # 4) 基线估算：只在 [left - extension, right + extension] 内部找最小值/均值
+        left_integ = max(0, left - extension)
+        right_integ = min(n - 1, right + extension)
 
-        # 分别计算左右侧的均值作为基线候选
-        baseline_left = np.mean(data[left_extended:peak + 1])
-        baseline_right = np.mean(data[peak:right_extended + 1])
+        # 这里可以用“局部波谷”逻辑：
+        #   baseline_left = np.min(data[left_integ: left+1])
+        #   baseline_right = np.min(data[right: right_integ+1])
+        # baseline = (baseline_left + baseline_right) / 2
+        # 或保持你原来的做法:
+        base_region_size = 15  # 可自行调整
+        baseline_left_vals = data[left_integ : left_integ + base_region_size]
+        baseline_right_vals = data[right_integ - base_region_size + 1 : right_integ + 1]
+
+        baseline_left = np.mean(baseline_left_vals) if len(baseline_left_vals) else data[left]
+        baseline_right = np.mean(baseline_right_vals) if len(baseline_right_vals) else data[right]
         baseline = min(baseline_left, baseline_right)
 
-        # 波峰宽度（数据点数，可乘以采样间隔得到实际宽度）
-        width = right - left
-
-        # 毛面积：在左右边界内对原始信号积分
-        gross_area = np.trapz(data[left:right + 1], dx=1)
-        # 基线面积
-        baseline_area = baseline * (right - left)
-        # 净面积：荧光面积（毛面积减去基线面积）
+        # 5) 计算积分
+        gross_area = np.trapz(data[left_integ : right_integ + 1], dx=1)
+        baseline_area = baseline * (right_integ - left_integ)
         net_area = gross_area - baseline_area
 
         peak_params.append({
             'peak_index': peak,
-            'left_index': left,
-            'right_index': right,
+            'left_index': left_integ,
+            'right_index': right_integ,
             'baseline': baseline,
-            'width': width,
             'gross_area': gross_area,
             'net_area': net_area
         })
-    return peaks, peak_params
+
+    return peak_params
 
 
 # ----------------------- 面积比计算 -----------------------
@@ -194,22 +353,71 @@ def get_max_peak_in_range(peak_params, x_range):
         return None
     return max(valid_peaks, key=lambda p: p['net_area'])
 
-def calculate_area_ratio(peak_params):
+
+def calculate_area_ratio(peak_params, data):
     """
-    分别在500-700和700-900区间内选择净面积最大的波峰，
-    并计算两者净面积的比值
+    根据给定的 peak_params 和原始 data，
+    在预定的两个区间 [500,700] 和 [700,900] 内选择净面积最大的峰，
+    若未能直接检测到两个峰，则尝试对跨界峰进行拆分。
+
+    返回：
+       (ratio, peak_500_700, peak_700_900)
     """
+    # 先按原来的区间规则尝试选择
     peak_500_700 = get_max_peak_in_range(peak_params, (500, 700))
     peak_700_900 = get_max_peak_in_range(peak_params, (700, 900))
+
+    # 如果有任一区间没有峰，但存在一个峰的左右边界跨越了 700，则拆分这个峰
+    if (not peak_500_700 or not peak_700_900):
+        for p in peak_params:
+            if p['left_index'] < 700 and p['right_index'] > 700:
+                # 将该峰拆分为左右两个子峰
+                # 左侧区域：[p['left_index'], 700]
+                left_indices = np.arange(p['left_index'], 701)  # 包含 700
+                left_area = np.trapz(data[left_indices], dx=1)
+                left_width = 700 - p['left_index']
+                left_net = left_area - p['baseline'] * left_width
+
+                # 右侧区域：[700, p['right_index']]
+                right_indices = np.arange(700, p['right_index'] + 1)
+                right_area = np.trapz(data[right_indices], dx=1)
+                right_width = p['right_index'] - 700
+                right_net = right_area - p['baseline'] * right_width
+
+                # 构造两个伪峰信息（复制原有峰信息，并更新部分字段）
+                pseudo_left = p.copy()
+                pseudo_left['peak_index'] = (p['left_index'] + 700) // 2
+                pseudo_left['net_area'] = left_net
+                pseudo_left['left_index'] = p['left_index']
+                pseudo_left['right_index'] = 700
+
+                pseudo_right = p.copy()
+                pseudo_right['peak_index'] = (700 + p['right_index']) // 2
+                pseudo_right['net_area'] = right_net
+                pseudo_right['left_index'] = 700
+                pseudo_right['right_index'] = p['right_index']
+
+                peak_500_700 = pseudo_left
+                peak_700_900 = pseudo_right
+                print("Split a cross-boundary peak into two parts:")
+                print(f"  Left part: Peak index ~{pseudo_left['peak_index']}, net_area={pseudo_left['net_area']}")
+                print(f"  Right part: Peak index ~{pseudo_right['peak_index']}, net_area={pseudo_right['net_area']}")
+                break
+
     if peak_500_700 and peak_700_900:
+        if peak_700_900['net_area'] == 0:
+            ratio = None
+        else:
+            ratio = peak_500_700['net_area'] / peak_700_900['net_area']
         print(f"Max peak in range 500-700: Peak {peak_500_700['peak_index']} with net area: {peak_500_700['net_area']}")
         print(f"Max peak in range 700-900: Peak {peak_700_900['peak_index']} with net area: {peak_700_900['net_area']}")
-        ratio = peak_500_700['net_area'] / peak_700_900['net_area']
         print(f"The ratio of net peak area in 500-700 to 700-900 is: {ratio}")
         return ratio, peak_500_700, peak_700_900
     else:
         print("One or both of the ranges do not contain any peaks.")
         return None, None, None
+
+
 # ----------------------- 检测结果数据库 -----------------------
 
 def create_app_database():
@@ -510,19 +718,50 @@ class TextWindow(QMainWindow):
         self.setFixedSize(470, 280)
 
     def on_button_click(self):
-        load_data()
-        if data_values.size == 0:
+
+        # 1) 获取串口数据
+        data_values = self.get_data_from_serial()
+
+        # 如果获取到数据，则处理
+        if data_values is None or len(data_values) == 0:
             QMessageBox.warning(self, "警告", "数据加载失败或数据为空")
             return
 
-        # 计算所有波峰的检测参数
-        peaks, peak_params = calculate_detection_parameters(data_values)
-        # 分别在两个区间选择净面积最大的波峰，并计算面积比
-        ratio, peak_500_700, peak_700_900 = calculate_area_ratio(peak_params)
+            # 2) 可选：先做平滑
+        #smoothed = smooth_data(data_values, window_size=9)
 
-        # 绘图时标出所有波峰，并用不同颜色标出用于面积比计算的波峰
+        print("原始数据：min =", data_values.min(), "max =", data_values.max())
+        smoothed = smooth_data(data_values, window_size=9)
+        print("平滑后数据：min =", smoothed.min(), "max =", smoothed.max())
+
+        # 计算所有波峰的检测参数
+        # 检测峰，使用自定义函数
+
+        peaks = custom_find_peaks(smoothed, prominence=5, min_distance=60)
+        print("检测到的峰索引：", peaks)
+        for p in peaks:
+            print(f"索引 {p}，值 = {smoothed[p]}")
+        # 4) 计算每个峰的净面积等参数
+        peak_params = refined_calculate_peak_params(
+            data_values,  # 或 data_values, 看你需要在原始数据还是平滑后计算面积
+            peaks,
+            step=2,  # 可以适当调大 step，避免太敏感
+            extension=74,  # 根据实际数据幅度调整
+            slope_threshold=5.0
+        )
+        # 5) 计算两峰面积比
+        #    如果你仍要固定在 [500,700] 和 [700,900]：
+        ratio, peak_500_700, peak_700_900 = calculate_area_ratio(peak_params, smoothed)
+
+        # 6) 绘图
         selected_peaks = [p for p in [peak_500_700, peak_700_900] if p is not None]
-        self.canvas.plot(data_values, peaks, selected_peaks=selected_peaks)
+
+        self.canvas.plot(data_values, [p for p in peaks], selected_peaks=selected_peaks)
+
+        print("Detected peaks:", peaks)
+        for p in peak_params:
+            print(
+                f"Peak at {p['peak_index']} => net_area={p['net_area']}, baseline={p['baseline']}, left={p['left_index']}, right={p['right_index']}")
 
         # 显示面积比并存储数据库
         if ratio is not None:
@@ -536,16 +775,48 @@ class TextWindow(QMainWindow):
         else:
             self.label.setText("Peak Area Ratio: N/A")
 
+    def get_data_from_serial(self):
+        """
+        获取串口数据
+        """
+
+        raw_data = get_serial_data()  # 调用控制脚本的函数获取数据
+        if raw_data:
+            # 使用原来 load_data() 中的处理逻辑
+            return self.load_data_from_raw(raw_data)
+        else:
+            return None
+
+    def load_data_from_raw(self, raw_data):
+        """
+        将串口获取的原始数据进行和 load_data() 一样的处理
+        """
+        # 假设获取到的数据是 bytes 格式，可以按原数据读取方式解析
+        hex_data = raw_data.split()  # 将字节流分割成列表
+        hex_data = hex_data[6:]  # 可能需要裁剪掉不必要的数据
+
+        data_values = []
+        for i in range(0, len(hex_data), 2):
+            hex_pair = hex_data[i:i + 2]
+            if len(hex_pair) == 2:
+                low_byte = int(hex_pair[0], 16)
+                high_byte = int(hex_pair[1], 16)
+                value = low_byte + (high_byte << 8)
+                data_values.append(value)
+
+        return np.array(data_values)
+
     def on_main_click(self):
         self.main_window = MainWindow()
         self.main_window.show()
         self.close()
+        self.deleteLater()
 
 
 class Welcome1Window(QMainWindow):
     def __init__(self):
         super().__init__()
-        loadUi("welcome1.ui", self)  # 加载 welcome1.ui
+        loadUi("welcome1.ui", self)  # 加载 main.ui
 
         # 获取进度条控件
         self.progress_bar = self.findChild(QProgressBar, "progressBar")  # 假设进度条名为 progressBar
@@ -563,27 +834,120 @@ class Welcome1Window(QMainWindow):
         self.progress_bar.setValue(self.progress)
 
         # 如果进度条完成了100%，跳转到 main.ui
-        if self.progress >= 100:
+        if  self.progress >= 100:
             self.timer.stop()  # 停止定时器
             self.open_main_window()  # 打开主界面
 
-
     def open_main_window(self):
+        # 在打开主界面之前先关闭当前窗口
+        self.close()
+        self.deleteLater()
         self.main_window = MainWindow()  # 创建主窗口对象
-        self.main_window.show()
-        self.close()  #
+        self.main_window.show()  # 显示主界面
 
+class MainWindow(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        loadUi("main.ui", self)  # 加载 main.ui
+        self.settingButton.clicked.connect(self.show_fluo_window)
+        self.historyButton.clicked.connect(self.show_history_window)
+        self.itemButton.clicked.connect(self.show_item_window)
+        self.testButton.clicked.connect(self.show_test_window)
+        self.close_button.clicked.connect(self.show_close_window)
+        self.setbox_button.clicked.connect(self.show_welcome_window)
+        self.data_Button.clicked.connect(self.show_user_window)
+        # 设置按钮点击事件
+        self.testButton.clicked.connect(self.show_test_window)
+        # 调用加载用户列表
+        self.load_users_to_combobox()
 
+    def load_users_to_combobox(self):
+        """
+        从数据库 user_table 中获取所有用户，将其显示在 userComboBox 中。
+        """
+        users = fetch_users()  # 通常返回 [(id, username, email), ...]
+
+        self.userComboBox.clear()
+        if not users:
+            # 如果没有任何用户，就加入一个占位项
+            self.userComboBox.addItem("（无用户）", -1)
+        else:
+            for row in users:
+                user_id = row[0]  # id
+                username = row[1]  # username
+                # 在ComboBox里显示username，同时把user_id作为对应数据
+                self.userComboBox.addItem(username, user_id)
+
+    # 处理按钮事件
+    def show_fluo_window(self):
+        self.fluo_window = FluoTestWindow()  # 创建 FluoTest 窗口对象
+        self.fluo_window.show()
+        self.close()  # 关闭当前窗口
+
+    def show_history_window(self):
+        self.historys_window = HistorysWindow()  # 创建 Historys 窗口对象
+        self.historys_window.show()
+        self.close()  # 关闭当前窗口
+
+    def show_item_window(self):
+        self.item_window = QuerylineWindow()  # 创建 Queryline 窗口对象
+        self.item_window.show()
+        self.close()  # 关闭当前窗口
+
+    def show_test_window(self):
+        self.test_window = TextWindow()  # 创建 Text 窗口对象
+        self.test_window.show()
+        self.close()  # 关闭当前窗口
+
+    def show_close_window(self):
+        self.close()  # 关闭当前窗口
+
+    def show_user_window(self):
+        # 创建欢迎界面并显示
+        self.user_window = UserWindow()
+        self.user_window.show()
+        # 关闭欢迎界面
+        self.close()
+
+    def show_welcome_window(self):
+        # 创建欢迎界面并显示
+        self.welcome_window = WelcomeWindow()
+        self.welcome_window.show()
+        # 关闭欢迎界面
+        self.close()
+
+        def show_history_window(self):
+            self.historys_window = HistorysWindow()
+            self.historys_window.show()
+            self.close()  # 关闭当前
+
+        def show_item_window(self):
+            self.item_window = QuerylineWindow()
+            self.item_window.show()
+            self.close()  # 关闭当前
+
+        def show_test_window(self):
+            # 1) 从下拉框获取当前选中的 user_id
+            selected_user_id = self.userComboBox.currentData()
+            if selected_user_id is None or selected_user_id < 0:
+                QMessageBox.warning(self, "警告", "请先在下拉框里选择一个用户！")
+                return
+
+            # 2) 创建 TextWindow 的时候，把 user_id 作为参数传过去
+            self.test_window = TextWindow(user_id=selected_user_id)
+            self.test_window.show()
+            self.close()
+
+        def show_close_window(self):
+            self.close()  #
 
 class WelcomeWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        loadUi("welcome.ui", self)  # 加载 welcome.ui
+        loadUi("welcome.ui", self)  # 加载 FluoTest.ui
         self.main_button.clicked.connect(self.show_main_window)  # main.ui 按钮
         self.fluo_button.clicked.connect(self.show_fluo_window)  # FluoTest.ui 按钮
         self.text_button.clicked.connect(self.show_text_window)
-
-
 
     def show_main_window(self):
         self.main_window = MainWindow()  # 创建主窗口对象
@@ -601,82 +965,6 @@ class WelcomeWindow(QMainWindow):
         self.close()  #
 
 
-class MainWindow(QMainWindow):
-    def __init__(self):
-        super().__init__()
-        loadUi("main.ui", self)  # 加载 main.ui
-        self.settingButton.clicked.connect(self.show_fluo_window)
-        self.historyButton.clicked.connect(self.show_history_window)
-        self.itemButton.clicked.connect(self.show_item_window)
-        self.testButton.clicked.connect(self.show_test_window)
-        self.close_button.clicked.connect(self.show_close_window)
-        self.setbox_button.clicked.connect(self.show_welcome_window)
-        self.data_Button.clicked.connect(self.show_user_window)
-        # 设置按钮点击事件
-        self.testButton.clicked.connect(self.show_test_window)
-        ...
-
-        # 调用加载用户列表
-        self.load_users_to_combobox()
-    def load_users_to_combobox(self):
-        """
-        从数据库 user_table 中获取所有用户，将其显示在 userComboBox 中。
-        """
-        users = fetch_users()  # 通常返回 [(id, username, email), ...]
-        self.userComboBox.clear()
-        if not users:
-            # 如果没有任何用户，就加入一个占位项
-            self.userComboBox.addItem("（无用户）", -1)
-        else:
-            for row in users:
-                user_id = row[0]  # id
-                username = row[1]  # username
-                # 在ComboBox里显示username，同时把user_id作为对应数据
-                self.userComboBox.addItem(username, user_id)
-
-    def show_fluo_window(self):
-        self.fluo_window = FluoTestWindow()  # 创建 FluoTest 窗口对象
-        self.fluo_window.show()
-        self.close()  # 关闭当前
-
-    def show_user_window(self):
-        # 创建欢迎界面并显示
-        self.user_window = UserWindow()
-        self.user_window.show()
-        # 关闭欢迎界面
-        self.close()
-
-    def show_welcome_window(self):
-        # 创建欢迎界面并显示
-        self.welcome_window = WelcomeWindow()
-        self.welcome_window.show()
-        # 关闭欢迎界面
-        self.close()
-
-    def show_history_window(self):
-        self.historys_window = HistorysWindow()
-        self.historys_window.show()
-        self.close()  # 关闭当前
-
-    def show_item_window(self):
-        self.item_window = QuerylineWindow()
-        self.item_window.show()
-        self.close()  # 关闭当前
-
-    def show_test_window(self):
-        # 1) 从下拉框获取当前选中的 user_id
-        selected_user_id = self.userComboBox.currentData()
-        if selected_user_id is None or selected_user_id < 0:
-            QMessageBox.warning(self, "警告", "请先在下拉框里选择一个用户！")
-            return
-
-        # 2) 创建 TextWindow 的时候，把 user_id 作为参数传过去
-        self.test_window = TextWindow(user_id=selected_user_id)
-        self.test_window.show()
-        self.close()
-
-    def show_close_window(self):
-        self.close()  #
 
 class UserWindow(QMainWindow):
     def __init__(self):

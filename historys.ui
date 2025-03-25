@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>MainWindow</class>
- <widget class="QMainWindow" name="MainWindow">
+ <class>Historys</class>
+ <widget class="QMainWindow" name="Historys">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -116,7 +116,7 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>461</width>
+        <width>676</width>
         <height>131</height>
        </rect>
       </property>
