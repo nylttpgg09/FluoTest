@@ -9,14 +9,14 @@ def get_serial_data():
     ports_list = list(serial.tools.list_ports.comports())
     if len(ports_list) <= 0:
         print("无串口设备。")
-        return None
+
     else:
         print("可用的串口设备如下：")
         for comport in ports_list:
             print(list(comport)[0], list(comport)[1])
     
     # 通过指定串口打开
-    ser = serial.Serial("COM17", 115200, timeout=2)  # 根据你的实际情况修改COM端口号
+    ser = serial.Serial("/dev/ttyCH343USB0", 115200, timeout=2)  # 根据你的实际情况修改COM端口号
     if ser.isOpen():
         print("打开串口成功。")
         print(ser.name)  # 输出串口号
@@ -33,9 +33,9 @@ def get_serial_data():
     wbuf[4] = 0x01
     wbuf[5] = 0x00
     wbuf[6] = 0x03
-    ser.write(wbuf)
+    write_len = ser.write(wbuf)
 
-    print("串口发出{}个字节。暂停20秒，读取数据".format(len(wbuf)))
+    print("串口发出{}个字节。暂停20秒，读取数据".format(write_len))
     time.sleep(20)
 
     # 读数据
@@ -48,13 +48,13 @@ def get_serial_data():
     wbuf[5] = 0x03
     wbuf[6] = 0xe8
     wbuf[7] = 0xf0
-    ser.write(wbuf)
+    write_len = ser.write(wbuf)
 
-    print("串口发出{}个字节。".format(len(wbuf)))
+    print("串口发出{}个字节。".format(write_len))
 
     # 读取串口数据
     com_input = ser.read(5000)
-    ser.close()
+
 
     if com_input:
         print("读取数据成功：", com_input)
@@ -62,3 +62,4 @@ def get_serial_data():
     else:
         print("未读取到数据。")
         return None
+    ser.close()

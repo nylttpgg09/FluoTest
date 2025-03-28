@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Welcome</class>
- <widget class="QMainWindow" name="Welcome">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>荧光分析仪</string>
+   <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QLabel" name="label">
@@ -173,8 +173,8 @@
      <widget class="QLabel" name="label_6">
       <property name="geometry">
        <rect>
-        <x>10</x>
-        <y>30</y>
+        <x>20</x>
+        <y>50</y>
         <width>54</width>
         <height>12</height>
        </rect>
@@ -192,11 +192,6 @@
        <width>75</width>
        <height>23</height>
       </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true"> border-radius: 10px;
-    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
-    color: white;</string>
      </property>
      <property name="text">
       <string>高级信息</string>
@@ -277,16 +272,11 @@
       <height>23</height>
      </rect>
     </property>
-    <property name="styleSheet">
-     <string notr="true"> border-radius: 10px;
-    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
-    color: white;</string>
-    </property>
     <property name="text">
      <string>读ID卡</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="text_button">
+   <widget class="QPushButton" name="pushButton_3">
     <property name="geometry">
      <rect>
       <x>420</x>
@@ -294,11 +284,6 @@
       <width>41</width>
       <height>23</height>
      </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true"> border-radius: 10px;
-    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
-    color: white;</string>
     </property>
     <property name="text">
      <string>测试</string>
@@ -312,11 +297,6 @@
       <width>75</width>
       <height>23</height>
      </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true"> border-radius: 10px;
-    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
-    color: white;</string>
     </property>
     <property name="text">
      <string>打印</string>
@@ -354,11 +334,6 @@
       <height>23</height>
      </rect>
     </property>
-    <property name="styleSheet">
-     <string notr="true"> border-radius: 10px;
-    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
-    color: white;</string>
-    </property>
     <property name="text">
      <string>主页</string>
     </property>
@@ -371,11 +346,6 @@
       <width>41</width>
       <height>23</height>
      </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true"> border-radius: 10px;
-    background-color: #00aaff; /* 变淡后的蓝色背景，透明度为50% */
-    color: white;</string>
     </property>
     <property name="text">
      <string>设置</string>
