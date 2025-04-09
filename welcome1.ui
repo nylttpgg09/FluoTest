@@ -23,6 +23,23 @@
       <height>23</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">QProgressBar {
+    background-color: #F0F0F0; 
+    border: 1px solid #CCCCCC; 
+    border-radius: 8px; 
+    padding: 1px; 
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.2) inset;
+    /* 让文本水平居中 */
+    text-align: center; 
+}
+
+QProgressBar::chunk {
+    background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(173, 216, 230, 255), stop:1 rgba(204, 229, 255, 255));
+    border-radius: 7px; 
+    margin: 0.5px; 
+}</string>
+    </property>
     <property name="value">
      <number>24</number>
     </property>
@@ -39,8 +56,15 @@
     <property name="font">
      <font>
       <family>Agency FB</family>
-      <pointsize>22</pointsize>
+      <pointsize>28</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
      </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QProgressBar::chunk {
+    font-weight: bold;
+}</string>
     </property>
     <property name="text">
      <string>系统启动中</string>
@@ -55,6 +79,14 @@
       <height>61</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <family>Agency FB</family>
+      <pointsize>11</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
     <property name="text">
      <string>欢迎使用荧光分析仪</string>
     </property>
@@ -66,7 +98,7 @@
      <x>0</x>
      <y>0</y>
      <width>480</width>
-     <height>23</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>

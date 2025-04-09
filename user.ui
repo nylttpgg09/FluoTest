@@ -19,25 +19,73 @@
      <rect>
       <x>10</x>
       <y>10</y>
-      <width>161</width>
+      <width>160</width>
       <height>23</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+    background-color: #42A5F5;
+    color: white;
+    font-family: Arial;
+    font-size: 12px; /* 调整字体大小 */
+    font-weight: bold;
+    border: none; /* 取消边框 */
+    border-radius: 5px;
+    padding: 5px;
+    min-width: 150px; /* 设置最小宽度 */
+    max-width: 150px; /* 设置最大宽度 */
+    min-height: 13px; /* 设置最小高度 */
+    max-height: 13px; /* 设置最大高度 */
+}
+
+QPushButton:hover {
+    background-color: lightgreen;
+}
+
+QPushButton:pressed {
+    background-color: darkgreen;
+}    </string>
+    </property>
     <property name="text">
-     <string>Load Users from File</string>
+     <string>从文件中选择对象</string>
     </property>
    </widget>
    <widget class="QPushButton" name="view_detection_button">
     <property name="geometry">
      <rect>
-      <x>20</x>
+      <x>10</x>
       <y>170</y>
-      <width>161</width>
-      <height>21</height>
+      <width>160</width>
+      <height>23</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+    background-color: #42A5F5;
+    color: white;
+    font-family: Arial;
+    font-size: 12px; /* 调整字体大小 */
+    font-weight: bold;
+    border: none; /* 取消边框 */
+    border-radius: 5px;
+    padding: 5px;
+    min-width: 150px; /* 设置最小宽度 */
+    max-width: 150px; /* 设置最大宽度 */
+    min-height: 13px; /* 设置最小高度 */
+    max-height: 13px; /* 设置最大高度 */
+}
+
+QPushButton:hover {
+    background-color: lightgreen;
+}
+
+QPushButton:pressed {
+    background-color: darkgreen;
+}    </string>
+    </property>
     <property name="text">
-     <string>view_detection_button</string>
+     <string>查看检测按钮</string>
     </property>
    </widget>
    <widget class="QPushButton" name="insert_user_button">
@@ -45,22 +93,70 @@
      <rect>
       <x>10</x>
       <y>40</y>
-      <width>151</width>
+      <width>160</width>
       <height>23</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+    background-color: #42A5F5;
+    color: white;
+    font-family: Arial;
+    font-size: 12px; /* 调整字体大小 */
+    font-weight: bold;
+    border: none; /* 取消边框 */
+    border-radius: 5px;
+    padding: 5px;
+    min-width: 150px; /* 设置最小宽度 */
+    max-width: 150px; /* 设置最大宽度 */
+    min-height: 13px; /* 设置最小高度 */
+    max-height: 13px; /* 设置最大高度 */
+}
+
+QPushButton:hover {
+    background-color: lightgreen;
+}
+
+QPushButton:pressed {
+    background-color: darkgreen;
+}    </string>
+    </property>
     <property name="text">
-     <string>Insert User</string>
+     <string>插入用户</string>
     </property>
    </widget>
    <widget class="QPushButton" name="back_button">
     <property name="geometry">
      <rect>
-      <x>20</x>
+      <x>10</x>
       <y>200</y>
-      <width>75</width>
+      <width>160</width>
       <height>23</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+    background-color: #42A5F5;
+    color: white;
+    font-family: Arial;
+    font-size: 12px; /* 调整字体大小 */
+    font-weight: bold;
+    border: none; /* 取消边框 */
+    border-radius: 5px;
+    padding: 5px;
+    min-width: 150px; /* 设置最小宽度 */
+    max-width: 150px; /* 设置最大宽度 */
+    min-height: 13px; /* 设置最小高度 */
+    max-height: 13px; /* 设置最大高度 */
+}
+
+QPushButton:hover {
+    background-color: lightgreen;
+}
+
+QPushButton:pressed {
+    background-color: darkgreen;
+}    </string>
     </property>
     <property name="text">
      <string>返回主界面</string>
@@ -69,103 +165,242 @@
    <widget class="QPushButton" name="query_button">
     <property name="geometry">
      <rect>
-      <x>224</x>
+      <x>180</x>
       <y>10</y>
-      <width>221</width>
+      <width>261</width>
       <height>23</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+    background-color: #42A5F5;
+    color: white;
+    font-family: Arial;
+    font-size: 12px; /* 调整字体大小 */
+    font-weight: bold;
+    border: none; /* 取消边框 */
+    border-radius: 5px;
+    padding: 5px;
+    min-width: 251px; /* 设置最小宽度 */
+    max-width: 251px; /* 设置最大宽度 */
+    min-height: 13px; /* 设置最小高度 */
+    max-height: 13px; /* 设置最大高度 */
+}
+
+QPushButton:hover {
+    background-color: lightgreen;
+}
+
+QPushButton:pressed {
+    background-color: darkgreen;
+}    </string>
+    </property>
     <property name="text">
-     <string>Query Users</string>
+     <string>查询对象</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="age_input">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>60</x>
       <y>70</y>
       <width>113</width>
       <height>20</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">    background-color: #f0f0f0; /* 浅灰色背景 */
+    color: black;</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
    </widget>
    <widget class="QLineEdit" name="username_input">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>60</x>
       <y>100</y>
       <width>113</width>
       <height>20</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">    background-color: #f0f0f0; /* 浅灰色背景 */
+    color: black;</string>
+    </property>
    </widget>
    <widget class="QLineEdit" name="email_input">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>60</x>
       <y>130</y>
       <width>113</width>
       <height>20</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">    background-color: #f0f0f0;
+    color: black;</string>
     </property>
    </widget>
    <widget class="QTableView" name="table_view">
     <property name="geometry">
      <rect>
       <x>180</x>
-      <y>91</y>
+      <y>70</y>
       <width>261</width>
-      <height>141</height>
+      <height>151</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QTableView {
+    background-color: #f0f0f0; /* 浅灰色背景 */
+    color: #007BFF; /* 蓝色文字 */
+    gridline-color: #ccc; /* 灰色网格线 */
+}
+
+QTableView::item {
+    padding: 5px;
+}
+
+QTableView::item:selected {
+    background-color: #007BFF; /* 蓝色选中背景 */
+    color: white; /* 白色选中文字 */
+}
+
+QHeaderView::section {
+    background-color: #e0e0e0; /* 稍深的灰色表头背景 */
+    color: #007BFF; /* 蓝色表头文字 */
+    border: 1px solid #ccc; /* 灰色表头边框 */
+    padding: 5px;
+}</string>
     </property>
    </widget>
    <widget class="QComboBox" name="query_combobox">
     <property name="geometry">
      <rect>
       <x>180</x>
-      <y>50</y>
+      <y>40</y>
       <width>261</width>
       <height>22</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QComboBox {
+    background-color: #f0f0f0; /* 浅灰色背景 */
+    color: black;
+    border: 1px solid #ccc; /* 浅灰色边框 */
+    border-radius: 3px;
+    padding: 1px 18px 1px 3px;
+    min-width: 6em;
+}
+
+QComboBox::drop-down {
+    subcontrol-origin: padding;
+    subcontrol-position: top right;
+    width: 20px;
+    border-left-width: 1px;
+    border-left-color: #ccc; /* 浅灰色边框 */
+    border-left-style: solid;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    background-color: #f0f0f0; /* 浅灰色背景 */
+}
+
+QComboBox QAbstractItemView {
+    border: 2px solid #ccc; /* 浅灰色边框 */
+    selection-background-color: #e0e0e0; /* 选中项的浅灰色背景 */
+    background-color: #f0f0f0; /* 下拉列表的浅灰色背景 */
+    color: black;
+}</string>
+    </property>
+    <property name="locale">
+     <locale language="Chinese" country="China"/>
     </property>
    </widget>
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>130</x>
+      <x>10</x>
       <y>70</y>
-      <width>54</width>
-      <height>12</height>
+      <width>40</width>
+      <height>23</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">    background-color: #42A5F5;
+    color: black;
+    font-family: Arial;
+    font-size: 12px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+    min-width: 30px;
+    max-width: 30px;
+    min-height: 13px;
+    max-height: 13px;
+    text-align: center;</string>
+    </property>
     <property name="text">
-     <string>age</string>
+     <string>年龄</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>120</x>
+      <x>10</x>
       <y>100</y>
-      <width>54</width>
-      <height>12</height>
+      <width>40</width>
+      <height>23</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">    background-color: #42A5F5;
+    color: black;
+    font-family: Arial;
+    font-size: 12px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+    min-width: 30px;
+    max-width: 30px;
+    min-height: 13px;
+    max-height: 13px;
+    text-align: center;</string>
+    </property>
     <property name="text">
-     <string>username</string>
+     <string>名字</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_3">
     <property name="geometry">
      <rect>
-      <x>130</x>
+      <x>10</x>
       <y>130</y>
-      <width>54</width>
-      <height>12</height>
+      <width>40</width>
+      <height>23</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">    background-color: #42A5F5;
+    color: black;
+    font-family: Arial;
+    font-size: 12px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+    min-width: 30px;
+    max-width: 30px;
+    min-height: 13px;
+    max-height: 13px;
+    text-align: center;</string>
+    </property>
     <property name="text">
-     <string>email</string>
+     <string>邮箱</string>
     </property>
    </widget>
   </widget>
@@ -175,7 +410,7 @@
      <x>0</x>
      <y>0</y>
      <width>470</width>
-     <height>23</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>

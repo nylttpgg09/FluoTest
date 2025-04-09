@@ -11,6 +11,10 @@ import paho.mqtt.client as mqtt
 import ssl
 import json
 
+from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QPainter, QColor
+from PyQt5.QtWidgets import QWidget
+import numpy as np
 
 DATABASE = "app.db"
 # 华为云 MQTT 配置信息（请替换为实际值）
@@ -230,24 +234,90 @@ class FluoTestWindow(QMainWindow):
                 self.userComboBox.addItem(str(user_id), user_id)
 
 
+class PlotCanvas(QWidget):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setWindowTitle("Peak Analysis")
+
+        # 初始化数据
+        self.data = None
+        self.peaks = None
+        self.selected_peaks = None
+
+    def plot(self, data, peaks, selected_peaks=None):
+        # 将数据和峰值传递给对象
+        self.data = data
+        self.peaks = peaks
+        self.selected_peaks = selected_peaks
+        self.update()  # 刷新窗口，触发 paintEvent
+
+    def paintEvent(self, event):
+        painter = QPainter(self)
+        painter.setRenderHint(QPainter.Antialiasing)  # 启用抗锯齿
+
+        if self.data is not None:
+            # 获取数据的最小值和最大值
+            min_data = min(self.data)
+            max_data = max(self.data)
+
+            # 设置一定的边距
+            y_margin = 50  # Y 轴的边距
+            y_range = max_data - min_data + 2 * y_margin  # Y 轴的显示范围
+
+            # 设置 X 轴范围
+            x_range = len(self.data)
+
+            # 绘制数据线，使用动态的坐标范围
+            for i in range(len(self.data) - 1):
+                # 缩放数据坐标
+                x1 = (i / x_range) * self.width()
+                y1 = self.height() - (self.data[i] - min_data + y_margin) / y_range * self.height()  # 翻转 y 坐标
+                x2 = ((i + 1) / x_range) * self.width()
+                y2 = self.height() - (self.data[i + 1] - min_data + y_margin) / y_range * self.height()  # 翻转 y 坐标
+
+                # 绘制线条
+                painter.setPen(QColor(0, 0, 0))  # 黑色线条
+                painter.drawLine(int(x1), int(y1), int(x2), int(y2))
+
+            # 绘制峰值（红色叉号）
+            if self.peaks is not None:
+                for peak in self.peaks:
+                    x = (peak / len(self.data)) * self.width()  # 计算峰的 x 坐标
+                    y = self.height() - (self.data[peak] - min_data + y_margin) / y_range * self.height()  # 翻转 y 坐标
+                    painter.setPen(QColor(255, 0, 0))  # 红色
+                    painter.drawLine(x - 5, y - 5, x + 5, y + 5)
+                    painter.drawLine(x - 5, y + 5, x + 5, y - 5)
+
+        painter.end()  # 结束绘制
+
 class TextWindow(QMainWindow):
     def __init__(self, user_id=0):
         super().__init__()
         loadUi("text.ui", self)
         self.user_id = user_id  # 保存所选用户的id
 
-        #self.canvas = PlotCanvas(self)
+        self.canvas = PlotCanvas(self)  # 创建绘图画布
+        self.layout().addWidget(self.canvas)  # 将画布添加到UI布局中
+
+        self.canvas.setGeometry(50, 50, 430, 200)  # 调整画布大小
+
         self.calc_button.clicked.connect(self.on_button_click)
 
         self.back_button.clicked.connect(self.on_main_click)
-    def on_button_click(self):
 
+        #self.is_plotting = False  # 标志位，确保绘图操作不会重复触发
+    def on_button_click(self):
+      #  if self.is_plotting:  # 如果正在绘图，直接返回，避免重复触发
+          #  return
+
+       # self.is_plotting = True  # 设置标志，防止多次绘图操作
         # 1) 获取串口数据
-        data_values = self.get_data_from_serial()
-        #load_data()
+        #data_values = self.get_data_from_serial()
+        load_data()
         # 如果获取到数据，则处理
         if data_values is None or len(data_values) == 0:
             QMessageBox.warning(self, "警告", "数据加载失败或数据为空")
+           # self.is_plotting = False  # 绘图完成，重置标志
             return
 
         print("原始数据：min =", data_values.min(), "max =", data_values.max())
@@ -275,9 +345,10 @@ class TextWindow(QMainWindow):
 
         # 6) 绘图
         selected_peaks = [p for p in [peak_500_700, peak_700_900] if p is not None]
+        # 将数据传递给画布进行绘制
 
-       # self.canvas.plot(data_values, [p for p in peaks], selected_peaks=selected_peaks)
-
+        self.canvas.update()  # 强制刷新绘图区域
+        self.canvas.plot(data_values, peaks, selected_peaks=selected_peaks)
         print("Detected peaks:", peaks)
         for p in peak_params:
             print(
@@ -285,18 +356,19 @@ class TextWindow(QMainWindow):
 
         # 显示面积比并存储数据库
         if ratio is not None:
-            self.label.setText(f"Peak Area Ratio: {ratio:.2f}\n"
-                               f"500-700 peak net area: {peak_500_700['net_area']:.2f}\n"
-                               f"700-900 peak net area: {peak_700_900['net_area']:.2f}")
+            self.label.setText(f"峰面积比          : {ratio:.2f}\n"
+                               f"500 - 700 峰净面积: {peak_500_700['net_area']:.2f}\n"
+                               f"700 - 900 峰净面积: {peak_700_900['net_area']:.2f}")
 
             # 存储组合波峰记录并上传至华为云
             store_two_peaks(peak_500_700, peak_700_900, ratio, self.user_id)
+            self.is_plotting = False  # 绘图完成，重置标志
         else:
-            self.label.setText("Peak Area Ratio: N/A")
+            self.label.setText("峰面积比: N/A")
 
 
     def get_data_from_serial(self):
-     
+
         raw_data = get_serial_data()  # 调用控制脚本的函数获取数据
         if raw_data:
             # 使用原来 load_data() 中的处理逻辑
@@ -305,21 +377,19 @@ class TextWindow(QMainWindow):
             return None
 
     def load_data_from_raw(self, raw_data):
-        # 将原始字节流转换为字节列表（每个元素为单个字节）
-        hex_data = list(raw_data)  # 直接遍历字节，例如 b'\xcd\xfa' → [0xCD, 0xFA]
-        hex_data = hex_data[6:]  # 裁剪掉前6个字节（根据需求调整）
+
+        # 假设获取到的数据是 bytes 格式，可以按原数据读取方式解析
+        hex_data = raw_data.split()  # 将字节流分割成列表
+        hex_data = hex_data[6:]  # 可能需要裁剪掉不必要的数据
 
         data_values = []
         for i in range(0, len(hex_data), 2):
-            # 每次取两个字节（防止越界）
-            if i + 1 >= len(hex_data):
-                break
-            byte_low = hex_data[i]  # 直接获取字节整数值，例如 0xCD
-            byte_high = hex_data[i + 1]  # 例如 0xFA
-
-            # 组合为16位整数（大端序：高字节在前，低字节在后）
-            combined_value = (byte_high << 8) | byte_low
-            data_values.append(combined_value)
+            hex_pair = hex_data[i:i + 2]
+            if len(hex_pair) == 2:
+                low_byte = int(hex_pair[0], 16)
+                high_byte = int(hex_pair[1], 16)
+                value = low_byte + (high_byte << 8)
+                data_values.append(value)
 
         return np.array(data_values)
 

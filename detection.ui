@@ -23,6 +23,30 @@
       <height>23</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+    background-color: #42A5F5;
+    color: white;
+    font-family: Arial;
+    font-size: 12px; /* 调整字体大小 */
+    font-weight: bold;
+    border: none; /* 取消边框 */
+    border-radius: 5px;
+    padding: 5px;
+    min-width: 65px; /* 设置最小宽度 */
+    max-width: 65px; /* 设置最大宽度 */
+    min-height: 13px; /* 设置最小高度 */
+    max-height: 13px; /* 设置最大高度 */
+}
+
+QPushButton:hover {
+    background-color: lightgreen;
+}
+
+QPushButton:pressed {
+    background-color: darkgreen;
+}    </string>
+    </property>
     <property name="text">
      <string>刷新</string>
     </property>
@@ -35,6 +59,30 @@
       <width>75</width>
       <height>23</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+    background-color: #42A5F5;
+    color: white;
+    font-family: Arial;
+    font-size: 12px; /* 调整字体大小 */
+    font-weight: bold;
+    border: none; /* 取消边框 */
+    border-radius: 5px;
+    padding: 5px;
+    min-width: 65px; /* 设置最小宽度 */
+    max-width: 65px; /* 设置最大宽度 */
+    min-height: 13px; /* 设置最小高度 */
+    max-height: 13px; /* 设置最大高度 */
+}
+
+QPushButton:hover {
+    background-color: lightgreen;
+}
+
+QPushButton:pressed {
+    background-color: darkgreen;
+}    </string>
     </property>
     <property name="text">
      <string>关闭</string>
@@ -49,6 +97,29 @@
       <height>181</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">QTableView {
+    background-color: #f0f0f0; /* 浅灰色背景 */
+    color: #007BFF; /* 蓝色文字 */
+    gridline-color: #ccc; /* 灰色网格线 */
+}
+
+QTableView::item {
+    padding: 5px;
+}
+
+QTableView::item:selected {
+    background-color: #007BFF; /* 蓝色选中背景 */
+    color: white; /* 白色选中文字 */
+}
+
+QHeaderView::section {
+    background-color: #e0e0e0; /* 稍深的灰色表头背景 */
+    color: #007BFF; /* 蓝色表头文字 */
+    border: 1px solid #ccc; /* 灰色表头边框 */
+    padding: 5px;
+}</string>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -57,7 +128,7 @@
      <x>0</x>
      <y>0</y>
      <width>470</width>
-     <height>23</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>

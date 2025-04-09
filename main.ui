@@ -25,14 +25,31 @@
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QPushButton" name="pushButton_3">
-       <property name="text">
-        <string>历史</string>
-       </property>
-      </widget>
-     </item>
-     <item>
       <widget class="QPushButton" name="view_detection_button">
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: lightblue;
+    color: white;
+    font-family: Arial;
+    font-size: 12px; /* 调整字体大小 */
+    font-weight: bold;
+    border: none; /* 取消边框 */
+    border-radius: 5px;
+    padding: 5px;
+    min-width: 69px; /* 设置最小宽度 */
+    max-width: 69px; /* 设置最大宽度 */
+    min-height: 13px; /* 设置最小高度 */
+    max-height: 13px; /* 设置最大高度 */
+}
+
+QPushButton:hover {
+    background-color: lightgreen;
+}
+
+QPushButton:pressed {
+    background-color: darkgreen;
+} </string>
+       </property>
        <property name="text">
         <string>批量测试</string>
        </property>
@@ -40,6 +57,30 @@
      </item>
      <item>
       <widget class="QPushButton" name="testButton">
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: lightblue;
+    color: white;
+    font-family: Arial;
+    font-size: 12px; /* 调整字体大小 */
+    font-weight: bold;
+    border: none; /* 取消边框 */
+    border-radius: 5px;
+    padding: 5px;
+    min-width: 69px; /* 设置最小宽度 */
+    max-width: 69px; /* 设置最大宽度 */
+    min-height: 13px; /* 设置最小高度 */
+    max-height: 13px; /* 设置最大高度 */
+}
+
+QPushButton:hover {
+    background-color: lightgreen;
+}
+
+QPushButton:pressed {
+    background-color: darkgreen;
+} </string>
+       </property>
        <property name="text">
         <string>测试</string>
        </property>
@@ -47,6 +88,30 @@
      </item>
      <item>
       <widget class="QPushButton" name="data_Button">
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: lightblue;
+    color: white;
+    font-family: Arial;
+    font-size: 12px; /* 调整字体大小 */
+    font-weight: bold;
+    border: none; /* 取消边框 */
+    border-radius: 5px;
+    padding: 5px;
+    min-width: 69px; /* 设置最小宽度 */
+    max-width: 69px; /* 设置最大宽度 */
+    min-height: 13px; /* 设置最小高度 */
+    max-height: 13px; /* 设置最大高度 */
+}
+
+QPushButton:hover {
+    background-color: lightgreen;
+}
+
+QPushButton:pressed {
+    background-color: darkgreen;
+} </string>
+       </property>
        <property name="text">
         <string>项目</string>
        </property>
@@ -54,6 +119,30 @@
      </item>
      <item>
       <widget class="QPushButton" name="settingButton">
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: lightblue;
+    color: white;
+    font-family: Arial;
+    font-size: 12px; /* 调整字体大小 */
+    font-weight: bold;
+    border: none; /* 取消边框 */
+    border-radius: 5px;
+    padding: 5px;
+    min-width: 69px; /* 设置最小宽度 */
+    max-width: 69px; /* 设置最大宽度 */
+    min-height: 13px; /* 设置最小高度 */
+    max-height: 13px; /* 设置最大高度 */
+}
+
+QPushButton:hover {
+    background-color: lightgreen;
+}
+
+QPushButton:pressed {
+    background-color: darkgreen;
+} </string>
+       </property>
        <property name="text">
         <string>设置</string>
        </property>

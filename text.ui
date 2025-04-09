@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>470</width>
-    <height>280</height>
+    <width>491</width>
+    <height>257</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,24 +17,55 @@
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>20</y>
-      <width>401</width>
+      <x>10</x>
+      <y>40</y>
+      <width>281</width>
       <height>111</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <family>Arial</family>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
     <property name="text">
-     <string>Peak Area Ratio: </string>
+     <string>峰面积比:</string>
     </property>
    </widget>
    <widget class="QPushButton" name="back_button">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>200</y>
+      <x>390</x>
+      <y>10</y>
       <width>75</width>
       <height>23</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+    background-color: #42A5F5;
+    color: white;
+    font-family: Arial;
+    font-size: 12px; /* 调整字体大小 */
+    font-weight: bold;
+    border: none; /* 取消边框 */
+    border-radius: 5px;
+    padding: 5px;
+    min-width: 65px; /* 设置最小宽度 */
+    max-width: 65px; /* 设置最大宽度 */
+    min-height: 13px; /* 设置最小高度 */
+    max-height: 13px; /* 设置最大高度 */
+}
+
+QPushButton:hover {
+    background-color: lightgreen;
+}
+
+QPushButton:pressed {
+    background-color: darkgreen;
+}    </string>
     </property>
     <property name="text">
      <string>返回</string>
@@ -43,11 +74,35 @@
    <widget class="QPushButton" name="calc_button">
     <property name="geometry">
      <rect>
-      <x>310</x>
-      <y>200</y>
+      <x>10</x>
+      <y>10</y>
       <width>75</width>
       <height>23</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+    background-color: #42A5F5;
+    color: white;
+    font-family: Arial;
+    font-size: 12px; /* 调整字体大小 */
+    font-weight: bold;
+    border: none; /* 取消边框 */
+    border-radius: 5px;
+    padding: 5px;
+    min-width: 65px; /* 设置最小宽度 */
+    max-width: 65px; /* 设置最大宽度 */
+    min-height: 13px; /* 设置最小高度 */
+    max-height: 13px; /* 设置最大高度 */
+}
+
+QPushButton:hover {
+    background-color: lightgreen;
+}
+
+QPushButton:pressed {
+    background-color: darkgreen;
+}    </string>
     </property>
     <property name="text">
      <string>计算</string>
@@ -59,7 +114,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>470</width>
+     <width>491</width>
      <height>23</height>
     </rect>
    </property>
