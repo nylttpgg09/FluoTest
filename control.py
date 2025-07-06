@@ -9,7 +9,7 @@ def get_serial_data():
     ports_list = list(serial.tools.list_ports.comports())
     if len(ports_list) <= 0:
         print("无串口设备。")
-
+        return None
     else:
         print("可用的串口设备如下：")
         for comport in ports_list:
@@ -55,9 +55,15 @@ def get_serial_data():
     # 读取串口数据
     com_input = ser.read(5000)
 
-
     if com_input:
-        print("读取数据成功：", com_input)
+        # 将字节流转换为十六进制格式输出
+        hex_output = ' '.join(f'{byte:02x}' for byte in com_input)
+        print("读取数据成功：", hex_output)
+
+        # 处理和打印字符串中的可打印字符
+        printable_data = ''.join([chr(byte) if 32 <= byte <= 126 else '.' for byte in com_input])
+        print("可打印字符：", printable_data)
+
         return com_input
     else:
         print("未读取到数据。")

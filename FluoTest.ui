@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>641</width>
-    <height>477</height>
+    <width>800</width>
+    <height>480</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,150 +17,32 @@
    <widget class="QWidget" name="gridLayoutWidget">
     <property name="geometry">
      <rect>
-      <x>0</x>
+      <x>80</x>
       <y>0</y>
       <width>631</width>
       <height>431</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout">
-     <item row="1" column="0">
+     <item row="0" column="0">
       <widget class="QTabWidget" name="tabWidget">
        <property name="styleSheet">
         <string notr="true"/>
        </property>
        <property name="currentIndex">
-        <number>5</number>
+        <number>6</number>
        </property>
        <widget class="QWidget" name="widget">
         <attribute name="title">
          <string>机构信息</string>
         </attribute>
-        <widget class="QWidget" name="horizontalLayoutWidget">
-         <property name="geometry">
-          <rect>
-           <x>0</x>
-           <y>10</y>
-           <width>371</width>
-           <height>61</height>
-          </rect>
-         </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_8">
-          <item>
-           <widget class="QLabel" name="label_30">
-            <property name="font">
-             <font>
-              <family>Arial</family>
-              <pointsize>-1</pointsize>
-              <weight>75</weight>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">    background-color: #42A5F5;
-    color: black;
-    font-family: Arial;
-    font-size: 12px;
-    font-weight: bold;
-    border: none;
-    border-radius: 5px;
-    padding: 5px;
-    min-width: 55px;
-    max-width: 5px;
-    min-height: 13px;
-    max-height: 13px;
-    text-align: center;</string>
-            </property>
-            <property name="text">
-             <string>机构地址</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLineEdit" name="lineEdit_14">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(227, 227, 227);
-    color: black;
-    font-family: Arial;
-    font-size: 12px;
-    font-weight: bold;
-    border: none;
-    border-radius: 5px;
-    padding: 5px;
-    min-width: 280px;
-    max-width: 280px;
-    min-height: 13px;
-    max-height: 13px;
-    text-align: center;</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-        <widget class="QWidget" name="horizontalLayoutWidget_8">
-         <property name="geometry">
-          <rect>
-           <x>0</x>
-           <y>80</y>
-           <width>371</width>
-           <height>81</height>
-          </rect>
-         </property>
-         <layout class="QHBoxLayout" name="horizontalLayout_9">
-          <item>
-           <widget class="QLabel" name="label_29">
-            <property name="font">
-             <font>
-              <family>Arial</family>
-              <pointsize>-1</pointsize>
-              <weight>75</weight>
-              <bold>true</bold>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">    background-color: #42A5F5;
-    color: black;
-    font-family: Arial;
-    font-size: 12px;
-    font-weight: bold;
-    border: none;
-    border-radius: 5px;
-    padding: 5px;
-    min-width: 55px;
-    max-width: 5px;
-    min-height: 13px;
-    max-height: 13px;
-    text-align: center;</string>
-            </property>
-            <property name="text">
-             <string>机构名称：</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QTextEdit" name="textEdit_2">
-            <property name="styleSheet">
-             <string notr="true">background-color: rgb(227, 227, 227);
-    color: black;
-    font-family: Arial;
-    font-size: 12px;
-    font-weight: bold;
-    border: none;
-    border-radius: 5px;
-    padding: 5px;
-    text-align: center;</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
         <widget class="QPushButton" name="pushButton_18">
          <property name="geometry">
           <rect>
-           <x>380</x>
-           <y>30</y>
-           <width>75</width>
-           <height>23</height>
+           <x>470</x>
+           <y>90</y>
+           <width>81</width>
+           <height>41</height>
           </rect>
          </property>
          <property name="font">
@@ -181,10 +63,7 @@
     border: none; /* 取消边框 */
     border-radius: 5px;
     padding: 5px;
-    min-width: 65px; /* 设置最小宽度 */
-    max-width: 65px; /* 设置最大宽度 */
-    min-height: 13px; /* 设置最小高度 */
-    max-height: 13px; /* 设置最大高度 */
+
 }
 
 QPushButton:hover {
@@ -202,10 +81,10 @@ QPushButton:pressed {
         <widget class="QPushButton" name="mainbutton">
          <property name="geometry">
           <rect>
-           <x>380</x>
-           <y>110</y>
-           <width>75</width>
-           <height>23</height>
+           <x>470</x>
+           <y>180</y>
+           <width>81</width>
+           <height>41</height>
           </rect>
          </property>
          <property name="styleSheet">
@@ -218,10 +97,6 @@ QPushButton:pressed {
     border: none; /* 取消边框 */
     border-radius: 5px;
     padding: 5px;
-    min-width: 65px; /* 设置最小宽度 */
-    max-width: 65px; /* 设置最大宽度 */
-    min-height: 13px; /* 设置最小高度 */
-    max-height: 13px; /* 设置最大高度 */
 }
 
 QPushButton:hover {
@@ -239,22 +114,128 @@ QPushButton:pressed {
         <widget class="QLabel" name="label_4">
          <property name="geometry">
           <rect>
-           <x>10</x>
-           <y>170</y>
-           <width>51</width>
+           <x>30</x>
+           <y>320</y>
+           <width>181</width>
            <height>41</height>
           </rect>
          </property>
          <property name="font">
           <font>
            <family>Agency FB</family>
-           <pointsize>10</pointsize>
+           <pointsize>14</pointsize>
            <weight>75</weight>
            <bold>true</bold>
           </font>
          </property>
          <property name="text">
           <string>2024.10.30</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_30">
+         <property name="geometry">
+          <rect>
+           <x>30</x>
+           <y>90</y>
+           <width>65</width>
+           <height>41</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <family>Arial</family>
+           <pointsize>-1</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">    background-color: #42A5F5;
+    color: black;
+    font-family: Arial;
+    font-size: 12px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+    text-align: center;</string>
+         </property>
+         <property name="text">
+          <string>机构地址</string>
+         </property>
+        </widget>
+        <widget class="QLineEdit" name="lineEdit_14">
+         <property name="geometry">
+          <rect>
+           <x>100</x>
+           <y>90</y>
+           <width>290</width>
+           <height>41</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(227, 227, 227);
+    color: black;
+    font-family: Arial;
+    font-size: 12px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+    text-align: center;</string>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_29">
+         <property name="geometry">
+          <rect>
+           <x>30</x>
+           <y>170</y>
+           <width>65</width>
+           <height>41</height>
+          </rect>
+         </property>
+         <property name="font">
+          <font>
+           <family>Arial</family>
+           <pointsize>-1</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">    background-color: #42A5F5;
+    color: black;
+    font-family: Arial;
+    font-size: 12px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+    text-align: center;</string>
+         </property>
+         <property name="text">
+          <string>机构名称：</string>
+         </property>
+        </widget>
+        <widget class="QTextEdit" name="textEdit_2">
+         <property name="geometry">
+          <rect>
+           <x>100</x>
+           <y>170</y>
+           <width>291</width>
+           <height>81</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(227, 227, 227);
+    color: black;
+    font-family: Arial;
+    font-size: 12px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+    text-align: center;</string>
          </property>
         </widget>
        </widget>
@@ -267,8 +248,8 @@ QPushButton:pressed {
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>461</width>
-           <height>201</height>
+           <width>631</width>
+           <height>411</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_3">
@@ -287,10 +268,10 @@ QPushButton:pressed {
             <widget class="QWidget" name="gridLayoutWidget_3">
              <property name="geometry">
               <rect>
-               <x>0</x>
-               <y>10</y>
-               <width>229</width>
-               <height>95</height>
+               <x>10</x>
+               <y>30</y>
+               <width>291</width>
+               <height>151</height>
               </rect>
              </property>
              <layout class="QGridLayout" name="gridLayout_4">
@@ -434,86 +415,16 @@ QRadioButton::indicator:checked {
             <property name="title">
              <string>LIS/HIS设置</string>
             </property>
-            <widget class="QRadioButton" name="radioButton">
-             <property name="geometry">
-              <rect>
-               <x>100</x>
-               <y>80</y>
-               <width>121</width>
-               <height>16</height>
-              </rect>
-             </property>
-             <property name="font">
-              <font>
-               <family>Agency FB</family>
-               <pointsize>-1</pointsize>
-               <weight>75</weight>
-               <bold>true</bold>
-              </font>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">QRadioButton {
-    font-size: 12px;
-}
-QRadioButton::indicator {
-    width: 14px;
-    height: 14px;
-    border: 1px solid #BDBDBD;
-    border-radius: 7px;
-    background-color: white;
-}
-QRadioButton::indicator:checked {
-    background-color: #2196F3;
-}</string>
-             </property>
-             <property name="text">
-              <string>LIS/HIS自动上传</string>
-             </property>
-            </widget>
             <widget class="QWidget" name="formLayoutWidget">
              <property name="geometry">
               <rect>
                <x>10</x>
-               <y>20</y>
-               <width>181</width>
-               <height>62</height>
+               <y>40</y>
+               <width>271</width>
+               <height>111</height>
               </rect>
              </property>
              <layout class="QFormLayout" name="formLayout">
-              <item row="1" column="0">
-               <widget class="QLabel" name="label_10">
-                <property name="styleSheet">
-                 <string notr="true">    background-color: #42A5F5;
-    color: black;
-    font-family: Arial;
-    font-size: 12px;
-    font-weight: bold;
-    border: none;
-    border-radius: 5px;
-    padding: 5px;
-    text-align: center;</string>
-                </property>
-                <property name="text">
-                 <string>服务器端口：</string>
-                </property>
-               </widget>
-              </item>
-              <item row="1" column="1">
-               <widget class="QLineEdit" name="lineEdit_5">
-                <property name="styleSheet">
-                 <string notr="true">background-color: rgb(227, 227, 227);
-    color: black;
-    font-family: Arial;
-    font-size: 12px;
-    font-weight: bold;
-    border: none;
-    border-radius: 5px;
-    padding: 5px;
-
-    text-align: center;</string>
-                </property>
-               </widget>
-              </item>
               <item row="0" column="0">
                <widget class="QLabel" name="label_9">
                 <property name="styleSheet">
@@ -548,7 +459,77 @@ QRadioButton::indicator:checked {
                 </property>
                </widget>
               </item>
+              <item row="1" column="0">
+               <widget class="QLabel" name="label_10">
+                <property name="styleSheet">
+                 <string notr="true">    background-color: #42A5F5;
+    color: black;
+    font-family: Arial;
+    font-size: 12px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+    text-align: center;</string>
+                </property>
+                <property name="text">
+                 <string>服务器端口：</string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QLineEdit" name="lineEdit_5">
+                <property name="styleSheet">
+                 <string notr="true">background-color: rgb(227, 227, 227);
+    color: black;
+    font-family: Arial;
+    font-size: 12px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+
+    text-align: center;</string>
+                </property>
+               </widget>
+              </item>
              </layout>
+            </widget>
+            <widget class="QRadioButton" name="radioButton">
+             <property name="geometry">
+              <rect>
+               <x>120</x>
+               <y>170</y>
+               <width>172</width>
+               <height>16</height>
+              </rect>
+             </property>
+             <property name="font">
+              <font>
+               <family>Agency FB</family>
+               <pointsize>-1</pointsize>
+               <weight>75</weight>
+               <bold>true</bold>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QRadioButton {
+    font-size: 12px;
+}
+QRadioButton::indicator {
+    width: 14px;
+    height: 14px;
+    border: 1px solid #BDBDBD;
+    border-radius: 7px;
+    background-color: white;
+}
+QRadioButton::indicator:checked {
+    background-color: #2196F3;
+}</string>
+             </property>
+             <property name="text">
+              <string>LIS/HIS自动上传</string>
+             </property>
             </widget>
            </widget>
           </item>
@@ -571,8 +552,8 @@ QRadioButton::indicator:checked {
                 <rect>
                  <x>10</x>
                  <y>30</y>
-                 <width>95</width>
-                 <height>22</height>
+                 <width>101</width>
+                 <height>31</height>
                 </rect>
                </property>
                <property name="styleSheet">
@@ -629,8 +610,8 @@ QComboBox QAbstractItemView {
                 <rect>
                  <x>10</x>
                  <y>30</y>
-                 <width>95</width>
-                 <height>22</height>
+                 <width>111</width>
+                 <height>31</height>
                 </rect>
                </property>
                <property name="styleSheet">
@@ -687,10 +668,10 @@ QComboBox QAbstractItemView {
             <widget class="QTextEdit" name="textEdit">
              <property name="geometry">
               <rect>
-               <x>70</x>
-               <y>30</y>
-               <width>101</width>
-               <height>21</height>
+               <x>110</x>
+               <y>40</y>
+               <width>151</width>
+               <height>31</height>
               </rect>
              </property>
              <property name="styleSheet">
@@ -727,9 +708,9 @@ QComboBox QAbstractItemView {
              <property name="geometry">
               <rect>
                <x>10</x>
-               <y>30</y>
-               <width>54</width>
-               <height>21</height>
+               <y>40</y>
+               <width>71</width>
+               <height>31</height>
               </rect>
              </property>
              <property name="styleSheet">
@@ -761,8 +742,8 @@ QComboBox QAbstractItemView {
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>401</width>
-           <height>191</height>
+           <width>461</width>
+           <height>351</height>
           </rect>
          </property>
          <layout class="QGridLayout" name="gridLayout_5">
@@ -1026,15 +1007,16 @@ QRadioButton::indicator:checked {
         <widget class="QGroupBox" name="groupBox_6">
          <property name="geometry">
           <rect>
-           <x>400</x>
-           <y>10</y>
-           <width>71</width>
-           <height>101</height>
+           <x>470</x>
+           <y>0</y>
+           <width>141</width>
+           <height>151</height>
           </rect>
          </property>
          <property name="font">
           <font>
            <family>Agency FB</family>
+           <pointsize>14</pointsize>
            <weight>75</weight>
            <bold>true</bold>
           </font>
@@ -1046,9 +1028,9 @@ QRadioButton::indicator:checked {
           <property name="geometry">
            <rect>
             <x>10</x>
-            <y>19</y>
-            <width>89</width>
-            <height>16</height>
+            <y>30</y>
+            <width>101</width>
+            <height>31</height>
            </rect>
           </property>
           <property name="maximumSize">
@@ -1088,7 +1070,7 @@ QRadioButton::indicator:checked {
           <property name="geometry">
            <rect>
             <x>10</x>
-            <y>40</y>
+            <y>70</y>
             <width>89</width>
             <height>16</height>
            </rect>
@@ -1116,9 +1098,9 @@ QRadioButton::indicator:checked {
           <property name="geometry">
            <rect>
             <x>10</x>
-            <y>70</y>
-            <width>51</width>
-            <height>23</height>
+            <y>100</y>
+            <width>61</width>
+            <height>41</height>
            </rect>
           </property>
           <property name="styleSheet">
@@ -1126,7 +1108,7 @@ QRadioButton::indicator:checked {
     background-color: #42A5F5;
     color: white;
     font-family: Arial;
-    font-size: 12px; /* 调整字体大小 */
+    font-size: 14px; /* 调整字体大小 */
     font-weight: bold;
     border: none; /* 取消边框 */
     border-radius: 5px;
@@ -1150,10 +1132,10 @@ QPushButton:pressed {
         <widget class="QWidget" name="horizontalLayoutWidget_2">
          <property name="geometry">
           <rect>
-           <x>330</x>
-           <y>120</y>
-           <width>172</width>
-           <height>27</height>
+           <x>370</x>
+           <y>360</y>
+           <width>241</width>
+           <height>31</height>
           </rect>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -1235,13 +1217,14 @@ QComboBox QAbstractItemView {
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>471</width>
-           <height>121</height>
+           <width>621</width>
+           <height>251</height>
           </rect>
          </property>
          <property name="font">
           <font>
            <family>Agency FB</family>
+           <pointsize>14</pointsize>
            <weight>75</weight>
            <bold>true</bold>
           </font>
@@ -1252,10 +1235,10 @@ QComboBox QAbstractItemView {
          <widget class="QWidget" name="horizontalLayoutWidget_3">
           <property name="geometry">
            <rect>
-            <x>10</x>
-            <y>60</y>
-            <width>292</width>
-            <height>31</height>
+            <x>20</x>
+            <y>150</y>
+            <width>371</width>
+            <height>51</height>
            </rect>
           </property>
           <layout class="QHBoxLayout" name="horizontalLayout_3">
@@ -1273,7 +1256,7 @@ QComboBox QAbstractItemView {
               <string notr="true">    background-color: #42A5F5;
     color: black;
     font-family: Arial;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: bold;
     border: none;
     border-radius: 5px;
@@ -1352,10 +1335,10 @@ QComboBox QAbstractItemView {
          <widget class="QWidget" name="horizontalLayoutWidget_4">
           <property name="geometry">
            <rect>
-            <x>10</x>
-            <y>20</y>
-            <width>290</width>
-            <height>31</height>
+            <x>20</x>
+            <y>60</y>
+            <width>371</width>
+            <height>51</height>
            </rect>
           </property>
           <layout class="QHBoxLayout" name="horizontalLayout_4">
@@ -1373,7 +1356,7 @@ QComboBox QAbstractItemView {
               <string notr="true">    background-color: #42A5F5;
     color: black;
     font-family: Arial;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: bold;
     border: none;
     border-radius: 5px;
@@ -1452,11 +1435,19 @@ QComboBox QAbstractItemView {
          <widget class="QRadioButton" name="radioButton_10">
           <property name="geometry">
            <rect>
-            <x>310</x>
-            <y>20</y>
-            <width>89</width>
-            <height>16</height>
+            <x>400</x>
+            <y>50</y>
+            <width>111</width>
+            <height>31</height>
            </rect>
+          </property>
+          <property name="font">
+           <font>
+            <family>Agency FB</family>
+            <pointsize>-1</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
           </property>
           <property name="styleSheet">
            <string notr="true">QRadioButton {
@@ -1477,66 +1468,13 @@ QRadioButton::indicator:checked {
            <string>触摸蜂鸣</string>
           </property>
          </widget>
-         <widget class="QWidget" name="horizontalLayoutWidget_5">
-          <property name="geometry">
-           <rect>
-            <x>310</x>
-            <y>40</y>
-            <width>149</width>
-            <height>31</height>
-           </rect>
-          </property>
-          <layout class="QHBoxLayout" name="horizontalLayout_5">
-           <item>
-            <widget class="QLabel" name="label_21">
-             <property name="styleSheet">
-              <string notr="true">    background-color: #42A5F5;
-    color: black;
-    font-family: Arial;
-    font-size: 12px;
-    font-weight: bold;
-    border: none;
-    border-radius: 5px;
-    padding: 5px;
-    min-width: 80px;
-    max-width: 80px;
-    min-height: 13px;
-    max-height: 13px;
-    text-align: center;</string>
-             </property>
-             <property name="text">
-              <string>系统剩余空间：</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="label_22">
-             <property name="styleSheet">
-              <string notr="true">background-color: rgb(227, 227, 227);
-    color: black;
-    font-family: Arial;
-    font-size: 12px;
-    font-weight: bold;
-    border: none;
-    border-radius: 5px;
-    padding: 5px;
-
-    text-align: center;</string>
-             </property>
-             <property name="text">
-              <string>37.1%</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </widget>
          <widget class="QPushButton" name="pushButton_3">
           <property name="geometry">
            <rect>
-            <x>310</x>
-            <y>90</y>
+            <x>410</x>
+            <y>160</y>
             <width>75</width>
-            <height>23</height>
+            <height>41</height>
            </rect>
           </property>
           <property name="styleSheet">
@@ -1544,7 +1482,7 @@ QRadioButton::indicator:checked {
     background-color: #42A5F5;
     color: white;
     font-family: Arial;
-    font-size: 12px; /* 调整字体大小 */
+    font-size: 15px; /* 调整字体大小 */
     font-weight: bold;
     border: none; /* 取消边框 */
     border-radius: 5px;
@@ -1564,14 +1502,63 @@ QPushButton:pressed {
            <string>保存</string>
           </property>
          </widget>
+         <widget class="QLabel" name="label_22">
+          <property name="geometry">
+           <rect>
+            <x>520</x>
+            <y>100</y>
+            <width>61</width>
+            <height>41</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">background-color: rgb(227, 227, 227);
+    color: black;
+    font-family: Arial;
+    font-size: 12px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+
+    text-align: center;</string>
+          </property>
+          <property name="text">
+           <string>37.1%</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_21">
+          <property name="geometry">
+           <rect>
+            <x>400</x>
+            <y>100</y>
+            <width>111</width>
+            <height>41</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">    background-color: #42A5F5;
+    color: black;
+    font-family: Arial;
+    font-size: 14px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+    text-align: center;</string>
+          </property>
+          <property name="text">
+           <string>系统剩余空间：</string>
+          </property>
+         </widget>
         </widget>
         <widget class="QWidget" name="horizontalLayoutWidget_6">
          <property name="geometry">
           <rect>
-           <x>0</x>
-           <y>130</y>
-           <width>471</width>
-           <height>81</height>
+           <x>20</x>
+           <y>270</y>
+           <width>591</width>
+           <height>121</height>
           </rect>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_6">
@@ -1580,6 +1567,7 @@ QPushButton:pressed {
             <property name="font">
              <font>
               <family>Agency FB</family>
+              <pointsize>14</pointsize>
               <weight>75</weight>
               <bold>true</bold>
              </font>
@@ -1590,10 +1578,10 @@ QPushButton:pressed {
             <widget class="QPushButton" name="pushButton_5">
              <property name="geometry">
               <rect>
-               <x>10</x>
-               <y>30</y>
+               <x>30</x>
+               <y>50</y>
                <width>75</width>
-               <height>23</height>
+               <height>31</height>
               </rect>
              </property>
              <property name="styleSheet">
@@ -1601,7 +1589,7 @@ QPushButton:pressed {
     background-color: #42A5F5;
     color: white;
     font-family: Arial;
-    font-size: 12px; /* 调整字体大小 */
+    font-size: 14px; /* 调整字体大小 */
     font-weight: bold;
     border: none; /* 取消边框 */
     border-radius: 5px;
@@ -1628,6 +1616,7 @@ QPushButton:pressed {
             <property name="font">
              <font>
               <family>Agency FB</family>
+              <pointsize>14</pointsize>
               <weight>75</weight>
               <bold>true</bold>
              </font>
@@ -1638,10 +1627,10 @@ QPushButton:pressed {
             <widget class="QPushButton" name="pushButton_6">
              <property name="geometry">
               <rect>
-               <x>10</x>
-               <y>30</y>
-               <width>75</width>
-               <height>23</height>
+               <x>34</x>
+               <y>50</y>
+               <width>81</width>
+               <height>31</height>
               </rect>
              </property>
              <property name="styleSheet">
@@ -1649,7 +1638,7 @@ QPushButton:pressed {
     background-color: #42A5F5;
     color: white;
     font-family: Arial;
-    font-size: 12px; /* 调整字体大小 */
+    font-size: 14px; /* 调整字体大小 */
     font-weight: bold;
     border: none; /* 取消边框 */
     border-radius: 5px;
@@ -1676,6 +1665,7 @@ QPushButton:pressed {
             <property name="font">
              <font>
               <family>Agency FB</family>
+              <pointsize>14</pointsize>
               <weight>75</weight>
               <bold>true</bold>
              </font>
@@ -1686,10 +1676,10 @@ QPushButton:pressed {
             <widget class="QPushButton" name="pushButton_7">
              <property name="geometry">
               <rect>
-               <x>10</x>
-               <y>30</y>
-               <width>75</width>
-               <height>23</height>
+               <x>34</x>
+               <y>50</y>
+               <width>81</width>
+               <height>31</height>
               </rect>
              </property>
              <property name="styleSheet">
@@ -1697,7 +1687,7 @@ QPushButton:pressed {
     background-color: #42A5F5;
     color: white;
     font-family: Arial;
-    font-size: 12px; /* 调整字体大小 */
+    font-size: 14px; /* 调整字体大小 */
     font-weight: bold;
     border: none; /* 取消边框 */
     border-radius: 5px;
@@ -1724,6 +1714,7 @@ QPushButton:pressed {
             <property name="font">
              <font>
               <family>Agency FB</family>
+              <pointsize>14</pointsize>
               <weight>75</weight>
               <bold>true</bold>
              </font>
@@ -1734,8 +1725,8 @@ QPushButton:pressed {
             <widget class="QComboBox" name="comboBox_4">
              <property name="geometry">
               <rect>
-               <x>10</x>
-               <y>20</y>
+               <x>20</x>
+               <y>40</y>
                <width>95</width>
                <height>22</height>
               </rect>
@@ -1778,10 +1769,10 @@ QComboBox QAbstractItemView {
             <widget class="QPushButton" name="pushButton_4">
              <property name="geometry">
               <rect>
-               <x>30</x>
-               <y>50</y>
-               <width>51</width>
-               <height>23</height>
+               <x>50</x>
+               <y>80</y>
+               <width>71</width>
+               <height>31</height>
               </rect>
              </property>
              <property name="styleSheet">
@@ -1789,7 +1780,7 @@ QComboBox QAbstractItemView {
     background-color: #42A5F5;
     color: white;
     font-family: Arial;
-    font-size: 12px; /* 调整字体大小 */
+    font-size: 14px; /* 调整字体大小 */
     font-weight: bold;
     border: none; /* 取消边框 */
     border-radius: 5px;
@@ -1821,10 +1812,10 @@ QPushButton:pressed {
         <widget class="QWidget" name="verticalLayoutWidget">
          <property name="geometry">
           <rect>
-           <x>10</x>
-           <y>30</y>
-           <width>326</width>
-           <height>171</height>
+           <x>40</x>
+           <y>50</y>
+           <width>451</width>
+           <height>271</height>
           </rect>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -1881,8 +1872,8 @@ QPushButton:pressed {
         <widget class="QPushButton" name="pushButton">
          <property name="geometry">
           <rect>
-           <x>340</x>
-           <y>40</y>
+           <x>470</x>
+           <y>160</y>
            <width>121</width>
            <height>51</height>
           </rect>
@@ -1931,12 +1922,13 @@ QPushButton:pressed {
            <x>10</x>
            <y>0</y>
            <width>161</width>
-           <height>101</height>
+           <height>261</height>
           </rect>
          </property>
          <property name="font">
           <font>
            <family>Agency FB</family>
+           <pointsize>14</pointsize>
            <weight>75</weight>
            <bold>true</bold>
           </font>
@@ -1948,9 +1940,9 @@ QPushButton:pressed {
           <property name="geometry">
            <rect>
             <x>10</x>
-            <y>20</y>
-            <width>54</width>
-            <height>21</height>
+            <y>60</y>
+            <width>61</width>
+            <height>41</height>
            </rect>
           </property>
           <property name="font">
@@ -1965,7 +1957,7 @@ QPushButton:pressed {
            <string notr="true">    background-color: #42A5F5;
     color: black;
     font-family: Arial;
-    font-size: 12px;
+    font-size: 20px;
     font-weight: bold;
     border: none;
     border-radius: 5px;
@@ -1980,16 +1972,16 @@ QPushButton:pressed {
           <property name="geometry">
            <rect>
             <x>10</x>
-            <y>50</y>
-            <width>54</width>
-            <height>21</height>
+            <y>130</y>
+            <width>61</width>
+            <height>41</height>
            </rect>
           </property>
           <property name="styleSheet">
            <string notr="true">    background-color: #42A5F5;
     color: black;
     font-family: Arial;
-    font-size: 12px;
+    font-size: 15px;
     font-weight: bold;
     border: none;
     border-radius: 5px;
@@ -2004,9 +1996,9 @@ QPushButton:pressed {
           <property name="geometry">
            <rect>
             <x>10</x>
-            <y>80</y>
+            <y>200</y>
             <width>61</width>
-            <height>21</height>
+            <height>41</height>
            </rect>
           </property>
           <property name="styleSheet">
@@ -2028,9 +2020,9 @@ QPushButton:pressed {
           <property name="geometry">
            <rect>
             <x>90</x>
-            <y>20</y>
-            <width>54</width>
-            <height>21</height>
+            <y>60</y>
+            <width>61</width>
+            <height>41</height>
            </rect>
           </property>
           <property name="styleSheet">
@@ -2053,9 +2045,9 @@ QPushButton:pressed {
           <property name="geometry">
            <rect>
             <x>90</x>
-            <y>50</y>
-            <width>54</width>
-            <height>21</height>
+            <y>130</y>
+            <width>61</width>
+            <height>41</height>
            </rect>
           </property>
           <property name="styleSheet">
@@ -2078,9 +2070,9 @@ QPushButton:pressed {
           <property name="geometry">
            <rect>
             <x>90</x>
-            <y>80</y>
-            <width>54</width>
-            <height>21</height>
+            <y>200</y>
+            <width>61</width>
+            <height>41</height>
            </rect>
           </property>
           <property name="styleSheet">
@@ -2103,15 +2095,16 @@ QPushButton:pressed {
         <widget class="QGroupBox" name="groupBox_13">
          <property name="geometry">
           <rect>
-           <x>190</x>
+           <x>180</x>
            <y>0</y>
-           <width>251</width>
-           <height>191</height>
+           <width>431</width>
+           <height>401</height>
           </rect>
          </property>
          <property name="font">
           <font>
            <family>Agency FB</family>
+           <pointsize>14</pointsize>
            <weight>75</weight>
            <bold>true</bold>
           </font>
@@ -2122,9 +2115,9 @@ QPushButton:pressed {
          <widget class="QComboBox" name="userComboBox">
           <property name="geometry">
            <rect>
-            <x>10</x>
-            <y>20</y>
-            <width>201</width>
+            <x>40</x>
+            <y>30</y>
+            <width>331</width>
             <height>31</height>
            </rect>
           </property>
@@ -2159,20 +2152,17 @@ QComboBox QAbstractItemView {
           </property>
          </widget>
         </widget>
-        <widget class="QWidget" name="gridLayoutWidget_5">
+        <widget class="QPushButton" name="pushButton_8">
          <property name="geometry">
           <rect>
            <x>10</x>
-           <y>100</y>
-           <width>171</width>
-           <height>91</height>
+           <y>270</y>
+           <width>71</width>
+           <height>41</height>
           </rect>
          </property>
-         <layout class="QGridLayout" name="gridLayout_6">
-          <item row="0" column="1">
-           <widget class="QPushButton" name="userbutton">
-            <property name="styleSheet">
-             <string notr="true">QPushButton {
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
     background-color: #42A5F5;
     color: white;
     font-family: Arial;
@@ -2191,16 +2181,22 @@ QPushButton:hover {
 QPushButton:pressed {
     background-color: darkgreen;
 }    </string>
-            </property>
-            <property name="text">
-             <string>选择用户</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="0">
-           <widget class="QPushButton" name="pushButton_8">
-            <property name="styleSheet">
-             <string notr="true">QPushButton {
+         </property>
+         <property name="text">
+          <string>登出</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="userbutton">
+         <property name="geometry">
+          <rect>
+           <x>90</x>
+           <y>270</y>
+           <width>81</width>
+           <height>41</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
     background-color: #42A5F5;
     color: white;
     font-family: Arial;
@@ -2219,16 +2215,22 @@ QPushButton:hover {
 QPushButton:pressed {
     background-color: darkgreen;
 }    </string>
-            </property>
-            <property name="text">
-             <string>登出</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QPushButton" name="pushButton_10">
-            <property name="styleSheet">
-             <string notr="true">QPushButton {
+         </property>
+         <property name="text">
+          <string>选择用户</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="pushButton_10">
+         <property name="geometry">
+          <rect>
+           <x>10</x>
+           <y>330</y>
+           <width>71</width>
+           <height>41</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
     background-color: #42A5F5;
     color: white;
     font-family: Arial;
@@ -2247,16 +2249,22 @@ QPushButton:hover {
 QPushButton:pressed {
     background-color: darkgreen;
 }    </string>
-            </property>
-            <property name="text">
-             <string>新增用户</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QPushButton" name="pushButton_11">
-            <property name="styleSheet">
-             <string notr="true">QPushButton {
+         </property>
+         <property name="text">
+          <string>新增用户</string>
+         </property>
+        </widget>
+        <widget class="QPushButton" name="pushButton_11">
+         <property name="geometry">
+          <rect>
+           <x>90</x>
+           <y>330</y>
+           <width>81</width>
+           <height>41</height>
+          </rect>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QPushButton {
     background-color: #42A5F5;
     color: white;
     font-family: Arial;
@@ -2275,13 +2283,10 @@ QPushButton:hover {
 QPushButton:pressed {
     background-color: darkgreen;
 }    </string>
-            </property>
-            <property name="text">
-             <string>删除用户</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
+         </property>
+         <property name="text">
+          <string>删除用户</string>
+         </property>
         </widget>
        </widget>
        <widget class="QWidget" name="tab_5">
@@ -2293,8 +2298,8 @@ QPushButton:pressed {
           <rect>
            <x>10</x>
            <y>10</y>
-           <width>441</width>
-           <height>201</height>
+           <width>611</width>
+           <height>391</height>
           </rect>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout_7">
@@ -2303,6 +2308,7 @@ QPushButton:pressed {
             <property name="font">
              <font>
               <family>Agency FB</family>
+              <pointsize>14</pointsize>
               <weight>75</weight>
               <bold>true</bold>
              </font>
@@ -2314,19 +2320,19 @@ QPushButton:pressed {
              <property name="geometry">
               <rect>
                <x>10</x>
-               <y>20</y>
-               <width>181</width>
-               <height>131</height>
+               <y>50</y>
+               <width>271</width>
+               <height>201</height>
               </rect>
              </property>
             </widget>
             <widget class="QPushButton" name="pushButton_12">
              <property name="geometry">
               <rect>
-               <x>10</x>
-               <y>170</y>
-               <width>75</width>
-               <height>23</height>
+               <x>30</x>
+               <y>300</y>
+               <width>81</width>
+               <height>41</height>
               </rect>
              </property>
              <property name="styleSheet">
@@ -2334,7 +2340,7 @@ QPushButton:pressed {
     background-color: #42A5F5;
     color: white;
     font-family: Arial;
-    font-size: 12px; /* 调整字体大小 */
+    font-size: 15px; /* 调整字体大小 */
     font-weight: bold;
     border: none; /* 取消边框 */
     border-radius: 5px;
@@ -2357,10 +2363,10 @@ QPushButton:pressed {
             <widget class="QPushButton" name="pushButton_13">
              <property name="geometry">
               <rect>
-               <x>120</x>
-               <y>170</y>
-               <width>75</width>
-               <height>23</height>
+               <x>160</x>
+               <y>300</y>
+               <width>91</width>
+               <height>41</height>
               </rect>
              </property>
              <property name="styleSheet">
@@ -2368,7 +2374,7 @@ QPushButton:pressed {
     background-color: #42A5F5;
     color: white;
     font-family: Arial;
-    font-size: 12px; /* 调整字体大小 */
+    font-size: 15px; /* 调整字体大小 */
     font-weight: bold;
     border: none; /* 取消边框 */
     border-radius: 5px;
@@ -2395,6 +2401,7 @@ QPushButton:pressed {
             <property name="font">
              <font>
               <family>Agency FB</family>
+              <pointsize>14</pointsize>
               <weight>75</weight>
               <bold>true</bold>
              </font>
@@ -2406,19 +2413,19 @@ QPushButton:pressed {
              <property name="geometry">
               <rect>
                <x>20</x>
-               <y>20</y>
-               <width>181</width>
-               <height>111</height>
+               <y>50</y>
+               <width>261</width>
+               <height>201</height>
               </rect>
              </property>
             </widget>
             <widget class="QPushButton" name="pushButton_14">
              <property name="geometry">
               <rect>
-               <x>50</x>
-               <y>170</y>
-               <width>111</width>
-               <height>23</height>
+               <x>20</x>
+               <y>320</y>
+               <width>261</width>
+               <height>41</height>
               </rect>
              </property>
              <property name="styleSheet">
@@ -2426,7 +2433,7 @@ QPushButton:pressed {
     background-color: #42A5F5;
     color: white;
     font-family: Arial;
-    font-size: 12px; /* 调整字体大小 */
+    font-size: 15px; /* 调整字体大小 */
     font-weight: bold;
     border: none; /* 取消边框 */
     border-radius: 5px;
@@ -2450,9 +2457,9 @@ QPushButton:pressed {
              <property name="geometry">
               <rect>
                <x>20</x>
-               <y>140</y>
-               <width>41</width>
-               <height>23</height>
+               <y>270</y>
+               <width>61</width>
+               <height>31</height>
               </rect>
              </property>
              <property name="styleSheet">
@@ -2460,7 +2467,7 @@ QPushButton:pressed {
     background-color: #42A5F5;
     color: white;
     font-family: Arial;
-    font-size: 12px; /* 调整字体大小 */
+    font-size: 15px; /* 调整字体大小 */
     font-weight: bold;
     border: none; /* 取消边框 */
     border-radius: 5px;
@@ -2483,10 +2490,10 @@ QPushButton:pressed {
             <widget class="QPushButton" name="pushButton_16">
              <property name="geometry">
               <rect>
-               <x>90</x>
-               <y>140</y>
-               <width>41</width>
-               <height>23</height>
+               <x>120</x>
+               <y>270</y>
+               <width>61</width>
+               <height>31</height>
               </rect>
              </property>
              <property name="styleSheet">
@@ -2494,7 +2501,7 @@ QPushButton:pressed {
     background-color: #42A5F5;
     color: white;
     font-family: Arial;
-    font-size: 12px; /* 调整字体大小 */
+    font-size: 15px; /* 调整字体大小 */
     font-weight: bold;
     border: none; /* 取消边框 */
     border-radius: 5px;
@@ -2517,10 +2524,10 @@ QPushButton:pressed {
             <widget class="QPushButton" name="pushButton_17">
              <property name="geometry">
               <rect>
-               <x>160</x>
-               <y>140</y>
-               <width>41</width>
-               <height>23</height>
+               <x>220</x>
+               <y>270</y>
+               <width>61</width>
+               <height>31</height>
               </rect>
              </property>
              <property name="styleSheet">
@@ -2528,7 +2535,7 @@ QPushButton:pressed {
     background-color: #42A5F5;
     color: white;
     font-family: Arial;
-    font-size: 12px; /* 调整字体大小 */
+    font-size: 15px; /* 调整字体大小 */
     font-weight: bold;
     border: none; /* 取消边框 */
     border-radius: 5px;
@@ -2563,8 +2570,8 @@ QPushButton:pressed {
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>641</width>
-     <height>23</height>
+     <width>800</width>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFluoTest">

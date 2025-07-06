@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>470</width>
-    <height>280</height>
+    <width>800</width>
+    <height>480</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,10 +17,10 @@
    <widget class="QPushButton" name="refresh_button">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>200</y>
-      <width>75</width>
-      <height>23</height>
+      <x>160</x>
+      <y>350</y>
+      <width>111</width>
+      <height>41</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -28,15 +28,12 @@
     background-color: #42A5F5;
     color: white;
     font-family: Arial;
-    font-size: 12px; /* 调整字体大小 */
+    font-size: 14px; /* 调整字体大小 */
     font-weight: bold;
     border: none; /* 取消边框 */
     border-radius: 5px;
     padding: 5px;
-    min-width: 65px; /* 设置最小宽度 */
-    max-width: 65px; /* 设置最大宽度 */
-    min-height: 13px; /* 设置最小高度 */
-    max-height: 13px; /* 设置最大高度 */
+
 }
 
 QPushButton:hover {
@@ -54,10 +51,10 @@ QPushButton:pressed {
    <widget class="QPushButton" name="close_button">
     <property name="geometry">
      <rect>
-      <x>350</x>
-      <y>200</y>
-      <width>75</width>
-      <height>23</height>
+      <x>530</x>
+      <y>350</y>
+      <width>101</width>
+      <height>41</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -65,15 +62,12 @@ QPushButton:pressed {
     background-color: #42A5F5;
     color: white;
     font-family: Arial;
-    font-size: 12px; /* 调整字体大小 */
+    font-size: 14px; /* 调整字体大小 */
     font-weight: bold;
     border: none; /* 取消边框 */
     border-radius: 5px;
     padding: 5px;
-    min-width: 65px; /* 设置最小宽度 */
-    max-width: 65px; /* 设置最大宽度 */
-    min-height: 13px; /* 设置最小高度 */
-    max-height: 13px; /* 设置最大高度 */
+
 }
 
 QPushButton:hover {
@@ -91,10 +85,10 @@ QPushButton:pressed {
    <widget class="QTableView" name="table_view">
     <property name="geometry">
      <rect>
-      <x>20</x>
+      <x>30</x>
       <y>10</y>
-      <width>421</width>
-      <height>181</height>
+      <width>721</width>
+      <height>311</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -127,7 +121,7 @@ QHeaderView::section {
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>470</width>
+     <width>800</width>
      <height>22</height>
     </rect>
    </property>

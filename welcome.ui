@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>540</width>
-    <height>281</height>
+    <width>800</width>
+    <height>480</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -23,8 +23,8 @@
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>0</y>
+      <x>80</x>
+      <y>80</y>
       <width>141</width>
       <height>16</height>
      </rect>
@@ -44,8 +44,8 @@
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>370</x>
-      <y>0</y>
+      <x>440</x>
+      <y>80</y>
       <width>41</width>
       <height>20</height>
      </rect>
@@ -71,9 +71,9 @@
    <widget class="QGroupBox" name="groupBox">
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>20</y>
-      <width>471</width>
+      <x>80</x>
+      <y>120</y>
+      <width>601</width>
       <height>101</height>
      </rect>
     </property>
@@ -84,9 +84,9 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>10</y>
-       <width>181</width>
-       <height>92</height>
+       <y>1</y>
+       <width>211</width>
+       <height>101</height>
       </rect>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
@@ -210,7 +210,7 @@
     <widget class="QRadioButton" name="radioButton">
      <property name="geometry">
       <rect>
-       <x>210</x>
+       <x>240</x>
        <y>20</y>
        <width>101</width>
        <height>16</height>
@@ -246,9 +246,9 @@ QRadioButton::indicator:checked {
     <widget class="QGroupBox" name="groupBox_2">
      <property name="geometry">
       <rect>
-       <x>300</x>
+       <x>360</x>
        <y>10</y>
-       <width>81</width>
+       <width>111</width>
        <height>81</height>
       </rect>
      </property>
@@ -338,9 +338,9 @@ QRadioButton::indicator:checked {
     <widget class="QGroupBox" name="groupBox_3">
      <property name="geometry">
       <rect>
-       <x>400</x>
+       <x>510</x>
        <y>10</y>
-       <width>61</width>
+       <width>81</width>
        <height>81</height>
       </rect>
      </property>
@@ -378,10 +378,10 @@ QRadioButton::indicator:checked {
     <widget class="QPushButton" name="pushButton">
      <property name="geometry">
       <rect>
-       <x>210</x>
+       <x>240</x>
        <y>60</y>
-       <width>75</width>
-       <height>23</height>
+       <width>101</width>
+       <height>31</height>
       </rect>
      </property>
      <property name="styleSheet">
@@ -394,10 +394,7 @@ QRadioButton::indicator:checked {
     border: none; /* 取消边框 */
     border-radius: 5px;
     padding: 5px;
-    min-width: 65px; /* 设置最小宽度 */
-    max-width: 65px; /* 设置最大宽度 */
-    min-height: 13px; /* 设置最小高度 */
-    max-height: 13px; /* 设置最大高度 */
+
 }
 
 QPushButton:hover {
@@ -416,10 +413,10 @@ QPushButton:pressed {
    <widget class="QGroupBox" name="groupBox_4">
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>120</y>
-      <width>361</width>
-      <height>51</height>
+      <x>80</x>
+      <y>240</y>
+      <width>451</width>
+      <height>91</height>
      </rect>
     </property>
     <property name="title">
@@ -465,7 +462,7 @@ QLabel#importantLabel {
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>30</y>
+       <y>50</y>
        <width>111</width>
        <height>16</height>
       </rect>
@@ -531,7 +528,7 @@ QLabel#importantLabel {
      <property name="geometry">
       <rect>
        <x>230</x>
-       <y>30</y>
+       <y>50</y>
        <width>71</width>
        <height>16</height>
       </rect>
@@ -551,22 +548,22 @@ QLabel#importantLabel {
    <widget class="QPushButton" name="pushButton_2">
     <property name="geometry">
      <rect>
-      <x>380</x>
-      <y>160</y>
-      <width>41</width>
-      <height>23</height>
+      <x>570</x>
+      <y>300</y>
+      <width>51</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="minimumSize">
      <size>
-      <width>41</width>
-      <height>23</height>
+      <width>0</width>
+      <height>0</height>
      </size>
     </property>
     <property name="maximumSize">
      <size>
-      <width>41</width>
-      <height>23</height>
+      <width>16777215</width>
+      <height>16777215</height>
      </size>
     </property>
     <property name="styleSheet">
@@ -579,10 +576,7 @@ QLabel#importantLabel {
     border: none; /* 取消边框 */
     border-radius: 5px;
     padding: 5px;
-    min-width: 31px; /* 设置最小宽度 */
-    max-width: 31px; /* 设置最大宽度 */
-    min-height: 13px; /* 设置最小高度 */
-    max-height: 13px; /* 设置最大高度 */
+
 }
 
 QPushButton:hover {
@@ -600,22 +594,22 @@ QPushButton:pressed {
    <widget class="QPushButton" name="pushButton_3">
     <property name="geometry">
      <rect>
-      <x>420</x>
-      <y>160</y>
-      <width>41</width>
-      <height>23</height>
+      <x>630</x>
+      <y>300</y>
+      <width>51</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="minimumSize">
      <size>
-      <width>41</width>
-      <height>23</height>
+      <width>0</width>
+      <height>0</height>
      </size>
     </property>
     <property name="maximumSize">
      <size>
-      <width>41</width>
-      <height>23</height>
+      <width>16777215</width>
+      <height>16777215</height>
      </size>
     </property>
     <property name="styleSheet">
@@ -628,10 +622,7 @@ QPushButton:pressed {
     border: none; /* 取消边框 */
     border-radius: 5px;
     padding: 5px;
-    min-width: 31px; /* 设置最小宽度 */
-    max-width: 31px; /* 设置最大宽度 */
-    min-height: 13px; /* 设置最小高度 */
-    max-height: 13px; /* 设置最大高度 */
+
 }
 
 QPushButton:hover {
@@ -649,22 +640,22 @@ QPushButton:pressed {
    <widget class="QPushButton" name="pushButton_4">
     <property name="geometry">
      <rect>
-      <x>380</x>
-      <y>190</y>
-      <width>80</width>
-      <height>23</height>
+      <x>570</x>
+      <y>350</y>
+      <width>111</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="minimumSize">
      <size>
-      <width>80</width>
-      <height>23</height>
+      <width>0</width>
+      <height>0</height>
      </size>
     </property>
     <property name="maximumSize">
      <size>
-      <width>80</width>
-      <height>23</height>
+      <width>16777215</width>
+      <height>16777215</height>
      </size>
     </property>
     <property name="styleSheet">
@@ -677,10 +668,7 @@ QPushButton:pressed {
     border: none; /* 取消边框 */
     border-radius: 5px;
     padding: 5px;
-    min-width: 70px; /* 设置最小宽度 */
-    max-width: 70px; /* 设置最大宽度 */
-    min-height: 13px; /* 设置最小高度 */
-    max-height: 13px; /* 设置最大高度 */
+
 }
 
 QPushButton:hover {
@@ -698,10 +686,10 @@ QPushButton:pressed {
    <widget class="QLabel" name="label_11">
     <property name="geometry">
      <rect>
-      <x>13</x>
-      <y>190</y>
+      <x>100</x>
+      <y>340</y>
       <width>61</width>
-      <height>21</height>
+      <height>31</height>
      </rect>
     </property>
     <property name="font">
@@ -736,32 +724,32 @@ QPushButton:pressed {
    <widget class="QTextBrowser" name="textBrowser">
     <property name="geometry">
      <rect>
-      <x>80</x>
-      <y>180</y>
-      <width>261</width>
-      <height>41</height>
+      <x>170</x>
+      <y>340</y>
+      <width>361</width>
+      <height>51</height>
      </rect>
     </property>
    </widget>
    <widget class="QPushButton" name="main_button">
     <property name="geometry">
      <rect>
-      <x>420</x>
-      <y>130</y>
-      <width>41</width>
-      <height>23</height>
+      <x>630</x>
+      <y>250</y>
+      <width>51</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="minimumSize">
      <size>
-      <width>41</width>
-      <height>23</height>
+      <width>0</width>
+      <height>0</height>
      </size>
     </property>
     <property name="maximumSize">
      <size>
-      <width>41</width>
-      <height>23</height>
+      <width>16777215</width>
+      <height>16777215</height>
      </size>
     </property>
     <property name="toolTipDuration">
@@ -777,10 +765,7 @@ QPushButton:pressed {
     border: none; /* 取消边框 */
     border-radius: 5px;
     padding: 5px;
-    min-width: 31px; /* 设置最小宽度 */
-    max-width: 31px; /* 设置最大宽度 */
-    min-height: 13px; /* 设置最小高度 */
-    max-height: 13px; /* 设置最大高度 */
+
 }
 
 QPushButton:hover {
@@ -798,22 +783,22 @@ QPushButton:pressed {
    <widget class="QPushButton" name="fluo_button">
     <property name="geometry">
      <rect>
-      <x>380</x>
-      <y>130</y>
-      <width>41</width>
-      <height>23</height>
+      <x>570</x>
+      <y>250</y>
+      <width>51</width>
+      <height>31</height>
      </rect>
     </property>
     <property name="minimumSize">
      <size>
-      <width>41</width>
-      <height>23</height>
+      <width>0</width>
+      <height>0</height>
      </size>
     </property>
     <property name="maximumSize">
      <size>
-      <width>41</width>
-      <height>23</height>
+      <width>16777215</width>
+      <height>16777215</height>
      </size>
     </property>
     <property name="cursor">
@@ -832,10 +817,7 @@ QPushButton:pressed {
     border: none; /* 取消边框 */
     border-radius: 5px;
     padding: 5px;
-    min-width: 31px; /* 设置最小宽度 */
-    max-width: 31px; /* 设置最大宽度 */
-    min-height: 13px; /* 设置最小高度 */
-    max-height: 13px; /* 设置最大高度 */
+
 }
 
 QPushButton:hover {
@@ -856,7 +838,7 @@ QPushButton:pressed {
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>540</width>
+     <width>800</width>
      <height>22</height>
     </rect>
    </property>

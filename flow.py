@@ -1,16 +1,12 @@
 from PyQt5.QtWidgets import QApplication, QMainWindow, QProgressBar, QVBoxLayout, QWidget, QPushButton,QMessageBox
 from PyQt5.uic import loadUi
-from PyQt5.QtSql import QSqlDatabase, QSqlQuery
-from PyQt5.QtCore import QTimer
 from PyQt5.QtCore import Qt, QAbstractTableModel, QTimer
-import numpy as np
 import sqlite3
 from control import get_serial_data  # 导入获取串口数据的函数
 import sys
 import paho.mqtt.client as mqtt
 import ssl
 import json
-
 from PyQt5.QtCore import Qt
 from PyQt5.QtGui import QPainter, QColor
 from PyQt5.QtWidgets import QWidget
@@ -18,11 +14,11 @@ import numpy as np
 
 DATABASE = "app.db"
 # 华为云 MQTT 配置信息（请替换为实际值）
-HW_MQTT_BROKER = ""  # 如："xxxx.iot-mqtts.cn-north-4.myhuaweicloud.com"
+HW_MQTT_BROKER = "cb52aa03b3.st1.iotda-device.cn-north-4.myhuaweicloud.com"  # 如："xxxx.iot-mqtts.cn-north-4.myhuaweicloud.com"
 HW_MQTT_PORT = 1883                        # 通常使用 TLS 端口 8883
-DEVICE_ID = ""                  # 设备ID
-MQTT_USERNAME = ""              # 用户名（可能为设备名称）
-MQTT_PASSWORD = ""  # 密码（设备密钥）
+DEVICE_ID = "67d68442375e694aa6932228_quanzhiv3s_0_0_2025031608"                  # 设备ID
+MQTT_USERNAME = "67d68442375e694aa6932228_quanzhiv3s"              # 用户名（可能为设备名称）
+MQTT_PASSWORD = "5f4d6625ecc954dbcb3618102b44dd421cf9235856538f70a7736472bc7ac21a"  # 密码（设备密钥）
 # 根据华为云平台要求设置 Topic，以下为示例格式
 MQTT_TOPIC = f"$oc/devices/{DEVICE_ID}/sys/properties/report"
 CA_CERT_PATH = ""                     # CA 证书路径，如需要验证服务器证书
@@ -96,14 +92,14 @@ def upload_detection_to_huawei_cloud(result, ratio):
     else:
         print("属性上报失败，返回码：", ret.rc)
 
-
 def load_data():
     global data_values
+    global data_valuess
     data_values = []
     try:
         with open('data.txt', 'r') as file:
             content = file.read()  # 可以先读取整个内容
-            print("成功读取 data.txt，字符数：", len(content))
+            print("成功读取 datas.txt，字符数：", len(content))
             hex_data = content.split()
             hex_data = hex_data[6:]
             for i in range(0, len(hex_data), 2):
@@ -299,7 +295,7 @@ class TextWindow(QMainWindow):
         self.canvas = PlotCanvas(self)  # 创建绘图画布
         self.layout().addWidget(self.canvas)  # 将画布添加到UI布局中
 
-        self.canvas.setGeometry(50, 50, 430, 200)  # 调整画布大小
+        self.canvas.setGeometry(50, 50, 680, 420)  # 调整画布大小
 
         self.calc_button.clicked.connect(self.on_button_click)
 
@@ -310,15 +306,16 @@ class TextWindow(QMainWindow):
       #  if self.is_plotting:  # 如果正在绘图，直接返回，避免重复触发
           #  return
 
-       # self.is_plotting = True  # 设置标志，防止多次绘图操作
+      # self.is_plotting = True  # 设置标志，防止多次绘图操作
         # 1) 获取串口数据
-        #data_values = self.get_data_from_serial()
-        load_data()
+        data_values = self.get_data_from_serial()
+
+        #load_data()
         # 如果获取到数据，则处理
-        if data_values is None or len(data_values) == 0:
-            QMessageBox.warning(self, "警告", "数据加载失败或数据为空")
+        #if data_values is None or len(data_values) == 0:
+          #  QMessageBox.warning(self, "警告", "数据加载失败或数据为空")
            # self.is_plotting = False  # 绘图完成，重置标志
-            return
+          #  return
 
         print("原始数据：min =", data_values.min(), "max =", data_values.max())
         smoothed = smooth_data(data_values, window_size=9)
@@ -333,14 +330,13 @@ class TextWindow(QMainWindow):
             print(f"索引 {p}，值 = {smoothed[p]}")
         # 4) 计算每个峰的净面积等参数
         peak_params = refined_calculate_peak_params(
-            data_values,  # 或 data_values, 看你需要在原始数据还是平滑后计算面积
+            data_values,
             peaks,
-            step=2,  # 可以适当调大 step，避免太敏感
-            extension=74,  # 根据实际数据幅度调整
+            step=2,
+            extension=74,
             slope_threshold=5.0
         )
         # 5) 计算两峰面积比
-        #    如果你仍要固定在 [500,700] 和 [700,900]：
         ratio, peak_500_700, peak_700_900 = calculate_area_ratio(peak_params, smoothed)
 
         # 6) 绘图
@@ -376,22 +372,26 @@ class TextWindow(QMainWindow):
         else:
             return None
 
+
     def load_data_from_raw(self, raw_data):
 
-        # 假设获取到的数据是 bytes 格式，可以按原数据读取方式解析
-        hex_data = raw_data.split()  # 将字节流分割成列表
-        hex_data = hex_data[6:]  # 可能需要裁剪掉不必要的数据
+        hex_data = list(raw_data)
+        hex_data = hex_data[6:]  # 裁剪掉前6个字节（根据需求调整）
 
         data_values = []
         for i in range(0, len(hex_data), 2):
-            hex_pair = hex_data[i:i + 2]
-            if len(hex_pair) == 2:
-                low_byte = int(hex_pair[0], 16)
-                high_byte = int(hex_pair[1], 16)
-                value = low_byte + (high_byte << 8)
-                data_values.append(value)
+            # 每次取两个字节（防止越界）
+            if i + 1 >= len(hex_data):
+                break
+            byte_low = hex_data[i]  # 直接获取字节整数值
+            byte_high = hex_data[i + 1]
+
+            # 组合为16位整数（小端序：低字节在前，高字节在后）
+            combined_value = (byte_low << 8) | byte_high
+            data_values.append(combined_value)
 
         return np.array(data_values)
+
 
     def on_main_click(self):
         self.main_window = MainWindow()
@@ -494,8 +494,7 @@ class UserWindow(QMainWindow):
         self.query_button.clicked.connect(self.query_users)
 
     def load_users_from_file(self):
-        # 假设从文件中读取用户数据并插入到数据库
-        # 这里你可以用实际的文件路径
+        # 从文件中读取用户数据并插入到数据库
         self.refresh_table()
 
     def on_back_to_main(self):
@@ -511,11 +510,7 @@ class UserWindow(QMainWindow):
         username = self.username_input.text()
         email = self.email_input.text()
         age_text = self.age_input.text()
-      #  try:
-        #age = int(age_text)
-    #    except:
-     #       QMessageBox.warning(self, "警告", "请输入有效的年龄（整数）！")
-     #       return
+
 
         insert_user(username, email, age_text)
         self.username_input.clear()
@@ -867,7 +862,7 @@ def refined_calculate_peak_params(data, peaks, step=5, extension=50, slope_thres
         #   baseline_left = np.min(data[left_integ: left+1])
         #   baseline_right = np.min(data[right: right_integ+1])
         # baseline = (baseline_left + baseline_right) / 2
-        # 或保持你原来的做法:
+
         base_region_size = 15  # 可自行调整
         baseline_left_vals = data[left_integ : left_integ + base_region_size]
         baseline_right_vals = data[right_integ - base_region_size + 1 : right_integ + 1]

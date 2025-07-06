@@ -6,9 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>491</width>
-    <height>257</height>
+    <width>800</width>
+    <height>480</height>
    </rect>
+  </property>
+  <property name="font">
+   <font>
+    <pointsize>14</pointsize>
+   </font>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
@@ -17,15 +22,16 @@
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>40</y>
-      <width>281</width>
-      <height>111</height>
+      <x>0</x>
+      <y>60</y>
+      <width>351</width>
+      <height>91</height>
      </rect>
     </property>
     <property name="font">
      <font>
       <family>Arial</family>
+      <pointsize>11</pointsize>
       <weight>75</weight>
       <bold>true</bold>
      </font>
@@ -37,10 +43,10 @@
    <widget class="QPushButton" name="back_button">
     <property name="geometry">
      <rect>
-      <x>390</x>
-      <y>10</y>
-      <width>75</width>
-      <height>23</height>
+      <x>650</x>
+      <y>0</y>
+      <width>121</width>
+      <height>51</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -48,15 +54,12 @@
     background-color: #42A5F5;
     color: white;
     font-family: Arial;
-    font-size: 12px; /* 调整字体大小 */
+    font-size: 20px; /* 调整字体大小 */
     font-weight: bold;
     border: none; /* 取消边框 */
     border-radius: 5px;
     padding: 5px;
-    min-width: 65px; /* 设置最小宽度 */
-    max-width: 65px; /* 设置最大宽度 */
-    min-height: 13px; /* 设置最小高度 */
-    max-height: 13px; /* 设置最大高度 */
+
 }
 
 QPushButton:hover {
@@ -74,26 +77,30 @@ QPushButton:pressed {
    <widget class="QPushButton" name="calc_button">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>10</y>
-      <width>75</width>
-      <height>23</height>
+      <x>0</x>
+      <y>0</y>
+      <width>121</width>
+      <height>51</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Arial</family>
+      <pointsize>-1</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
     background-color: #42A5F5;
     color: white;
     font-family: Arial;
-    font-size: 12px; /* 调整字体大小 */
+    font-size: 20px; /* 调整字体大小 */
     font-weight: bold;
     border: none; /* 取消边框 */
     border-radius: 5px;
     padding: 5px;
-    min-width: 65px; /* 设置最小宽度 */
-    max-width: 65px; /* 设置最大宽度 */
-    min-height: 13px; /* 设置最小高度 */
-    max-height: 13px; /* 设置最大高度 */
 }
 
 QPushButton:hover {
@@ -114,8 +121,8 @@ QPushButton:pressed {
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>491</width>
-     <height>23</height>
+     <width>800</width>
+     <height>31</height>
     </rect>
    </property>
   </widget>
